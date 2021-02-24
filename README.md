@@ -17,9 +17,7 @@ Make sure you have installed all of the following prerequisites on your developm
 ### Built with
 
 - [React.js with TypeScript](https://create-react-app.dev/docs/adding-typescript/)
-
-#### Key packages
-
+- [Styled components](https://styled-components.com/)
 
 ### Installing a project
 

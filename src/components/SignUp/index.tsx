@@ -1,0 +1,142 @@
+import React, { Component } from 'react';
+import { TextField } from '@material-ui/core';
+import {
+  ScPanel,
+  ScTitle,
+  ScForm,
+  ScInputWrap
+} from './styles'
+
+
+class SignUp extends Component {
+
+  state = {
+    email: '',
+    name: '',
+    username: '',
+    password: '',
+    errors: [],
+  }
+
+  // update state on field change
+  change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  }
+
+  // submit
+  submit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    // get each values from state
+    const {
+      email,
+      name,
+      username,
+      password,
+    } = this.state;
+
+    // set options to pass to api request
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify({
+        email,
+        name,
+        username,
+        password,
+      })
+    };
+
+    // function to send request and get response
+    async function createUser(user: any) {
+      const response = await fetch( process.env.API_CONNECTION + '/api/users', user);
+    
+      if (response.status === 201) {
+        return [];
+      }
+      else if (response.status === 400) {
+        return response.json().then(data => {
+          return data.errors;
+        });
+      }
+      else {
+        throw new Error();
+      }
+    };
+
+    // run a function
+    createUser(options)
+      .then( errors => {
+        if (errors.length) {
+          this.setState({ errors });
+        } else {
+          console.log(`${username} is successfully signed up and authenticated!`);
+        }
+      })
+      .catch( err => { // handle rejected promises
+        console.log(err);
+      });  
+  }
+
+  render() {
+    return (
+      <ScPanel>
+        <ScTitle>Sign up</ScTitle>
+  
+        <ScForm
+          onSubmit={ this.submit } >
+
+          <ScInputWrap>
+            <TextField 
+              id="email"
+              name="email" 
+              label="Email" 
+              variant="filled"
+              onChange={ this.change } />
+          </ScInputWrap>
+          <ScInputWrap>
+            <TextField 
+              id="name" 
+              name="name"
+              label="Name" 
+              variant="filled"
+              onChange={ this.change } />
+          </ScInputWrap>
+          <ScInputWrap>
+            <TextField 
+              id="username" 
+              name="username"
+              label="Username" 
+              variant="filled"
+              onChange={ this.change } />
+          </ScInputWrap>
+          <ScInputWrap>
+            <TextField 
+              id="password" 
+              name="password"
+              label="Password" 
+              variant="filled"
+              onChange={ this.change } />
+          </ScInputWrap>
+
+          <div>
+            <button type="submit" value="submit">Submit</button>
+          </div>
+        </ScForm>
+  
+      </ScPanel>
+    )
+  }
+  
+}
+
+export default SignUp;

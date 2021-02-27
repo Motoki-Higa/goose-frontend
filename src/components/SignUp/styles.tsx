@@ -39,9 +39,27 @@ const ScInputWrap = styled.div`
   }
 `
 
+const ScBtnWrap = styled.div`
+  width: 100%;
+  margin-top: 18px;
+  text-align: center;
+
+  button {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: ${ props => props.theme.colors.blue };
+
+    &:hover {
+      background-color: ${ props => props.theme.colors.pink };
+    }
+  }
+`
+
 export {
   ScPanel,
   ScTitle,
   ScForm,
-  ScInputWrap
+  ScInputWrap,
+  ScBtnWrap
 }

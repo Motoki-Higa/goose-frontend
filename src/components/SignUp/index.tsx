@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
+import config from './../../config';
+import { TextField, Button } from '@material-ui/core';
 import {
   ScPanel,
   ScTitle,
   ScForm,
-  ScInputWrap
+  ScInputWrap,
+  ScBtnWrap
 } from './styles'
 
 
@@ -23,11 +25,7 @@ class SignUp extends Component {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
+    this.setState({[name]: value});
   }
 
   // submit
@@ -58,7 +56,7 @@ class SignUp extends Component {
 
     // function to send request and get response
     async function createUser(user: any) {
-      const response = await fetch( process.env.API_CONNECTION + '/api/users', user);
+      const response = await fetch( config.apiBaseUrl + '/users', user);
     
       if (response.status === 201) {
         return [];
@@ -73,7 +71,7 @@ class SignUp extends Component {
       }
     };
 
-    // run a function
+    // run the function
     createUser(options)
       .then( errors => {
         if (errors.length) {
@@ -128,9 +126,9 @@ class SignUp extends Component {
               onChange={ this.change } />
           </ScInputWrap>
 
-          <div>
-            <button type="submit" value="submit">Submit</button>
-          </div>
+          <ScBtnWrap>
+            <Button variant="contained" color="primary" type="submit" >Sign up</Button>
+          </ScBtnWrap>
         </ScForm>
   
       </ScPanel>

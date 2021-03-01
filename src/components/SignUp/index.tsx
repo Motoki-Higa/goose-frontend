@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useForm, Controller } from "react-hook-form";
 import config from './../../config';
 import { TextField, Button } from '@material-ui/core';
 import {
@@ -9,36 +10,24 @@ import {
   ScBtnWrap
 } from './styles'
 
+// typescript's interface
+interface IFormInput {
+  email: String;
+  name: String;
+  username: String;
+  password: String;
+}
 
-class SignUp extends Component {
+function SignUp() {
+  // error messages from api (user wont get this msg as validation is handled in FE)
+  // having this state in case dev want to use it
+  const [ apiError, setApiError ] = useState([]);
 
-  state = {
-    email: '',
-    name: '',
-    username: '',
-    password: '',
-    errors: [],
-  }
+  // react hook form
+  const { control, handleSubmit, errors } = useForm();
 
-  // update state on field change
-  change = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState({[name]: value});
-  }
-
-  // submit
-  submit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-
-    // get each values from state
-    const {
-      email,
-      name,
-      username,
-      password,
-    } = this.state;
+  // handle submit
+  const onSubmit = (data: IFormInput) => {
 
     // set options to pass to api request
     const options = {
@@ -46,18 +35,13 @@ class SignUp extends Component {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: JSON.stringify({
-        email,
-        name,
-        username,
-        password,
-      })
+      body: JSON.stringify(data)
     };
 
     // function to send request and get response
-    async function createUser(user: any) {
+    const createUser = async (user: Object) => {
       const response = await fetch( config.apiBaseUrl + '/users', user);
-    
+
       if (response.status === 201) {
         return [];
       }
@@ -75,9 +59,10 @@ class SignUp extends Component {
     createUser(options)
       .then( errors => {
         if (errors.length) {
-          this.setState({ errors });
+          setApiError(errors);
+          console.log(`Error message from api: ${apiError}`);
         } else {
-          console.log(`${username} is successfully signed up and authenticated!`);
+          console.log(`${data.username} is successfully signed up and authenticated!`);
         }
       })
       .catch( err => { // handle rejected promises
@@ -85,56 +70,108 @@ class SignUp extends Component {
       });  
   }
 
-  render() {
-    return (
-      <ScPanel>
-        <ScTitle>Sign up</ScTitle>
-  
-        <ScForm
-          onSubmit={ this.submit } >
+  return (
+    <ScPanel>
+      <ScTitle>Sign up</ScTitle>
 
-          <ScInputWrap>
-            <TextField 
-              id="email"
-              name="email" 
-              label="Email" 
-              variant="filled"
-              onChange={ this.change } />
-          </ScInputWrap>
-          <ScInputWrap>
-            <TextField 
-              id="name" 
-              name="name"
-              label="Name" 
-              variant="filled"
-              onChange={ this.change } />
-          </ScInputWrap>
-          <ScInputWrap>
-            <TextField 
-              id="username" 
-              name="username"
-              label="Username" 
-              variant="filled"
-              onChange={ this.change } />
-          </ScInputWrap>
-          <ScInputWrap>
-            <TextField 
-              id="password" 
-              name="password"
-              label="Password" 
-              variant="filled"
-              onChange={ this.change } />
-          </ScInputWrap>
+      <ScForm
+      onSubmit={ handleSubmit(onSubmit) } >
 
-          <ScBtnWrap>
-            <Button variant="contained" color="primary" type="submit" >Sign up</Button>
-          </ScBtnWrap>
-        </ScForm>
-  
-      </ScPanel>
-    )
-  }
-  
+        <Controller
+          name="email"
+          as={
+            <ScInputWrap>
+              <TextField 
+                id="email"
+                name="email" 
+                label="Email" 
+                variant="filled"
+                helperText={ errors.email ? errors.email.message : null}
+                error={ errors.email }
+                />
+            </ScInputWrap>
+          }
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'Required',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: 'invalid email address'
+            }
+          }}
+        />
+
+        <Controller 
+          name="name"
+          as={
+            <ScInputWrap>
+              <TextField 
+                id="name" 
+                name="name"
+                label="Name" 
+                variant="filled"
+                helperText={ errors.name ? errors.name.message : null}
+                error={ errors.name }
+                />
+            </ScInputWrap>
+          }
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'Required',
+          }}
+        />
+
+        <Controller 
+          name="username"
+          as={
+            <ScInputWrap>
+              <TextField 
+                id="username" 
+                name="username"
+                label="username" 
+                variant="filled"
+                helperText={ errors.username ? errors.username.message : null}
+                error={ errors.username }
+                />
+            </ScInputWrap>
+          }
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'Required',
+          }}
+        />
+
+        <Controller 
+          name="password"
+          as={
+            <ScInputWrap>
+              <TextField 
+                id="password" 
+                name="password"
+                label="password" 
+                variant="filled"
+                helperText={ errors.password ? errors.password.message : null}
+                error={ errors.password }
+                />
+            </ScInputWrap>
+          }
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'Required',
+          }}
+        />
+
+        <ScBtnWrap>
+          <Button variant="contained" color="primary" type="submit" >Sign up</Button>
+        </ScBtnWrap>
+      </ScForm>
+
+    </ScPanel>
+  )
 }
 
 export default SignUp;

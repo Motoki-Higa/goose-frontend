@@ -8,6 +8,7 @@ import {
 // components
 import Header from '../Header/index';
 import SignUp from '../SignUp/index';
+import SignIn from '../SignIn/index';
 
 // style
 import {
@@ -29,6 +30,8 @@ function App() {
 
           <Switch>
             <Route exact path="/" component={ SignUp } />
+            <Route path="/signup" component={ SignUp } />
+            <Route path="/signin" component={ SignIn } />
           </Switch>
 
         </ScAppInner>

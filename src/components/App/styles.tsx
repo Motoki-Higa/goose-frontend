@@ -6,8 +6,8 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   /* custom reset */
-  h1, h2, h3, h4, h5, p {
-    letter-spacing: 0.075rem;
+  h1, h2, h3, h4, h5, p, a {
+    letter-spacing: 0.05rem;
   }
 
   /* material ui form style reset */
@@ -66,7 +66,12 @@ const ScApp = styled.div`
   height: 100%;
   min-height: calc(100vh - 60px);
   padding-top: 60px;
-  background-color: ${ props => props.theme.colors.midGrey }
+  background-color: ${ props => props.theme.colors.midGrey };
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 46px);
+    padding-top: 46px;
+  }
 `
 
 const ScAppInner = styled.div`

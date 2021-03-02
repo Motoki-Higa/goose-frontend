@@ -5,17 +5,18 @@ import {
   Switch
 } from 'react-router-dom';
 
-// context
-import { Provider } from './../../Context';
-
-// private route with context
-import { PrivateRoute } from './../../PrivateRoute';
-
 // components
 import Header from '../Header/index';
 import Authenticated from '../Authenticated/index';
 import SignUp from '../SignUp/index';
 import SignIn from '../SignIn/index';
+import SignOut from '../SignOut/index';
+
+// context
+import { Provider } from './../../Context';
+
+// private route with context
+import { PrivateRoute } from './../../PrivateRoute';
 
 // style
 import {
@@ -25,33 +26,27 @@ import {
 } from './styles';
 
 
-
-
 function App() {
   return (
     <Router>
       <GlobalStyle />
-      <ScApp className="App">
-        
-        <Provider>
+      <Provider>
+        <ScApp className="App">
+          {/* header */}
           <Header></Header>
-        </Provider>
-
-        <ScAppInner>
-
-          <Switch>
-            <Route exact path="/" />
-
-            <Provider>
+          
+          {/* body */}
+          <ScAppInner>
+            <Switch>
+              <Route exact path="/" />
               <PrivateRoute path="/authenticated" component={ Authenticated } />
               <Route path="/signup" component={ SignUp } />
               <Route path="/signin" component={ SignIn } />
-            </Provider>
-
-          </Switch>
-
-        </ScAppInner>
-      </ScApp>
+              <Route path="/signout" component={ SignOut } />
+            </Switch>
+          </ScAppInner>
+        </ScApp>
+      </Provider>
     </Router>
   );
 }

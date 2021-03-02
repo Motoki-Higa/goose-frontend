@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { AccountCircle } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const ScHeader = styled.header`
   position: fixed;
@@ -34,8 +35,9 @@ const ScAccountBlock = styled.div`
 `
 
 const ScUsername = styled.p`
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   color: #fff;
+  margin-left: 12px;
 `
 
 const ScAccountCircle = styled(AccountCircle)`
@@ -46,10 +48,20 @@ const ScAccountCircle = styled(AccountCircle)`
   }
 `
 
+const ScLink = styled(Link)`
+  font-size: 0.875rem;
+  color: #fff;
+
+  &:not(:first-of-type){
+    margin-left: 12px;
+  }
+`
+
 export { 
   ScHeader, 
   ScTitle, 
   ScAccountBlock,
   ScUsername, 
-  ScAccountCircle
+  ScAccountCircle,
+  ScLink
 }

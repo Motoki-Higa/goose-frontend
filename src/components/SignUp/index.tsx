@@ -10,7 +10,7 @@ import {
   ScBtnWrap
 } from './styles'
 
-// typescript's interface
+// TS interface for submitted data
 interface IFormInput {
   email: String;
   name: String;
@@ -18,7 +18,7 @@ interface IFormInput {
   password: String;
 }
 
-function SignUp() {
+function SignUp(props: any) {
   // initialize context for use
   const context = useContext(Context);
 
@@ -28,29 +28,26 @@ function SignUp() {
   // handle submit
   const onSubmit = (data: IFormInput) => {
 
-    // set options to pass to api request
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(data)
-    };
-
     // api call with the utils (custom helper function)
-    context.utils.createUser(options)
-    .then( (errors: any) => {
-      if (errors.length) {
-        setApiError(errors);
-        console.log(`Error message from api: ${apiError}`);
-      } else {
-        console.log(`${data.username} is successfully signed up and authenticated!`);
-      }
-    })
-    .catch( (err: any) => { // handle rejected promises
-      console.log(err);
-    });  
+    context.utils.createUser(data)
+      .then( (errors: any) => {
+        if (errors.length) {
+          setApiError(errors);
+          console.log(`Error message from api: ${apiError}`);
+        }
+        else {
+          console.log(`${data.username} is successfully signed up and authenticated!`);
 
+          // store user info in cookie and redirect to authenticated page
+          context.actions.signIn(data.email, data.password)
+            .then(() => {
+              props.history.push('/authenticated')
+            })
+        }
+      })
+      .catch( (err: any) => { // handle rejected promises
+        console.log(err);
+      });  
   }
 
   return (

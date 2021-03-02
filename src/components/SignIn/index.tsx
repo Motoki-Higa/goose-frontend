@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Context } from './../../Context';
 import { useForm, Controller } from "react-hook-form";
-import config from './../../config';
 import { TextField, Button } from '@material-ui/core';
 import {
   ScPanel,
@@ -11,15 +10,13 @@ import {
   ScBtnWrap
 } from './styles'
 
-// typescript's interface
+// TS interface for submitted data
 interface IFormInput {
   email: String;
-  name: String;
-  username: String;
   password: String;
 }
 
-function SignIn() {
+function SignIn(props: any) {
   // initialize context for use
   const context = useContext(Context);
 
@@ -28,28 +25,22 @@ function SignIn() {
 
   // handle submit
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
-
-    // encode email and password values to Base64-encoded ASCII string
-    const encodedCredentials = btoa(`${data.email}:${data.password}`);
-
-    // set options to pass to api request
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': `Basic ${encodedCredentials}`
-      },
-    };
 
     // api call with the utils (custom helper function)
-    context.utils.getUser(options)
+    context.utils.getUser(data.email, data.password)
       .then( (errors: any) => {
         if (errors.length) {
           setApiError(errors);
           console.log(`Error message from api: ${apiError}`);
-        } else {
-          console.log(`SUCCESS! ${data.username} is now signed in!`);
+        }
+        else {
+          console.log(`SUCCESS! ${data.email} is now signed in!`);
+
+          // store user info in cookie and redirect to authenticated page
+          context.actions.signIn(data.email, data.password)
+            .then(() => {
+              props.history.push('/authenticated')
+            })
         }
       })
       .catch( (err: any) => { // handle rejected promises

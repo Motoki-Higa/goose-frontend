@@ -7,12 +7,14 @@ interface ContextState {
   authenticatedUser: string | null;
   utils: any;
   actions: {
+    signIn: Function;
     signOut: Function;
   }
 }
 
 export const Context = createContext({} as ContextState);
 
+// export Provider
 export const Provider: React.FC = (props) => {
   // state
   const [ authenticatedUser, setAuthenticatedUser ] = useState(Cookies.getJSON('authenticatedUser') || null);
@@ -20,7 +22,19 @@ export const Provider: React.FC = (props) => {
   // get utils with object constructor. (Utils comes with 'createUser' and 'getUser' functions)
   const utils = new Utils();
 
-  // signout function
+  // signin
+  const signIn = async (email: string, password: string) => {
+    const user = await utils.getUser(email, password);
+
+    if (user !== null){
+      setAuthenticatedUser(user);
+      Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+    }
+
+    return user;
+  }
+
+  // signout
   const signOut = () => {
     setAuthenticatedUser(null);
     Cookies.remove('authenticatedUser');
@@ -31,6 +45,7 @@ export const Provider: React.FC = (props) => {
     authenticatedUser,
     utils,
     actions: {
+      signIn,
       signOut
     }
   };
@@ -41,6 +56,9 @@ export const Provider: React.FC = (props) => {
     </Context.Provider>
   )
 }
+
+// export Consumer
+export const Consumer = Context.Consumer;
 
 
 

@@ -31,7 +31,7 @@ function SignIn(props: any) {
       .then( (errors: any) => {
         if (errors.length) {
           setApiError(errors);
-          console.log(`Error message from api: ${apiError}`);
+          console.log(`Error message from api: ${errors}`);
         }
         else {
           console.log(`SUCCESS! ${data.email} is now signed in!`);
@@ -65,7 +65,7 @@ function SignIn(props: any) {
                 label="Email" 
                 variant="filled"
                 helperText={ errors.email ? errors.email.message : null}
-                error={ errors.email }
+                error={ !!errors.email } // without the '!!', error message will show on console if submitted with empty field
                 />
             </ScInputWrap>
           }
@@ -90,7 +90,7 @@ function SignIn(props: any) {
                 label="password" 
                 variant="filled"
                 helperText={ errors.password ? errors.password.message : null}
-                error={ errors.password }
+                error={ !!errors.password }
                 />
             </ScInputWrap>
           }

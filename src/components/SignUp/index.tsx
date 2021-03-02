@@ -7,7 +7,8 @@ import {
   ScTitle,
   ScForm,
   ScInputWrap,
-  ScBtnWrap
+  ScBtnWrap,
+  ScError
 } from './styles'
 
 // TS interface for submitted data
@@ -33,7 +34,7 @@ function SignUp(props: any) {
       .then( (errors: any) => {
         if (errors.length) {
           setApiError(errors);
-          console.log(`Error message from api: ${apiError}`);
+          console.log(`Error message from api: ${errors}`);
         }
         else {
           console.log(`${data.username} is successfully signed up and authenticated!`);
@@ -54,6 +55,13 @@ function SignUp(props: any) {
     <ScPanel>
       <ScTitle>Sign up</ScTitle>
 
+      {
+        apiError ?
+        <ScError>{ apiError }</ScError>
+        :
+        null
+      }
+
       <ScForm
       onSubmit={ handleSubmit(onSubmit) } >
 
@@ -67,7 +75,7 @@ function SignUp(props: any) {
                 label="Email" 
                 variant="filled"
                 helperText={ errors.email ? errors.email.message : null}
-                error={ errors.email }
+                error={ !!errors.email }
                 />
             </ScInputWrap>
           }
@@ -92,7 +100,7 @@ function SignUp(props: any) {
                 label="Name" 
                 variant="filled"
                 helperText={ errors.name ? errors.name.message : null}
-                error={ errors.name }
+                error={ !!errors.name }
                 />
             </ScInputWrap>
           }
@@ -113,7 +121,7 @@ function SignUp(props: any) {
                 label="username" 
                 variant="filled"
                 helperText={ errors.username ? errors.username.message : null}
-                error={ errors.username }
+                error={ !!errors.username }
                 />
             </ScInputWrap>
           }
@@ -134,7 +142,7 @@ function SignUp(props: any) {
                 label="password" 
                 variant="filled"
                 helperText={ errors.password ? errors.password.message : null}
-                error={ errors.password }
+                error={ !!errors.password }
                 />
             </ScInputWrap>
           }

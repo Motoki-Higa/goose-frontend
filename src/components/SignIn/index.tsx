@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from './../../Context';
 import { useForm, Controller } from "react-hook-form";
 import config from './../../config';
 import { TextField, Button } from '@material-ui/core';
@@ -19,11 +20,10 @@ interface IFormInput {
 }
 
 function SignIn() {
-  // error messages from api (user wont get this msg as validation is handled in FE)
-  // having this state in case dev want to use it
-  const [ apiError, setApiError ] = useState([]);
+  // initialize context for use
+  const context = useContext(Context);
 
-  // react hook form
+  const [ apiError, setApiError ] = useState([]); // for error handling from api
   const { control, handleSubmit, errors } = useForm();
 
   // handle submit
@@ -42,26 +42,9 @@ function SignIn() {
       },
     };
 
-    console.log(options);
-
-    // function to send request and get response
-    const getUser = async (user: Object) => {
-      const response = await fetch( config.apiBaseUrl + '/users', user);
-
-      if (response.status === 200) {
-        return response.json().then(data => data);
-      }
-      else if (response.status === 401) {
-        return null;
-      }
-      else {
-        throw new Error();
-      }
-    };
-
-    // run the function
-    getUser(options)
-      .then( errors => {
+    // api call with the utils (custom helper function)
+    context.utils.getUser(options)
+      .then( (errors: any) => {
         if (errors.length) {
           setApiError(errors);
           console.log(`Error message from api: ${apiError}`);
@@ -69,7 +52,7 @@ function SignIn() {
           console.log(`SUCCESS! ${data.username} is now signed in!`);
         }
       })
-      .catch( err => { // handle rejected promises
+      .catch( (err: any) => { // handle rejected promises
         console.log(err);
       });  
   }

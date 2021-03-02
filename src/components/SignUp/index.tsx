@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from './../../Context';
 import { useForm, Controller } from "react-hook-form";
-import config from './../../config';
 import { TextField, Button } from '@material-ui/core';
 import {
   ScPanel,
@@ -19,11 +19,10 @@ interface IFormInput {
 }
 
 function SignUp() {
-  // error messages from api (user wont get this msg as validation is handled in FE)
-  // having this state in case dev want to use it
-  const [ apiError, setApiError ] = useState([]);
+  // initialize context for use
+  const context = useContext(Context);
 
-  // react hook form
+  const [ apiError, setApiError ] = useState([]); // for error handling from api
   const { control, handleSubmit, errors } = useForm();
 
   // handle submit
@@ -38,36 +37,20 @@ function SignUp() {
       body: JSON.stringify(data)
     };
 
-    // function to send request and get response
-    const createUser = async (user: Object) => {
-      const response = await fetch( config.apiBaseUrl + '/users', user);
+    // api call with the utils (custom helper function)
+    context.utils.createUser(options)
+    .then( (errors: any) => {
+      if (errors.length) {
+        setApiError(errors);
+        console.log(`Error message from api: ${apiError}`);
+      } else {
+        console.log(`${data.username} is successfully signed up and authenticated!`);
+      }
+    })
+    .catch( (err: any) => { // handle rejected promises
+      console.log(err);
+    });  
 
-      if (response.status === 201) {
-        return [];
-      }
-      else if (response.status === 400) {
-        return response.json().then(data => {
-          return data.errors;
-        });
-      }
-      else {
-        throw new Error();
-      }
-    };
-
-    // run the function
-    createUser(options)
-      .then( errors => {
-        if (errors.length) {
-          setApiError(errors);
-          console.log(`Error message from api: ${apiError}`);
-        } else {
-          console.log(`${data.username} is successfully signed up and authenticated!`);
-        }
-      })
-      .catch( err => { // handle rejected promises
-        console.log(err);
-      });  
   }
 
   return (

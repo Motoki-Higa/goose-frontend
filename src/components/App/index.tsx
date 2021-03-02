@@ -5,6 +5,9 @@ import {
   Switch
 } from 'react-router-dom';
 
+// context
+import { Provider } from './../../Context';
+
 // components
 import Header from '../Header/index';
 import SignUp from '../SignUp/index';
@@ -30,8 +33,12 @@ function App() {
 
           <Switch>
             <Route exact path="/" component={ SignUp } />
-            <Route path="/signup" component={ SignUp } />
-            <Route path="/signin" component={ SignIn } />
+
+            <Provider>
+              <Route path="/signup" component={ SignUp } />
+              <Route path="/signin" component={ SignIn } />
+            </Provider>
+
           </Switch>
 
         </ScAppInner>

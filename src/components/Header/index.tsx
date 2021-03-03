@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Context } from './../../Context';
+import { ReactComponent as Logo } from './../assets/goose-logo.svg';
 
 import { 
   ScHeader, 
-  ScTitle, 
+  ScLogo, 
   ScAccountBlock,
   ScUsername, 
   ScAccountCircle,
@@ -17,7 +18,10 @@ const Header: React.FC = () => {
 
   return (
     <ScHeader>
-      <ScTitle>GOOSE</ScTitle>
+      <ScLogo>
+        <Logo></Logo>
+      </ScLogo>
+    
       {
         authUser ?
         <ScAccountBlock>

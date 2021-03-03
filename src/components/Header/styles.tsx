@@ -5,39 +5,48 @@ import { Link } from 'react-router-dom';
 const ScHeader = styled.header`
   position: fixed;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60px;
+  height: 80px;
   top: 0;
   padding: 0 24px;
   box-sizing: border-box;
-  background: ${ props => props.theme.colors.gradient };
   
   @media (max-width: 768px) {
-    height: 46px;
+    justify-content: space-between;
+    height: 50px;
   }
 `
 
-const ScTitle = styled.h1`
-  font-size: 1.625rem;
-  font-weight: 500;
+const ScLogo = styled.div`
   color: #fff;
 
+  svg {
+    width: 100%;
+  }
+
   @media (max-width: 768px) {
-    font-size: 1.25rem;
+    width: 90px;
   }
 `
 
 const ScAccountBlock = styled.div`
   display: flex;
   align-items: center;
+  position: absolute;
+  right: 0;
+  margin-right: 24px;
 `
 
 const ScUsername = styled.p`
   font-size: 0.875rem;
   color: #fff;
   margin-left: 12px;
+
+  @media (max-width: 768px){
+    display: none;
+  }
 `
 
 const ScAccountCircle = styled(AccountCircle)`
@@ -59,7 +68,7 @@ const ScLink = styled(Link)`
 
 export { 
   ScHeader, 
-  ScTitle, 
+  ScLogo, 
   ScAccountBlock,
   ScUsername, 
   ScAccountCircle,

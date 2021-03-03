@@ -7,10 +7,13 @@ import {
 
 // components
 import Header from '../Header/index';
-import Authenticated from '../Authenticated/index';
+import Nav from '../Nav/index';
+import Home from '../Home/index';
 import SignUp from '../SignUp/index';
 import SignIn from '../SignIn/index';
 import SignOut from '../SignOut/index';
+import MyBikes from '../MyBikes/index';
+import Authenticated from '../Authenticated/index';
 
 // context
 import { Provider } from './../../Context';
@@ -34,15 +37,19 @@ function App() {
         <ScApp className="App">
           {/* header */}
           <Header></Header>
+
+          {/* nav */}
+          <Nav></Nav>
           
           {/* body */}
           <ScAppInner>
             <Switch>
-              <Route exact path="/" />
-              <PrivateRoute path="/authenticated" component={ Authenticated } />
+              <Route exact path="/" component={ Home } />
               <Route path="/signup" component={ SignUp } />
               <Route path="/signin" component={ SignIn } />
               <Route path="/signout" component={ SignOut } />
+              <PrivateRoute path="/mybikes" component={ MyBikes } />
+              <PrivateRoute path="/authenticated" component={ Authenticated } />
             </Switch>
           </ScAppInner>
         </ScApp>

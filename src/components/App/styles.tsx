@@ -6,6 +6,10 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   /* custom reset */
+  * {
+    box-sizing: border-box;
+  }
+
   h1, h2, h3, h4, h5, p, a {
     letter-spacing: 0.05rem;
   }
@@ -64,18 +68,20 @@ const ScApp = styled.div`
   font-family: ${ props => props.theme.fonts.primary };
   width: 100%;
   height: 100%;
-  min-height: calc(100vh - 60px);
-  padding-top: 60px;
+  min-height: 100vh;
+  padding-top: 80px;
   background-color: ${ props => props.theme.colors.midGrey };
 
   @media (max-width: 768px) {
-    min-height: calc(100vh - 46px);
-    padding-top: 46px;
+    padding-top: 50px;
   }
 `
 
 const ScAppInner = styled.div`
   position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 0 12px;
 `
 

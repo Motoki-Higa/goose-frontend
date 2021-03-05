@@ -6,26 +6,24 @@ import {
 } from 'react-router-dom';
 
 // components
-import Header from '../Header/index';
-import Nav from '../Nav/index';
-import Home from '../Home/index';
-import SignUp from '../SignUp/index';
-import SignIn from '../SignIn/index';
-import SignOut from '../SignOut/index';
-import MyBikes from '../MyBikes/index';
-import Authenticated from '../Authenticated/index';
+import Header from '../components/Header/index';
+import Nav from '../components/Nav/index';
+import Home from '../pages/Home/index';
+import SignUp from '../pages/SignUp/index';
+import SignIn from '../pages/SignIn/index';
+import SignOut from '../pages/SignOut/index';
+import MyBikes from '../pages/MyBikes/index';
+import Authenticated from '../pages/Authenticated/index';
 
 // context
-import { Provider } from './../../Context';
+import { Provider } from '../Context';
 
 // private route with context
-import { PrivateRoute } from './../../PrivateRoute';
+import { PrivateRoute } from '../PrivateRoute';
 
 // style
 import {
   GlobalStyle,
-  ScApp,
-  ScAppInner
 } from './styles';
 
 
@@ -34,7 +32,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <Provider>
-        <ScApp className="App">
+        <div className="App">
           {/* header */}
           <Header></Header>
 
@@ -42,7 +40,7 @@ function App() {
           <Nav></Nav>
           
           {/* body */}
-          <ScAppInner>
+          <div className="AppInner">
             <Switch>
               <Route exact path="/" component={ Home } />
               <Route path="/signup" component={ SignUp } />
@@ -51,8 +49,8 @@ function App() {
               <PrivateRoute path="/mybikes" component={ MyBikes } />
               <PrivateRoute path="/authenticated" component={ Authenticated } />
             </Switch>
-          </ScAppInner>
-        </ScApp>
+          </div>
+        </div>
       </Provider>
     </Router>
   );

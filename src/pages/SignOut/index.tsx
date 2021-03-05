@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Context } from './../../Context';
+import { Context } from '../../Context';
 
 function SignOut() {
   // initialize context for use

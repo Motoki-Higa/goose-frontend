@@ -14,6 +14,42 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.05rem;
   }
 
+  /* global component is controlled by className */
+  /* TIP: each individual component is styled with styled components */
+  .App {
+    position: relative;
+    font-family: ${ props => props.theme.fonts.primary };
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    padding-top: 80px;
+    background-color: ${ props => props.theme.colors.midGrey };
+
+    @media (max-width: 768px) {
+      padding-top: 50px;
+    }
+  }
+
+  .AppInner {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 12px;
+  }
+
+  .AppBody {
+    display: flex;
+    justify-content: center;
+  }
+
+  .Title {
+    font-size: 1.125rem;
+    color: ${ props => props.theme.colors.black };
+  }
+
+
+
   /* material ui form style reset */
   .MuiButton-contained {
     line-height: 1!important;
@@ -63,30 +99,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const ScApp = styled.div`
-  position: relative;
-  font-family: ${ props => props.theme.fonts.primary };
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  padding-top: 80px;
-  background-color: ${ props => props.theme.colors.midGrey };
-
-  @media (max-width: 768px) {
-    padding-top: 50px;
-  }
-`
-
-const ScAppInner = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 12px;
-`
 
 export {
-  GlobalStyle,
-  ScApp,
-  ScAppInner
+  GlobalStyle
 }

@@ -48,6 +48,7 @@ const ScBtnWrap = styled.div`
     font-size: 1rem;
     font-weight: 500;
     color: #fff;
+    cursor: pointer;
     background-color: ${ props => props.theme.colors.blue };
 
     &:hover {

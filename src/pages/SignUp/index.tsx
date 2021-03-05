@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../Context';
+import { UserContext } from '../../context/Context';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
 import {
@@ -21,7 +21,7 @@ interface IFormInput {
 
 function SignUp(props: any) {
   // initialize context for use
-  const context = useContext(Context);
+  const context = useContext(UserContext);
 
   const [ apiError, setApiError ] = useState([]); // for error handling from api
   const { control, handleSubmit, errors } = useForm();

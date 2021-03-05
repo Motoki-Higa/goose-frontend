@@ -16,7 +16,7 @@ import MyBikes from '../pages/MyBikes/index';
 import Authenticated from '../pages/Authenticated/index';
 
 // context
-import { Provider } from '../Context';
+import { UserProvider } from '../context/Context';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -31,7 +31,7 @@ function App() {
   return (
     <Router>
       <GlobalStyle />
-      <Provider>
+      <UserProvider>
         <div className="App">
           {/* header */}
           <Header></Header>
@@ -50,8 +50,10 @@ function App() {
               <PrivateRoute path="/authenticated" component={ Authenticated } />
             </Switch>
           </div>
+
+          
         </div>
-      </Provider>
+      </UserProvider>
     </Router>
   );
 }

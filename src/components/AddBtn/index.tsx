@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Add } from '@material-ui/icons';
 
 import {
@@ -6,11 +6,18 @@ import {
 } from './styles';
 
 function AddBtn() {
+  const [ isModal, setIsModal ] = useState(false);
+
+  const handleModal = () => {
+    setIsModal(!isModal);
+  }
+
   return (
-    <ScAddBtnWrap>
-      <Add></Add>
+    <ScAddBtnWrap
+      onClick={ handleModal } >
+
+      <Add />
     </ScAddBtnWrap>
-    
   )
 }
 

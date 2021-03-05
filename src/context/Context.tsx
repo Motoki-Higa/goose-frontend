@@ -1,6 +1,6 @@
 import { useState, createContext } from 'react';
 import Cookies from 'js-cookie';
-import Utils from './Utils';
+import Utils from '../Utils';
 
 // set the type of state you want to handle with context e.g.
 interface ContextState {
@@ -12,10 +12,10 @@ interface ContextState {
   }
 }
 
-export const Context = createContext({} as ContextState);
+export const UserContext = createContext({} as ContextState);
 
 // export Provider
-export const Provider: React.FC = (props) => {
+export const UserProvider: React.FC = (props) => {
   // state
   const [ authenticatedUser, setAuthenticatedUser ] = useState(Cookies.getJSON('authenticatedUser') || null);
 
@@ -51,14 +51,14 @@ export const Provider: React.FC = (props) => {
   };
 
   return (
-    <Context.Provider value={ value }>
+    <UserContext.Provider value={ value }>
       { props.children }
-    </Context.Provider>
+    </UserContext.Provider>
   )
 }
 
-// export Consumer
-export const Consumer = Context.Consumer;
+// export Consumer : this is only used for PrivateRoute.tsx
+export const UserConsumer = UserContext.Consumer;
 
 
 

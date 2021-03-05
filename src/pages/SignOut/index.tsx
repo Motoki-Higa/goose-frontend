@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Context } from '../../Context';
+import { UserContext } from '../../context/Context';
 
 function SignOut() {
   // initialize context for use
-  const context = useContext(Context);
+  const context = useContext(UserContext);
   // component calls signOut and updates state after render
   useEffect(() => context.actions.signOut())
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context } from './../../Context';
+import { UserContext } from '../../context/Context';
 import { NavLink } from 'react-router-dom';
 import { LocalFlorist, Dashboard, Album, Bookmark, Category } from '@material-ui/icons';
 
@@ -11,7 +11,7 @@ import {
 
 function Nav() {
   // initialize context for use
-  const context = useContext(Context);
+  const context = useContext(UserContext);
   const authUser: any = context.authenticatedUser;
 
   return (

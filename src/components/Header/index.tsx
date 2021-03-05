@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Context } from './../../Context';
-import { ReactComponent as Logo } from './../assets/goose-logo.svg';
+import { UserContext } from '../../context/Context';
+import { ReactComponent as Logo } from './../../assets/goose-logo.svg';
 
 import { 
   ScHeader, 
@@ -13,7 +13,7 @@ import {
 
 const Header: React.FC = () => {
   // initialize context for use
-  const context = useContext(Context);
+  const context = useContext(UserContext);
   const authUser: any = context.authenticatedUser;
 
   return (

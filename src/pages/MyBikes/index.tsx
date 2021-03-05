@@ -1,13 +1,21 @@
 import React from 'react';
+import AddBtn from './../../components/AddBtn';
+import SearchBar from './../../components/SearchBar';
+import {
+  ScUtils
+} from './styles';
 
 
 function MyBikes() {
   return (
-    <div className="AppBody">
+    <>
       <h1 className="Title">My Bikes</h1>
 
-      
-    </div>
+      <ScUtils>
+        <AddBtn></AddBtn>
+        <SearchBar></SearchBar>
+      </ScUtils>
+    </>
     
   )
 }

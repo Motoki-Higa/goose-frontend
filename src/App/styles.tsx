@@ -38,14 +38,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 12px;
   }
 
-  .AppBody {
-    display: flex;
-    justify-content: center;
-  }
-
   .Title {
     font-size: 1.125rem;
     color: ${ props => props.theme.colors.black };
+    text-align: center;
   }
 
 

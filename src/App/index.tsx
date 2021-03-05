@@ -14,9 +14,10 @@ import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import MyBikes from '../pages/MyBikes/index';
 import Authenticated from '../pages/Authenticated/index';
+import Modal from '../components/Modal';
 
 // context
-import { UserProvider } from '../context/Context';
+import { UserProvider } from '../context/UserContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -25,6 +26,7 @@ import { PrivateRoute } from '../PrivateRoute';
 import {
   GlobalStyle,
 } from './styles';
+import { ModalProvider } from '../context/ModalContext';
 
 
 function App() {
@@ -32,27 +34,33 @@ function App() {
     <Router>
       <GlobalStyle />
       <UserProvider>
-        <div className="App">
-          {/* header */}
-          <Header></Header>
+        <ModalProvider>
 
-          {/* nav */}
-          <Nav></Nav>
-          
-          {/* body */}
-          <div className="AppInner">
-            <Switch>
-              <Route exact path="/" component={ Home } />
-              <Route path="/signup" component={ SignUp } />
-              <Route path="/signin" component={ SignIn } />
-              <Route path="/signout" component={ SignOut } />
-              <PrivateRoute path="/mybikes" component={ MyBikes } />
-              <PrivateRoute path="/authenticated" component={ Authenticated } />
-            </Switch>
+          <div className="App">
+            {/* header */}
+            <Header></Header>
+
+            {/* nav */}
+            <Nav></Nav>
+            
+            {/* body */}
+            <div className="AppInner">
+              <Switch>
+                <Route exact path="/" component={ Home } />
+                <Route path="/signup" component={ SignUp } />
+                <Route path="/signin" component={ SignIn } />
+                <Route path="/signout" component={ SignOut } />
+                <PrivateRoute path="/mybikes" component={ MyBikes } />
+                <PrivateRoute path="/authenticated" component={ Authenticated } />
+              </Switch>
+            </div>
+
+            
           </div>
 
-          
-        </div>
+          <Modal></Modal>
+
+        </ModalProvider>
       </UserProvider>
     </Router>
   );

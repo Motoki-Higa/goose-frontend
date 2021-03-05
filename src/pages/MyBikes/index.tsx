@@ -1,4 +1,5 @@
 import React from 'react';
+
 import AddBtn from './../../components/AddBtn';
 import SearchBar from './../../components/SearchBar';
 
@@ -11,7 +12,6 @@ import {
 
 function MyBikes() {
 
-
   return (
     <>
       <h1 className="Title">My Bikes</h1>
@@ -20,7 +20,6 @@ function MyBikes() {
         <ScUtilsInner>
           <AddBtn />
           <SearchBar />
-          <div></div>
         </ScUtilsInner>
         
         <ScCounter>Item: </ScCounter>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../context/Context';
+import { UserContext } from '../../context/UserContext';
 import { NavLink } from 'react-router-dom';
 import { LocalFlorist, Dashboard, Album, Bookmark, Category } from '@material-ui/icons';
 

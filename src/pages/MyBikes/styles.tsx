@@ -9,6 +9,7 @@ const ScUtils = styled.div`
 
 const ScUtilsInner = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const ScCounter = styled.div`

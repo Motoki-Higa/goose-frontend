@@ -15,9 +15,12 @@ import SignOut from '../pages/SignOut/index';
 import MyBikes from '../pages/MyBikes/index';
 import Authenticated from '../pages/Authenticated/index';
 import Modal from '../components/Modal';
+import Form from '../components/Form';
 
 // context
 import { UserProvider } from '../context/UserContext';
+import { ModalProvider } from '../context/ModalContext';
+import { FormProvider } from '../context/FormContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -26,7 +29,7 @@ import { PrivateRoute } from '../PrivateRoute';
 import {
   GlobalStyle,
 } from './styles';
-import { ModalProvider } from '../context/ModalContext';
+
 
 
 function App() {
@@ -35,31 +38,34 @@ function App() {
       <GlobalStyle />
       <UserProvider>
         <ModalProvider>
+          <FormProvider>
 
-          <div className="App">
-            {/* header */}
-            <Header></Header>
+            <div className="App">
+              {/* modal */}
+              <Modal></Modal>
+              <Form></Form>
 
-            {/* nav */}
-            <Nav></Nav>
-            
-            {/* body */}
-            <div className="AppInner">
-              <Switch>
-                <Route exact path="/" component={ Home } />
-                <Route path="/signup" component={ SignUp } />
-                <Route path="/signin" component={ SignIn } />
-                <Route path="/signout" component={ SignOut } />
-                <PrivateRoute path="/mybikes" component={ MyBikes } />
-                <PrivateRoute path="/authenticated" component={ Authenticated } />
-              </Switch>
+              {/* header */}
+              <Header></Header>
+
+              {/* nav */}
+              <Nav></Nav>
+              
+              {/* body */}
+              <div className="AppInner">
+                <Switch>
+                  <Route exact path="/" component={ Home } />
+                  <Route path="/signup" component={ SignUp } />
+                  <Route path="/signin" component={ SignIn } />
+                  <Route path="/signout" component={ SignOut } />
+                  <PrivateRoute path="/mybikes" component={ MyBikes } />
+                  <PrivateRoute path="/authenticated" component={ Authenticated } />
+                </Switch>
+              </div>
+
             </div>
 
-            
-          </div>
-
-          <Modal></Modal>
-
+          </FormProvider>
         </ModalProvider>
       </UserProvider>
     </Router>

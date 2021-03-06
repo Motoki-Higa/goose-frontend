@@ -12,7 +12,7 @@ const ScUtilsInner = styled.div`
   align-items: center;
 `;
 
-const ScCounter = styled.div`
+const ScUtilsCounter = styled.div`
   display: flex;
   color: ${ props => props.theme.colors.black };
 `;
@@ -21,5 +21,5 @@ const ScCounter = styled.div`
 export {
   ScUtils,
   ScUtilsInner,
-  ScCounter
+  ScUtilsCounter
 }

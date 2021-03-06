@@ -12,6 +12,7 @@ const ScModal = styled.div<Props>`
   left: 0;
   transition: all 0.3s ease;
   background-color: rgba(0,0,0,0.3);
+  z-index: 99;
 `
 
 export {

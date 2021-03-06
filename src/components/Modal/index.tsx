@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../context/ModalContext';
+import { FormContext } from '../../context/FormContext';
 
 import {
   ScModal
@@ -7,19 +8,19 @@ import {
 
 function Modal() {
   // init context to use
-  const context = useContext(ModalContext);
+  const { isModal, handleCloseModal } = useContext(ModalContext);
+  const { handleCloseForm } = useContext(FormContext);
 
-  // destructure modal's state (Modal) and a function
-  const { Modal, handleCloseModal } = context;
-
+  // make sure to remove form inside the modal too
   const closeModal = () => {
     handleCloseModal();
+    handleCloseForm();
   }
 
   return (
     <>
       {
-        Modal ? 
+        isModal ? 
         <ScModal onClick={ closeModal }></ScModal>
         :
         null

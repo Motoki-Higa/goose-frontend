@@ -4,21 +4,21 @@ export const FormContext = createContext({} as any);
 
 export const FormProvider: React.FC = (props) => {
   // state
-  const [ form, setForm ] = useState('');
+  const [ formName, setFormName ] = useState('');
 
   // function to be used for onClick
-  const handleSetForm = (form: any) => {
-    setForm(form);
-    console.log(form);
+  const handleSetForm = (form: string) => {
+    setFormName(form);
+    // console.log(form);
   }
 
   const handleCloseForm = () => {
-    setForm('');
+    setFormName('');
   }
 
   // value to pass to the provider
   const value = {
-    form,
+    formName,
     handleSetForm,
     handleCloseForm
   };

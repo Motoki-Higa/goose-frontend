@@ -47,6 +47,72 @@ const GlobalStyle = createGlobalStyle`
 
 
   /* material ui form style reset */
+  .formPanel {
+    width: 100%;
+    max-width: 400px;
+    margin: 96px auto 0;
+    padding: 24px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    background-color: ${ props => props.theme.colors.lightGrey };
+
+    @media (max-width: 768px) {
+      margin-top: 48px;
+    }
+  }
+
+  .formPanel--modal {
+    position: absolute;
+    max-width: 700px;
+    left: 0;
+    right: 0;
+    margin: 50px auto 0;
+    z-index: 100;
+  }
+
+  .formTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  .form {
+    margin-top: 24px;
+  }
+
+  .formInputWrap {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  .formBtnWrap {
+    width: 100%;
+    margin-top: 18px;
+    text-align: center;
+
+    button {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      background-color: ${ props => props.theme.colors.blue };
+
+      &:hover {
+        background-color: ${ props => props.theme.colors.pink };
+      }
+    }
+  }
+
+  .MuiFormControl-root {
+    width: 100%;   
+  }
+
   .MuiButton-contained {
     line-height: 1!important;
     padding: 12px 24px 10px!important;

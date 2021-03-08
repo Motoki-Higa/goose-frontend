@@ -5,28 +5,26 @@ import AddBike from './AddBike';
 
 function Form() {
   // destructure context to use
-  const { form, handleCloseForm } = useContext(FormContext);
+  const { formName } = useContext(FormContext);
 
-  const selectForm = () => {
-    // store forms in object
-    const forms = {
-      'addBike': AddBike,
-    }
+  // store forms in object
+  const forms: any = {
+    'AddBike': AddBike
+  };
 
-    // condition to return appropriate form
-    return (
-      <AddBike />
-    )
+  const selectForm = (targetFrom: string) => {
+    let SelectedForm = forms[targetFrom];
 
-  }
+    return <SelectedForm />
+  };
 
   return (
     <>
       {
-        form === '' ?
+        formName === '' ?
         null
         :
-        selectForm()
+        selectForm(formName)
       }
     </>
   )

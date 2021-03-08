@@ -2,13 +2,6 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
-import {
-  ScPanel,
-  ScTitle,
-  ScForm,
-  ScInputWrap,
-  ScBtnWrap
-} from './styles'
 
 // TS interface for submitted data
 interface IFormInput {
@@ -50,16 +43,17 @@ function SignIn(props: any) {
   }
 
   return (
-    <ScPanel>
-      <ScTitle>Sign in</ScTitle>
+    <div className="formPanel">
+      <h2 className="formTitle">Sign in</h2>
 
-      <ScForm
-      onSubmit={ handleSubmit(onSubmit) } >
+      <form 
+        className="form"
+        onSubmit={ handleSubmit(onSubmit) } >
 
         <Controller
           name="email"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="email"
                 name="email" 
@@ -68,7 +62,7 @@ function SignIn(props: any) {
                 helperText={ errors.email ? errors.email.message : null}
                 error={ !!errors.email } // without the '!!', error message will show on console if submitted with empty field
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -84,7 +78,7 @@ function SignIn(props: any) {
         <Controller 
           name="password"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="password" 
                 name="password"
@@ -93,7 +87,7 @@ function SignIn(props: any) {
                 helperText={ errors.password ? errors.password.message : null}
                 error={ !!errors.password }
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -102,12 +96,12 @@ function SignIn(props: any) {
           }}
         />
 
-        <ScBtnWrap>
+        <div className="formBtnWrap">
           <Button variant="contained" color="primary" type="submit" >Sign in</Button>
-        </ScBtnWrap>
-      </ScForm>
+        </div>
+      </form>
 
-    </ScPanel>
+    </div>
   )
 
 }

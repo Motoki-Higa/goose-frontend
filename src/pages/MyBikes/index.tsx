@@ -19,13 +19,14 @@ function MyBikes() {
 
   const handleModalForm = () => {
     handleModal();
-    handleSetForm('addBike');
+    handleSetForm('AddBike');
   }
 
-  // close the modal on browser back
+  // close the modal and form on browser back
   useEffect( () => {
     window.onpopstate = () => {
       handleCloseModal();
+      handleCloseForm();
     }
   }) 
 

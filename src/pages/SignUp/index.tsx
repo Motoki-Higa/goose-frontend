@@ -3,11 +3,6 @@ import { UserContext } from '../../context/UserContext';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
 import {
-  ScPanel,
-  ScTitle,
-  ScForm,
-  ScInputWrap,
-  ScBtnWrap,
   ScError
 } from './styles'
 
@@ -52,8 +47,8 @@ function SignUp(props: any) {
   }
 
   return (
-    <ScPanel>
-      <ScTitle>Sign up</ScTitle>
+    <div className="formPanel">
+      <h2 className="formTitle">Sign up</h2>
 
       {
         apiError ?
@@ -62,13 +57,14 @@ function SignUp(props: any) {
         null
       }
 
-      <ScForm
-      onSubmit={ handleSubmit(onSubmit) } >
+      <form
+        className="form"
+        onSubmit={ handleSubmit(onSubmit) } >
 
         <Controller
           name="email"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="email"
                 name="email" 
@@ -77,7 +73,7 @@ function SignUp(props: any) {
                 helperText={ errors.email ? errors.email.message : null}
                 error={ !!errors.email }
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -93,7 +89,7 @@ function SignUp(props: any) {
         <Controller 
           name="name"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="name" 
                 name="name"
@@ -102,7 +98,7 @@ function SignUp(props: any) {
                 helperText={ errors.name ? errors.name.message : null}
                 error={ !!errors.name }
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -114,7 +110,7 @@ function SignUp(props: any) {
         <Controller 
           name="username"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="username" 
                 name="username"
@@ -123,7 +119,7 @@ function SignUp(props: any) {
                 helperText={ errors.username ? errors.username.message : null}
                 error={ !!errors.username }
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -135,7 +131,7 @@ function SignUp(props: any) {
         <Controller 
           name="password"
           as={
-            <ScInputWrap>
+            <div className="formInputWrap">
               <TextField 
                 id="password" 
                 name="password"
@@ -144,7 +140,7 @@ function SignUp(props: any) {
                 helperText={ errors.password ? errors.password.message : null}
                 error={ !!errors.password }
                 />
-            </ScInputWrap>
+            </div>
           }
           control={control}
           defaultValue=""
@@ -153,12 +149,12 @@ function SignUp(props: any) {
           }}
         />
 
-        <ScBtnWrap>
+        <div className="formBtnWrap">
           <Button variant="contained" color="primary" type="submit" >Sign up</Button>
-        </ScBtnWrap>
-      </ScForm>
+        </div>
+      </form>
 
-    </ScPanel>
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ export const ModalProvider: React.FC = (props) => {
   // function to be used for onClick
   const handleModal = () => {
     setIsModal(!isModal);
-    console.log('clicked!');
+    // console.log('clicked!');
   }
 
   const handleCloseModal = () => {

@@ -1,35 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 import { TextField, Button } from '@material-ui/core';
-import { HighlightOff } from '@material-ui/icons';
 import config from './../../../config';
-
-import { ModalContext } from '../../../context/ModalContext';
-import { FormContext } from '../../../context/FormContext';
 
 
 function AddBike(){
-  // init context to use
-  const { handleCloseModal } = useContext(ModalContext);
-  const { handleCloseForm } = useContext(FormContext);
-
-  // form
+  const [ imageArr, setImgArr ] = useState<FileList | any>([]);
+  const [ files, setFiles ] = useState<FileList | any>(null);
   const { control, register, handleSubmit, errors } = useForm();
 
-  // state for preview image (display purpose)
-  const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
-  // state for images to be used for api request call
-  const [ images, setImages ] = useState<FileList | any>([]);
-  
 
-  // Store image URIs to its state for preview purpose
+  // Store image URIs to state for multiple files
   const readURI = (event: any) => {
     // Get files and store in array
     const files = [...event.target.files];
-
-    console.log(previewArr);
-
+    console.log(files);
+ 
     // Map each file to a promise that resolves to an array of image URI's
     Promise.all(files.map( file => {
       return (
@@ -44,61 +31,52 @@ function AddBike(){
       )
     }))
     .then(images => {
-      setPreviewArr([...previewArr, images]);
+      setImgArr(images);
     }, error => {        
       console.error(error);
     });
   }
 
 
-  // remove images onClick
-  const handleRemoveImage = ( index: number ) => {
-    // remove preview from its state
-    setPreviewArr(previewArr.slice(0, index).concat(previewArr.slice(index + 1, previewArr.length)) );
-    // remove image from its state
-    setImages(images.slice(0, index).concat(images.slice(index + 1, images.length)));
-  }
-
-
-  // handle preview image and state onChange
+  // handle image preview and state
   const handleChange = (event: any) => {
-    // preview image update
+    // to avoid memory leak, do below
+    // URL.revokeObjectURL(imageArr);
+
+    // handle preview image update
     readURI(event);
-    // set image state
-    setImages([...images, event.target.files[0]]);
+
+    // set and update state for files (it's needed for storing files to AWS)
+    setFiles(event.target.files);
   }
 
 
-  // submit
+  // handle submit
   const onSubmit = async (data: any) => {
     try {
       // endpoint
       const url = config.apiBaseUrl + '/mybikes';
 
-      // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
+      // construct a set of key/value pairs by js FormData()
       const formData: any = new FormData();
       formData.append('name', data.name);
       formData.append('brand', data.brand);
       formData.append('builtby', data.builtby);
       formData.append('desc', data.desc);
 
-      // loop through the images state to append each images info into formData
-      for (let i = 0; i < images.length; i++) {
-        formData.append('image', images[i]);
+      // *only file infomation needs to be stored in state while selecting
+      // loop through the files to append each images into formData
+      for (let i = 0; i < files.length; i++) {
+        formData.append('image', files[i]);
       }
+      // console.log([...formData]);
 
-      // send request
+      // request
       await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 'multipart/form-data' for text and image values together
         },
       })
-        .then( response => {
-          console.log(response);
-          handleCloseModal();
-          handleCloseForm();
-        })
-      
     } catch(err) {
 
     }
@@ -184,30 +162,34 @@ function AddBike(){
           defaultValue=""
         />
 
-        {/* add image button */}
-        <div className="formImageAddBtnWrap">
-          <label htmlFor="image" >
-            <Button 
-              variant="contained" 
-              component="span"
-              size="small">
-                Images
-            </Button>
-          </label>
-          <input 
-            style={{ display: "none" }}
-            ref={ register } 
-            type="file" 
-            id="image" 
-            name="image" 
-            onChange={ handleChange } />
-        </div>
 
-        { // show preview images
-          images.length !== 0 ? 
+
+        <input ref={ register } type="file" id="image" name="image" onChange={ handleChange }  multiple />
+
+        {/* <label htmlFor="imageUpload">
+          <Button variant="contained" color="primary" component="span">
+            Upload images
+          </Button>
+        </label>
+        <input
+          style={{ display: "none" }}
+          id="imageUpload"
+          name="image"
+          type="file"
+          onChange={ handleChange } /> */}
+
+        {
+          imageArr ? 
+          <div></div>
+          :
+          null
+        }
+
+        { // if image file is selected, show previews, otherwise null
+          imageArr ? 
           <div className="formPreviewImgArea">
             {
-              previewArr.map( (imageURI: any, index: any) => {
+              imageArr.map( (imageURI: any, index: any) => {
                 return (
                   <div 
                     className="formPreviewImg"
@@ -217,10 +199,6 @@ function AddBike(){
                       className="photo-uploaded" 
                       src={imageURI} 
                       alt="uploaded" />
-
-                    <HighlightOff 
-                      onClick={ () => handleRemoveImage(index) }
-                    />
                   </div>
                 )
               })    
@@ -230,7 +208,6 @@ function AddBike(){
           null
         }
 
-        {/* submit */}
         <div className="formBtnWrap">
           <Button variant="contained" color="primary" type="submit" >Submit</Button>
         </div>

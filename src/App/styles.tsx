@@ -45,8 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
 
-
-  /* material ui form style reset */
+  /* form style reset (include material ui) */
   .formPanel {
     width: 100%;
     max-width: 400px;
@@ -64,10 +63,13 @@ const GlobalStyle = createGlobalStyle`
 
   .formPanel--modal {
     position: absolute;
+    width: 90%;
     max-width: 700px;
+    max-height: 80%;
     left: 0;
     right: 0;
-    margin: 50px auto 0;
+    margin: 0 auto;
+    overflow-y: scroll;
     z-index: 100;
   }
 
@@ -88,7 +90,11 @@ const GlobalStyle = createGlobalStyle`
 
   .formInputWrap {
     width: 100%;
-    margin-top: 18px;
+    margin-top: 12px;
+  }
+
+  .formImageAddBtnWrap {
+    margin-top: 12px;
   }
 
   .formBtnWrap {
@@ -106,6 +112,40 @@ const GlobalStyle = createGlobalStyle`
       &:hover {
         background-color: ${ props => props.theme.colors.pink };
       }
+
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .formPreviewImgArea {
+    display: flex;
+    overflow-x: scroll;
+    margin-top: 12px;
+  }
+
+  .formPreviewImg {
+    position: relative;
+    max-width: 33.333%;
+    min-width: 30%;
+    margin: 1%;
+    border-radius: 5px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      vertical-align: top;
+    }
+
+    svg {
+      position: absolute;
+      color: #fff;
+      right: 0;
+      bottom: 0;
+      margin: 0 6px 6px 0;
+      border-radius: 50%;
+      background-color: ${ props => props.theme.colors.pink };
     }
   }
 

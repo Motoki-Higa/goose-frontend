@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
+import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
 import { HighlightOff } from '@material-ui/icons';
-import config from './../../../config';
 
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
@@ -12,10 +12,10 @@ import { FormContext } from '../../../context/FormContext';
 function AddBike(){
   // init context to use
   const { handleCloseModal } = useContext(ModalContext);
-  const { handleCloseForm } = useContext(FormContext);
+  const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
 
   // form
-  const { control, register, handleSubmit, errors } = useForm();
+  const { control, register, handleSubmit, errors, formState } = useForm();
 
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
@@ -28,7 +28,7 @@ function AddBike(){
     // Get files and store in array
     const files = [...event.target.files];
 
-    console.log(previewArr);
+    // console.log(previewArr);
 
     // Map each file to a promise that resolves to an array of image URI's
     Promise.all(files.map( file => {
@@ -43,20 +43,11 @@ function AddBike(){
         })
       )
     }))
-    .then(images => {
-      setPreviewArr([...previewArr, images]);
+    .then(previews => {
+      setPreviewArr([...previewArr, previews]);
     }, error => {        
       console.error(error);
     });
-  }
-
-
-  // remove images onClick
-  const handleRemoveImage = ( index: number ) => {
-    // remove preview from its state
-    setPreviewArr(previewArr.slice(0, index).concat(previewArr.slice(index + 1, previewArr.length)) );
-    // remove image from its state
-    setImages(images.slice(0, index).concat(images.slice(index + 1, images.length)));
   }
 
 
@@ -66,6 +57,15 @@ function AddBike(){
     readURI(event);
     // set image state
     setImages([...images, event.target.files[0]]);
+  }
+
+  
+  // remove images onClick
+  const handleRemoveImage = ( index: number ) => {
+    // remove preview from its state
+    setPreviewArr(previewArr.slice(0, index).concat(previewArr.slice(index + 1, previewArr.length)) );
+    // remove image from its state
+    setImages(images.slice(0, index).concat(images.slice(index + 1, images.length)));
   }
 
 
@@ -95,6 +95,7 @@ function AddBike(){
       })
         .then( response => {
           console.log(response);
+          setDetectAnyFormSubmit(formState);
           handleCloseModal();
           handleCloseForm();
         })

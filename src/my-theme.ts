@@ -14,6 +14,7 @@ const myTheme: DefaultTheme = {
     black: '#3A3A3A',
     blue: '#6CA3B8',
     pink: '#EA81DA',
+    white: '#FAFAFA',
     gradient: 'linear-gradient(135deg, rgba(234,129,218,1) 0%, rgba(98,165,181,1) 100%)',
   },
 } as const;

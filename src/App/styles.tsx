@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body {
+    background-color: ${ props => props.theme.colors.midGrey };
+  }
+
   h1, h2, h3, h4, h5, p, a {
     letter-spacing: 0.05rem;
   }
@@ -23,7 +27,6 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     min-height: 100vh;
     padding-top: 80px;
-    background-color: ${ props => props.theme.colors.midGrey };
 
     @media (max-width: 768px) {
       padding-top: 50px;

@@ -3,7 +3,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const ScHeader = styled.header`
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,9 +4,12 @@ import { FormContext } from '../../context/FormContext';
 import axios from 'axios';
 import config from './../../config';
 
+// components
 import AddBtn from './../../components/AddBtn';
 import SearchBar from './../../components/SearchBar';
+import ItemList from '../../components/ItemList';
 
+// styles
 import {
   ScUtils,
   ScUtilsInner,
@@ -16,17 +19,15 @@ import {
 
 function MyBikes() {
 
-  interface IImages {
-    key: string;
-    location: string;
-  }
-
   interface IMyBikes {
     name: string;
     brand: string;
     builtby: string;
     desc: string;
-    images: IImages;
+    images: [{
+      key: string;
+      location: string;
+    }];
   }
 
   // state : mybikes
@@ -63,7 +64,7 @@ function MyBikes() {
       });
 
     })()
-  }, [detectAnyFormSubmit])
+  }, [detectAnyFormSubmit]) // detectAnyFormSubmit makes sure to re-render useEffect
 
   return (
     <>
@@ -82,11 +83,7 @@ function MyBikes() {
         <ScUtilsCounter>Item: </ScUtilsCounter>
       </ScUtils>
 
-      {
-        myBikes.map( (bike, index) => 
-          <div key={index}>{bike.name} {bike.brand}</div>
-        )
-      }
+      <ItemList items={myBikes} />
 
     </>
     

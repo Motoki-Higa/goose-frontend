@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from './../../config';
 
 // components
-import AddBtn from './../../components/AddBtn';
+import AddBtn from '../../components/buttons/AddBtn';
 import SearchBar from './../../components/SearchBar';
 import ItemList from '../../components/ItemList';
 
@@ -59,7 +59,7 @@ function MyBikes() {
 
       await axios.get(url)
       .then( (response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setMyBikes(response.data);
       });
 
@@ -70,8 +70,8 @@ function MyBikes() {
     <>
       <h1 className="Title">My Bikes</h1>
 
+      {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>
-        {/* Add buttn & search */}
         <ScUtilsInner>
           <div onClick={ handleModalForm }>
             <AddBtn />
@@ -79,12 +79,14 @@ function MyBikes() {
           
           <SearchBar />
         </ScUtilsInner>
-        {/* number of items */}
-        <ScUtilsCounter>Item: </ScUtilsCounter>
+
+        <ScUtilsCounter>Total: { myBikes.length }</ScUtilsCounter>
       </ScUtils>
 
-      <ItemList items={myBikes} />
-
+      {/* Send data to ItemList component */}
+      <ItemList 
+        items={ myBikes }
+        route={ '/mybikes' } />
     </>
     
   )

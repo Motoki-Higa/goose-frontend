@@ -13,6 +13,7 @@ import SignUp from '../pages/SignUp/index';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import MyBikes from '../pages/MyBikes/index';
+import MyBike from '../pages/MyBike/index';
 import Authenticated from '../pages/Authenticated/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
@@ -58,7 +59,8 @@ function App() {
                   <Route path="/signup" component={ SignUp } />
                   <Route path="/signin" component={ SignIn } />
                   <Route path="/signout" component={ SignOut } />
-                  <PrivateRoute path="/mybikes" component={ MyBikes } />
+                  <PrivateRoute exact path="/mybikes" component={ MyBikes } />
+                  <PrivateRoute path="/mybikes/:id" component={ MyBike } />
                   <PrivateRoute path="/authenticated" component={ Authenticated } />
                 </Switch>
               </div>

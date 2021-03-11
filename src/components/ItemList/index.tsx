@@ -1,10 +1,14 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 // styles
 import {
   ScItemList,
   ScItemCard,
-  ScItemCardImg
+  ScItemCardImg,
+  ScItemCardCat,
+  ScItemCardName,
+  ScItemCardBbrand
 } from './styles';
 
 
@@ -14,10 +18,21 @@ function ItemList(props: any) {
       {
         props.items.map( (item: any, index: number) => 
           <ScItemCard key={ index }>
-            <div>Category</div>
-            <div>{item.name}</div>
-            <div>{item.brand}</div>
-            <ScItemCardImg><img src={item.images[0].location} alt=""/></ScItemCardImg>
+            <NavLink to={ props.route + '/' +  item._id}>
+
+              { // category
+                item.category ? <ScItemCardCat>Category</ScItemCardCat> : null
+              }
+              
+              <ScItemCardName>{item.name}</ScItemCardName>
+              <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
+              <ScItemCardImg style={{
+                backgroundImage: `url( ${item.images[0].location} )`,
+                backgroundSize: `cover`,
+                backgroundPosition: `center`
+                }}></ScItemCardImg>
+                
+            </NavLink>
           </ScItemCard>
         )
       }

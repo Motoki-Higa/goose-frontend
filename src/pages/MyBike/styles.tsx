@@ -13,14 +13,8 @@ const ScUtilsInner = styled.div`
   align-items: center;
 `;
 
-const ScUtilsCounter = styled.div`
-  display: flex;
-  color: ${ props => props.theme.colors.black };
-`;
-
 
 export {
   ScUtils,
-  ScUtilsInner,
-  ScUtilsCounter
+  ScUtilsInner
 }

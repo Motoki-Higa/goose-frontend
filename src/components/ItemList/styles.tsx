@@ -88,9 +88,10 @@ const ScItemCardName = styled.div`
 
 const ScItemCardBbrand = styled.div`
   font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0.025rem;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 6px;
   color: ${ props => props.theme.colors.darkGrey };
 
   @media (max-width: 768px) {

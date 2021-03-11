@@ -11,7 +11,7 @@ const myTheme: DefaultTheme = {
     lightGrey: '#ECEDEF',
     midGrey: '#DFE0E3',
     darkGrey: '#707070',
-    black: '#3A3A3A',
+    black: '#333333',
     blue: '#6CA3B8',
     pink: '#EA81DA',
     white: '#FAFAFA',

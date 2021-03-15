@@ -62,7 +62,7 @@ const ScMoreHorizBtnWrap = styled.button`
 
 const ScMoreOptionTable = styled.div`
   position: absolute;
-  opacity: 0;
+  /* opacity: 0; */
   width: auto;
   text-align: right;
   right: 0;
@@ -70,13 +70,8 @@ const ScMoreOptionTable = styled.div`
   padding: 16px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   border-radius: 10px 0 10px 10px;
+  animation: ${ keyFadeInTop } 0.3s ease-in;
   background: ${ props => props.theme.colors.gradient};
-  
-
-  &.fadeIn {
-    animation: ${ keyFadeInTop } 0.3s ease-in;
-    opacity: 1;
-  }
 
   &.fadeOut {
     animation: ${ keyFadeOutTop } 0.3s ease-in;

@@ -19,7 +19,7 @@ function MoreHorizBtn() {
 
     setFadeClass(fadeClass === 'fadeIn' ? 'fadeOut' : 'fadeIn');
     setTimeout(() => {
-      setMenu(!menu);
+      setMenu(fadeClass === 'fadeIn' ? false : true);
     }, ms)
     
   }

@@ -14,8 +14,12 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${ props => props.theme.colors.midGrey };
   }
 
-  h1, h2, h3, h4, h5, p, a {
+  h1, h2, h3, h4, h5, li, p, a {
     letter-spacing: 0.05rem;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   /* global component is controlled by className */
@@ -38,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 12px;
+    padding: 12px 12px 96px;
   }
 
   .Title {

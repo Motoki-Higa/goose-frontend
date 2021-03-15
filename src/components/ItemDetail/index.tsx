@@ -6,6 +6,10 @@ import {
   ScItemDetail,
   ScItemDetailName,
   ScItemDetailBrand,
+  ScItemDetailTxtArea,
+  ScItemDetailRow,
+  ScItemDetailDataKey,
+  ScItemDetailDataVal,
 } from './styles';
 
 function ItemDetail(props: any) {
@@ -19,6 +23,24 @@ function ItemDetail(props: any) {
 
         {/* EmblaCarousel library */}
         <EmblaCarousel slides={ item.images } />
+
+        {/* body area */}
+        <ScItemDetailTxtArea>
+          <ScItemDetailRow>
+            <ScItemDetailDataKey>Built by</ScItemDetailDataKey>
+            <ScItemDetailDataVal>{ item.builtby }</ScItemDetailDataVal>
+          </ScItemDetailRow>
+
+          <ScItemDetailRow>
+            <ScItemDetailDataKey>Description</ScItemDetailDataKey>
+            <ScItemDetailDataVal>{ item.desc }</ScItemDetailDataVal>
+          </ScItemDetailRow>
+
+          <ScItemDetailRow>
+            <ScItemDetailDataKey>Components</ScItemDetailDataKey>
+            <ScItemDetailDataVal></ScItemDetailDataVal>
+          </ScItemDetailRow>
+        </ScItemDetailTxtArea>
 
       </ScItemDetail>
     ) 

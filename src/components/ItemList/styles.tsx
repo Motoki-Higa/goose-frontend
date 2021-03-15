@@ -11,11 +11,7 @@ const ScItemList = styled.div`
   flex-direction: row-reverse;
   flex-wrap: wrap-reverse;
   justify-content: center;
-  margin-top: 20px;
-
-  @media (max-width: 768px) {
-    margin-top: 12px;
-  }
+  margin-top: 5px;
 `
 
 const ScItemCard = styled.div<IScItemCard>`

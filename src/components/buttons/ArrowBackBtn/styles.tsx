@@ -6,8 +6,7 @@ const ScArrowBackBtnWrap = styled.button`
   justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  border: 2px solid ${ props => props.theme.colors.black};
+  border: none;
   background-color: transparent;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -25,7 +24,7 @@ const ScArrowBackBtnWrap = styled.button`
   }
 
   svg {
-    font-size: 1rem !important;
+    font-size: 1.5rem !important;
     transition: all 0.3s ease;
     color: ${ props => props.theme.colors.black};
   }

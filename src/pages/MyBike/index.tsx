@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import config from './../../config';
 
 // components
 import ItemDetail from './../../components/ItemDetail';
 import ArrowBackBtn from '../../components/buttons/ArrowBackBtn';
+import MoreHorizBtn from '../../components/buttons/MoreHorizBtn';
 
 // styles
 import {
@@ -30,14 +31,6 @@ function MyBike() {
   const [ bike, setBike ] = useState<IBike[]>([]);
   // id params
   const { id } = useParams<{ id: string }>();
-  // history
-  let history = useHistory();
-
-
-  // function: back to prev page
-  const handlePageBack = () => {
-    history.goBack();
-  }
 
   // api call to get bikes
   useEffect( () => {
@@ -55,22 +48,18 @@ function MyBike() {
   }, [id])
 
   return (
-
     <>
       {/* utility bar: ArrowBackBtn & tools btn */}
       <ScUtils>
         <ScUtilsInner>
-          <div onClick={ handlePageBack }>
-            <ArrowBackBtn />
-          </div>
-          
+          <ArrowBackBtn/>
+          <MoreHorizBtn/>
         </ScUtilsInner>
       </ScUtils>
 
       {/* Send data to ItemDetail component */}
       <ItemDetail item={ bike } />
     </>
-    
   )
 }
 

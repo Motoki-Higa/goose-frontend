@@ -6,7 +6,11 @@ import {
   ScModal
 } from './styles';
 
-function Modal() {
+interface IProps {
+  children?: React.ReactNode;
+}
+
+function Modal(props: IProps) {
   // init context to use
   const { isModal, handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm } = useContext(FormContext);
@@ -21,7 +25,9 @@ function Modal() {
     <>
       {
         isModal ? 
-        <ScModal onClick={ closeModal }></ScModal>
+        <ScModal onClick={ closeModal }>
+          { props.children }
+        </ScModal>
         :
         null
       }

@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import config from './../../config';
+
+// contexts
+import { CurrentItemIdContext } from '../../context/CurrentItemIdContext';
 
 // components
 import ItemDetail from './../../components/ItemDetail';
@@ -15,6 +18,7 @@ import {
 } from './styles';
 
 function MyBike() {
+  
 
   interface IBike {
     name: string;
@@ -29,6 +33,8 @@ function MyBike() {
 
   // state : mybikes
   const [ bike, setBike ] = useState<IBike[]>([]);
+  // currentItem context
+  const { handleCurrentItemId } = useContext(CurrentItemIdContext);
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -42,6 +48,7 @@ function MyBike() {
         .then( (response) => {
           // console.log(response.data);
           setBike(response.data);
+          handleCurrentItemId(id);
         });
 
     })()
@@ -52,8 +59,8 @@ function MyBike() {
       {/* utility bar: ArrowBackBtn & tools btn */}
       <ScUtils>
         <ScUtilsInner>
-          <ArrowBackBtn/>
-          <MoreHorizBtn/>
+          <ArrowBackBtn />
+          <MoreHorizBtn />
         </ScUtilsInner>
       </ScUtils>
 

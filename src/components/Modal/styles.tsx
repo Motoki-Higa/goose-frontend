@@ -5,9 +5,10 @@ interface Props {
 }
 
 const ScModal = styled.div<Props>`
-  position: absolute;
+  position: fixed;
+  display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   top: 0;
   left: 0;
   transition: all 0.3s ease;

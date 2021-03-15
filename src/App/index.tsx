@@ -22,6 +22,7 @@ import Form from '../components/Form';
 import { UserProvider } from '../context/UserContext';
 import { ModalProvider } from '../context/ModalContext';
 import { FormProvider } from '../context/FormContext';
+import { CurrentItemIdProvider } from '../context/CurrentItemIdContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -33,42 +34,48 @@ import {
 
 
 
+
 function App() {
   return (
     <Router>
       <GlobalStyle />
       <UserProvider>
-        <ModalProvider>
-          <FormProvider>
+        <CurrentItemIdProvider>
+          <ModalProvider>
+            <FormProvider>
 
-            <div className="App">
-              {/* modal */}
-              <Modal></Modal>
-              <Form></Form>
+              <div className="App">
+                {/* modal */}
+                
+                  <Modal>
+                    <Form></Form>
+                  </Modal>
+                
+                
+                {/* header */}
+                <Header></Header>
 
-              {/* header */}
-              <Header></Header>
+                {/* nav */}
+                <Nav></Nav>
+                
+                {/* body */}
+                <div className="AppInner">
+                  <Switch>
+                    <Route exact path="/" component={ Home } />
+                    <Route path="/signup" component={ SignUp } />
+                    <Route path="/signin" component={ SignIn } />
+                    <Route path="/signout" component={ SignOut } />
+                    <PrivateRoute exact path="/mybikes" component={ MyBikes } />
+                    <PrivateRoute path="/mybikes/:id" component={ MyBike } />
+                    <PrivateRoute path="/authenticated" component={ Authenticated } />
+                  </Switch>
+                </div>
 
-              {/* nav */}
-              <Nav></Nav>
-              
-              {/* body */}
-              <div className="AppInner">
-                <Switch>
-                  <Route exact path="/" component={ Home } />
-                  <Route path="/signup" component={ SignUp } />
-                  <Route path="/signin" component={ SignIn } />
-                  <Route path="/signout" component={ SignOut } />
-                  <PrivateRoute exact path="/mybikes" component={ MyBikes } />
-                  <PrivateRoute path="/mybikes/:id" component={ MyBike } />
-                  <PrivateRoute path="/authenticated" component={ Authenticated } />
-                </Switch>
               </div>
 
-            </div>
-
-          </FormProvider>
-        </ModalProvider>
+            </FormProvider>
+          </ModalProvider>
+        </CurrentItemIdProvider>
       </UserProvider>
     </Router>
   );

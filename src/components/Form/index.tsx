@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { FormContext } from '../../context/FormContext';
 
 import AddBike from './AddBike';
+import DeleteBike from './DeleteBike';
 
 function Form() {
   // destructure context to use
@@ -9,7 +10,8 @@ function Form() {
 
   // store forms in object
   const forms: any = {
-    'AddBike': AddBike
+    'AddBike': AddBike,
+    'DeleteBike': DeleteBike,
   };
 
   const selectForm = (targetFrom: string) => {

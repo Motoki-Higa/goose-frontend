@@ -69,13 +69,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .formPanel--modal {
-    position: absolute;
+    position: relative;
     width: 90%;
     max-width: 700px;
     max-height: 80%;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    margin: auto;
     overflow-y: scroll;
     z-index: 100;
   }

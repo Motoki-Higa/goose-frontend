@@ -5,6 +5,7 @@ import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
 import { HighlightOff } from '@material-ui/icons';
 
+// contexts
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 
@@ -95,7 +96,7 @@ function AddBike(){
       })
         .then( response => {
           console.log(response);
-          setDetectAnyFormSubmit(formState);
+          setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
           handleCloseModal();
           handleCloseForm();
         })

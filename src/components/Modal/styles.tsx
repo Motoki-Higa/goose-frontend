@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 
-interface Props {
-  onClick: (e: Event) => void;
-}
 
-const ScModal = styled.div<Props>`
+const ScModal = styled.div`
   position: fixed;
   display: flex;
   width: 100%;
@@ -16,6 +13,15 @@ const ScModal = styled.div<Props>`
   z-index: 99;
 `
 
+const ScModalInner = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`
+
 export {
-  ScModal
+  ScModal,
+  ScModalInner
 };

@@ -3,7 +3,8 @@ import { ModalContext } from '../../context/ModalContext';
 import { FormContext } from '../../context/FormContext';
 
 import {
-  ScModal
+  ScModal,
+  ScModalInner
 } from './styles';
 
 interface IProps {
@@ -25,7 +26,8 @@ function Modal(props: IProps) {
     <>
       {
         isModal ? 
-        <ScModal onClick={ closeModal }>
+        <ScModal>
+          <ScModalInner onClick={ closeModal } />
           { props.children }
         </ScModal>
         :

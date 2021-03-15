@@ -46,11 +46,9 @@ function App() {
 
               <div className="App">
                 {/* modal */}
-                
-                  <Modal>
-                    <Form></Form>
-                  </Modal>
-                
+                <Modal>
+                  <Form></Form>
+                </Modal>
                 
                 {/* header */}
                 <Header></Header>

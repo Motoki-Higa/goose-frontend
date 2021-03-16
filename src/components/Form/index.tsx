@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { FormContext } from '../../context/FormContext';
 
 import AddBike from './AddBike';
+import EditBike from './EditBike';
 import DeleteBike from './DeleteBike';
 
 function Form() {
@@ -11,9 +12,11 @@ function Form() {
   // store forms in object
   const forms: any = {
     'AddBike': AddBike,
+    'EditBike': EditBike,
     'DeleteBike': DeleteBike,
   };
 
+  // this returns a form component
   const selectForm = (targetFrom: string) => {
     let SelectedForm = forms[targetFrom];
 
@@ -22,7 +25,7 @@ function Form() {
 
   return (
     <>
-      {
+      { // condition: no form or selected form
         formName === '' ?
         null
         :

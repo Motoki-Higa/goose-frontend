@@ -5,22 +5,22 @@ import axios from 'axios';
 import config from './../../../config';
 
 // contexts
-import { CurrentItemIdContext } from '../../../context/CurrentItemIdContext';
+import { CurrentItemContext } from '../../../context/CurrentItemContext';
 
 
 function DeleteBike(props: any){
   // init context
-  const { currentItemId } = useContext(CurrentItemIdContext);
+  const { currentItem } = useContext(CurrentItemContext);
 
   // init history
   let history = useHistory();
 
   // delete item and go back to list page
   const handleDelete = () => {
-    console.log('Delete this item? : ' + currentItemId);
-
-    const id = currentItemId;
+    const id = currentItem[0]._id;
     const url = config.apiBaseUrl + '/mybikes/' + id;
+
+    console.log('Delete this item? : ' + id);
 
     axios.delete(url)
       .then( (response) => {

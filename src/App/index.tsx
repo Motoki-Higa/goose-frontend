@@ -22,7 +22,7 @@ import Form from '../components/Form';
 import { UserProvider } from '../context/UserContext';
 import { ModalProvider } from '../context/ModalContext';
 import { FormProvider } from '../context/FormContext';
-import { CurrentItemIdProvider } from '../context/CurrentItemIdContext';
+import { CurrentItemProvider } from '../context/CurrentItemContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -40,7 +40,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <UserProvider>
-        <CurrentItemIdProvider>
+        <CurrentItemProvider>
           <ModalProvider>
             <FormProvider>
 
@@ -73,7 +73,7 @@ function App() {
 
             </FormProvider>
           </ModalProvider>
-        </CurrentItemIdProvider>
+        </CurrentItemProvider>
       </UserProvider>
     </Router>
   );

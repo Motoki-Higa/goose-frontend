@@ -20,12 +20,12 @@ function MoreHorizBtn() {
 
   // init context to use
   const { handleModal, handleCloseModal } = useContext(ModalContext);
-  const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
+  const { handleSetForm, handleCloseForm } = useContext(FormContext);
 
-  // delete onClick event
-  const handleModalForm = () => {
+  // onClick event: setting which form to use
+  const handleModalForm = (formName: string) => {
     handleModal();
-    handleSetForm('DeleteBike');
+    handleSetForm(formName);
   }
 
   // close the modal and form on browser back
@@ -64,8 +64,8 @@ function MoreHorizBtn() {
         menu ?
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
-            <li>Edit</li>
-            <li onClick={ handleModalForm }>Delete</li>
+            <li onClick={ () => handleModalForm('EditBike') }>Edit</li>
+            <li onClick={ () => handleModalForm('DeleteBike') }>Delete</li>
           </ul>
         </ScMoreOptionTable>
         :

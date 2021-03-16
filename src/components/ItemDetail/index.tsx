@@ -8,6 +8,7 @@ import {
   ScItemDetailBrand,
   ScItemDetailTxtArea,
   ScItemDetailRow,
+  ScItemDetailCol,
   ScItemDetailDataKey,
   ScItemDetailDataVal,
 } from './styles';
@@ -31,10 +32,10 @@ function ItemDetail(props: any) {
             <ScItemDetailDataVal>{ item.builtby }</ScItemDetailDataVal>
           </ScItemDetailRow>
 
-          <ScItemDetailRow>
+          <ScItemDetailCol>
             <ScItemDetailDataKey>Description</ScItemDetailDataKey>
             <ScItemDetailDataVal>{ item.desc }</ScItemDetailDataVal>
-          </ScItemDetailRow>
+          </ScItemDetailCol>
 
           <ScItemDetailRow>
             <ScItemDetailDataKey>Components</ScItemDetailDataKey>

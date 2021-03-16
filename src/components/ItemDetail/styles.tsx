@@ -59,11 +59,26 @@ const ScItemDetailRow = styled.div`
   }
 `
 
+const ScItemDetailCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 12px 8px;
+
+  &:not(:last-of-type){
+    border-bottom: 1px solid ${ props => props.theme.colors.lightGrey };
+  }
+
+  div:not(:first-of-type){
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+`
+
 const ScItemDetailDataKey = styled.div`
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.05rem;
-  color: ${ props => props.theme.colors.black };
+  color: ${ props => props.theme.colors.blue };
 
   @media (max-width: 768px) {
     font-size: 0.75rem;
@@ -88,6 +103,7 @@ export {
   ScItemDetailBrand,
   ScItemDetailTxtArea,
   ScItemDetailRow,
+  ScItemDetailCol,
   ScItemDetailDataKey,
   ScItemDetailDataVal
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import config from './../../config';
 
 // contexts
-import { CurrentItemIdContext } from '../../context/CurrentItemIdContext';
+import { CurrentItemContext } from '../../context/CurrentItemContext';
 
 // components
 import ItemDetail from './../../components/ItemDetail';
@@ -19,8 +19,8 @@ import {
 
 function MyBike() {
   
-
   interface IBike {
+    _id: string;
     name: string;
     brand: string;
     builtby: string;
@@ -34,7 +34,7 @@ function MyBike() {
   // state : mybikes
   const [ bike, setBike ] = useState<IBike[]>([]);
   // currentItem context
-  const { handleCurrentItemId } = useContext(CurrentItemIdContext);
+  const { handleCurrentItem } = useContext(CurrentItemContext);
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -46,9 +46,9 @@ function MyBike() {
 
       await axios.get(url)
         .then( (response) => {
-          // console.log(response.data);
+          console.log(response.data);
           setBike(response.data);
-          handleCurrentItemId(id);
+          handleCurrentItem(response.data);
         });
 
     })()

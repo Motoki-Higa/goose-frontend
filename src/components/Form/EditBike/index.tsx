@@ -9,8 +9,7 @@ import { HighlightOff } from '@material-ui/icons';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 
-
-function AddBike(){
+function EditBike(){
   // init context to use
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
@@ -22,7 +21,6 @@ function AddBike(){
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
   const [ images, setImages ] = useState<FileList | any>([]);
-  
 
   // Store image URIs to its state for preview purpose
   const readURI = (event: any) => {
@@ -169,6 +167,7 @@ function AddBike(){
                 name="name"
                 label="Name" 
                 variant="filled"
+                defaultValue="default value is here"
                 helperText={ errors.name ? errors.name.message : null}
                 error={ !!errors.name }
                 />
@@ -232,8 +231,6 @@ function AddBike(){
           defaultValue=""
         />
 
-        
-
         {/* submit */}
         <div className="formBtnWrap">
           <Button variant="contained" color="primary" type="submit" >Submit</Button>
@@ -244,4 +241,4 @@ function AddBike(){
   )
 }
 
-export default AddBike;
+export default EditBike;

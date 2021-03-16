@@ -79,9 +79,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .formTitle {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     font-weight: 500;
     color: #333;
+    letter-spacing: 0.05rem;
     text-align: center;
 
     @media (max-width: 768px) {
@@ -95,10 +96,6 @@ const GlobalStyle = createGlobalStyle`
 
   .formInputWrap {
     width: 100%;
-    margin-top: 12px;
-  }
-
-  .formImageAddBtnWrap {
     margin-top: 12px;
   }
 
@@ -122,6 +119,22 @@ const GlobalStyle = createGlobalStyle`
         font-size: 0.875rem;
       }
     }
+  }
+
+  .formCurrentImgArea__ttl {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.025rem;
+    margin-top: 24px;
+    color: ${ props => props.theme.colors.black };
+  }
+
+  .formCurrentImgArea__inner {
+    display: flex;
+    overflow-x: scroll;
+    margin-top: 12px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid ${ props => props.theme.colors.black };
   }
 
   .formPreviewImgArea {

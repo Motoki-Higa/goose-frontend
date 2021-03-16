@@ -17,7 +17,7 @@ function DeleteBike(props: any){
 
   // delete item and go back to list page
   const handleDelete = () => {
-    const id = currentItem[0]._id;
+    const id = currentItem._id;
     const url = config.apiBaseUrl + '/mybikes/' + id;
 
     console.log('Delete this item? : ' + id);

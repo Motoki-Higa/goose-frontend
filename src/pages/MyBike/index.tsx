@@ -34,7 +34,7 @@ function MyBike() {
   // state : mybikes
   const [ bike, setBike ] = useState<IBike[]>([]);
   // currentItem context
-  const { handleCurrentItem } = useContext(CurrentItemContext);
+  const { handleSetCurrentItem } = useContext(CurrentItemContext);
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -48,7 +48,7 @@ function MyBike() {
         .then( (response) => {
           console.log(response.data);
           setBike(response.data);
-          handleCurrentItem(response.data);
+          handleSetCurrentItem(response.data);
         });
 
     })()

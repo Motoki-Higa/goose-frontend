@@ -7,8 +7,8 @@ export const CurrentItemProvider: React.FC = (props) => {
   const [ currentItem, setCurrentItem ] = useState('');
 
   // function to be used for onClick
-  const handleCurrentItem = (item: any) => {
-    setCurrentItem(item);
+  const handleSetCurrentItem = (item: any) => {
+    setCurrentItem(item[0]);
     console.log('current bike id is: ' + item[0]._id);
   }
 
@@ -19,7 +19,7 @@ export const CurrentItemProvider: React.FC = (props) => {
   // value to pass to the provider
   const value = {
     currentItem,
-    handleCurrentItem,
+    handleSetCurrentItem,
     handleClearCurrentItem
   };
 

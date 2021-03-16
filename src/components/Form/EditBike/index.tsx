@@ -5,12 +5,17 @@ import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
 import { HighlightOff } from '@material-ui/icons';
 
+// components
+import CurrentImages from './CurrentImages';
+
 // contexts
+import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 
 function EditBike(){
   // init context to use
+  const { currentItem } = useContext(CurrentItemContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
 
@@ -21,6 +26,7 @@ function EditBike(){
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
   const [ images, setImages ] = useState<FileList | any>([]);
+
 
   // Store image URIs to its state for preview purpose
   const readURI = (event: any) => {
@@ -100,14 +106,18 @@ function EditBike(){
         })
       
     } catch(err) {
-
+      console.log(err)
     }
   };
 
   return (
     <div className="formPanel formPanel--modal">
-      <div className="formTitle">Add a new bike</div>
+      <div className="formTitle">Edit your bike</div>
+      
+      {/* form 1: this handles deleting current images */}
+      <CurrentImages></CurrentImages>
 
+      {/* form 2: this handles new entries include images */}
       <form 
         className="form" 
         onSubmit={ handleSubmit(onSubmit) }>
@@ -167,14 +177,14 @@ function EditBike(){
                 name="name"
                 label="Name" 
                 variant="filled"
-                defaultValue="default value is here"
+                defaultValue={ currentItem.name }
                 helperText={ errors.name ? errors.name.message : null}
                 error={ !!errors.name }
                 />
             </div>
           }
           control={control}
-          defaultValue=""
+          defaultValue={ currentItem.name }
           rules={{
             required: 'Required',
           }}
@@ -189,11 +199,12 @@ function EditBike(){
                 name="brand"
                 label="Brand" 
                 variant="filled"
+                defaultValue={ currentItem.brand }
                 />
             </div>
           }
           control={control}
-          defaultValue=""
+          defaultValue={ currentItem.brand }
         />
 
         <Controller 
@@ -205,11 +216,12 @@ function EditBike(){
                 name="builtby"
                 label="Built by" 
                 variant="filled"
+                defaultValue={ currentItem.builtby }
                 />
             </div>
           }
           control={control}
-          defaultValue=""
+          defaultValue={ currentItem.builtby }
         />
 
         <Controller 
@@ -224,11 +236,12 @@ function EditBike(){
                 rowsMax={4}
                 label="Description" 
                 variant="filled"
+                defaultValue={ currentItem.desc }
                 />
             </div>
           }
           control={control}
-          defaultValue=""
+          defaultValue={ currentItem.desc }
         />
 
         {/* submit */}

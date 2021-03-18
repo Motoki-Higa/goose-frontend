@@ -1,8 +1,8 @@
 .embla {
   position: relative;
-  width: calc(100% + 60px);
+  width: calc(100% + 40px);
   margin-top: 16px;
-  margin-left: -30px;
+  margin-left: -20px;
 }
 
 @media (max-width: 768px) {
@@ -36,7 +36,7 @@
 
 .embla__slide {
   padding-left: 4px;
-  min-width: 92%;
+  min-width: 93%;
   position: relative;
 }
 
@@ -71,8 +71,10 @@
 }
 
 .embla--thumb {
-  padding-top: 0;
+  width: 100%;
   margin-top: 8px;
+  margin-left: 0;
+  padding-top: 0;
 }
 
 .embla__container--thumb {
@@ -86,24 +88,39 @@
 }
 
 .embla__slide__inner--thumb {
-  touch-action: manipulation;
-  cursor: pointer;
-  border: 0;
-  outline: 0;
-  margin: 0;
-  padding: 0;
-  height: 100px;
-  width: 100%;
-  background-color: transparent;
   position: relative;
   display: block;
-  border-radius: 4px;
+  height: 100px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
   overflow: hidden;
+}
+
+.embla__slide__thumbnail {
+  position: absolute;
+  opacity: 0.2;
+  top: 0;
+  bottom: 0;
+  left: -10000%;
+  right: -10000%;
+  margin: auto;
+  min-width: 1000%;
+  min-height: 1000%;
+  max-width: none;
+  transform: scale(0.1);
+  transition: opacity 0.2s;
 }
 
 @media (max-width: 768px) {
   .embla__slide__inner--thumb {
-    height: 50px;
+    height: auto;
+    padding-top: 70%;
   }
 }
 

@@ -5,6 +5,7 @@ import config from './../../config';
 
 // contexts
 import { CurrentItemContext } from '../../context/CurrentItemContext';
+import { FormContext } from '../../context/FormContext';
 
 // components
 import ItemDetail from './../../components/ItemDetail';
@@ -18,7 +19,7 @@ import {
 } from './styles';
 
 function MyBike() {
-  
+
   interface IBike {
     _id: string;
     name: string;
@@ -33,8 +34,9 @@ function MyBike() {
 
   // state : mybikes
   const [ bike, setBike ] = useState<IBike[]>([]);
-  // currentItem context
+  // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
+  const { detectAnyFormSubmit } = useContext(FormContext);
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -52,7 +54,7 @@ function MyBike() {
         });
 
     })()
-  }, [id])
+  }, [id, detectAnyFormSubmit])
 
   return (
     <>

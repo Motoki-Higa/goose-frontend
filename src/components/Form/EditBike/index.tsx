@@ -21,6 +21,7 @@ function EditBike(){
 
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
+  const { isDirty } = formState;
 
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
@@ -32,8 +33,6 @@ function EditBike(){
   const readURI = (event: any) => {
     // Get files and store in array
     const files = [...event.target.files];
-
-    // console.log(previewArr);
 
     // Map each file to a promise that resolves to an array of image URI's
     Promise.all(files.map( file => {
@@ -129,7 +128,7 @@ function EditBike(){
               variant="contained" 
               component="span"
               size="small">
-                Add Images
+                Add more Images
             </Button>
           </label>
           <input 
@@ -149,12 +148,12 @@ function EditBike(){
                 return (
                   <div 
                     className="formPreviewImg"
-                    key={index} >
-
-                    <img 
-                      className="photo-uploaded" 
-                      src={imageURI} 
-                      alt="uploaded" />
+                    key={index}
+                    style={{
+                      backgroundImage: `url( ${ imageURI } )`,
+                      backgroundSize: `cover`,
+                      backgroundPosition: `center`
+                      }} >
 
                     <HighlightOff 
                       onClick={ () => handleRemoveImage(index) }
@@ -232,7 +231,7 @@ function EditBike(){
                 id="desc" 
                 name="desc"
                 multiline
-                rows={4}
+                rows={3}
                 rowsMax={4}
                 label="Description" 
                 variant="filled"
@@ -246,7 +245,11 @@ function EditBike(){
 
         {/* submit */}
         <div className="formBtnWrap">
-          <Button variant="contained" color="primary" type="submit" >Submit</Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            type="submit" 
+            disabled={ !isDirty }>Update</Button>
         </div>
 
       </form>

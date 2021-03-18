@@ -141,12 +141,12 @@ function AddBike(){
                 return (
                   <div 
                     className="formPreviewImg"
-                    key={index} >
-
-                    <img 
-                      className="photo-uploaded" 
-                      src={imageURI} 
-                      alt="uploaded" />
+                    key={index}
+                    style={{
+                      backgroundImage: `url( ${ imageURI } )`,
+                      backgroundSize: `cover`,
+                      backgroundPosition: `center`
+                      }} >
 
                     <HighlightOff 
                       onClick={ () => handleRemoveImage(index) }
@@ -236,7 +236,10 @@ function AddBike(){
 
         {/* submit */}
         <div className="formBtnWrap">
-          <Button variant="contained" color="primary" type="submit" >Submit</Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            type="submit" >Submit</Button>
         </div>
 
       </form>

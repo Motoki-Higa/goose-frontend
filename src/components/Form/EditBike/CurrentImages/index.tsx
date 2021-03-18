@@ -1,29 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import config from './../../../../config';
-import { HighlightOff } from '@material-ui/icons';
+import { DeleteForever } from '@material-ui/icons';
 
 // contexts
 import { CurrentItemContext } from '../../../../context/CurrentItemContext';
+import { FormContext } from '../../../../context/FormContext';
 
 function CurrentImages() {
-  // init context to use
+  // context
   const { currentItem } = useContext(CurrentItemContext);
+  const { setDetectAnyFormSubmit } = useContext(FormContext);
 
-  // delete an image from current image stack
+  // state
+  const [ previewImages, setPreviewImages] = useState([]);
+
+  // delete an image from current image stack from DB and update the component state
   const handleDeleteImage = async (imageKey: string) => {
     try {
       // endpoint
       const id = currentItem._id;
-      const url = config.apiBaseUrl + '/mybikes/edit/' + id;
+      const url = config.apiBaseUrl + '/mybikes/' + id + '/edit/image';
 
       // send request
       await axios.post(url, {'key': imageKey})
         .then( response => {
           console.log(response);
-          // setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
-          // handleCloseModal();
-          // handleCloseForm();
+          // update state, and trigger the component to render
+          setPreviewImages(previewImages.filter( item => item['key'] !== imageKey));
+          setDetectAnyFormSubmit(true);
+          setDetectAnyFormSubmit(false);
         })
       
     } catch(err) {
@@ -31,26 +37,30 @@ function CurrentImages() {
     }
   }
 
+  useEffect(() => {
+    setPreviewImages(currentItem.images)
+  }, [currentItem.images])
+
   return (
     <>
     {
-      currentItem.images.length !== 0 ? 
+      previewImages.length !== 0 ? 
       <div className="formCurrentImgArea">
         <div className="formCurrentImgArea__ttl">Current images</div>
         <div className="formCurrentImgArea__inner">
         {
-          currentItem.images.map( (image: any, index: number) => {
+          previewImages.map( (image: any, index: number) => {
             return (
               <div 
                 className="formPreviewImg"
-                key={index} >
+                key={index}
+                style={{
+                  backgroundImage: `url( ${ image.location } )`,
+                  backgroundSize: `cover`,
+                  backgroundPosition: `center`
+                  }} >
 
-                <img 
-                  className="photo-uploaded" 
-                  src={image.location} 
-                  alt="uploaded" />
-
-                <HighlightOff onClick={ () => handleDeleteImage(image.key) } />
+                <DeleteForever onClick={ () => handleDeleteImage(image.key) } />
               </div>
             )
           })    

@@ -65,6 +65,7 @@ const GlobalStyle = createGlobalStyle`
 
     @media (max-width: 768px) {
       margin-top: 48px;
+      padding: 24px 12px;
     }
   }
 
@@ -72,7 +73,7 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
     width: 90%;
     max-width: 700px;
-    max-height: 80%;
+    max-height: 83%;
     margin: auto;
     overflow-y: scroll;
     z-index: 100;
@@ -121,20 +122,25 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .formCurrentImgArea {
+    margin-top: 20px;
+    padding: 12px 12px 8px;
+    border-radius: 4px;
+    border: 1px solid ${ props => props.theme.colors.pink };
+  }
+
   .formCurrentImgArea__ttl {
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.025rem;
-    margin-top: 24px;
-    color: ${ props => props.theme.colors.black };
+    color: ${ props => props.theme.colors.pink };
   }
 
   .formCurrentImgArea__inner {
     display: flex;
     overflow-x: scroll;
     margin-top: 12px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid ${ props => props.theme.colors.black };
+    padding-bottom: 4px
   }
 
   .formPreviewImgArea {
@@ -147,7 +153,9 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
     max-width: 33.333%;
     min-width: 30%;
+    height: auto;
     margin: 1%;
+    padding-top: 20%;
     border-radius: 5px;
     overflow: hidden;
 
@@ -162,6 +170,7 @@ const GlobalStyle = createGlobalStyle`
       right: 0;
       bottom: 0;
       margin: 0 6px 6px 0;
+      padding: 2px;
       border-radius: 50%;
       background-color: ${ props => props.theme.colors.pink };
     }

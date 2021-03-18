@@ -26,11 +26,21 @@ function ItemList(props: any) {
               
               <ScItemCardName>{item.name}</ScItemCardName>
               <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
-              <ScItemCardImg style={{
-                backgroundImage: `url( ${item.images[0].location} )`,
-                backgroundSize: `cover`,
-                backgroundPosition: `center`
-                }}></ScItemCardImg>
+
+              { // images
+                item.images.length > 0 ?
+
+                <ScItemCardImg style={{
+                  backgroundImage: `url( ${item.images[0].location} )`,
+                  backgroundSize: `cover`,
+                  backgroundPosition: `center`
+                  }}></ScItemCardImg>
+                
+                :
+                <ScItemCardImg style={{
+                  background: `linear-gradient(135deg, rgba(234,129,218,1) 0%, rgba(98,165,181,1) 100%)`
+                  }}></ScItemCardImg>
+              }
                 
             </NavLink>
           </ScItemCard>

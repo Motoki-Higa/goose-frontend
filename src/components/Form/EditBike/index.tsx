@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
@@ -10,19 +11,15 @@ import CurrentImages from './CurrentImages';
 
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
-import { ModalContext } from '../../../context/ModalContext';
-import { FormContext } from '../../../context/FormContext';
 
 function EditBike(){
   // init context to use
   const { currentItem } = useContext(CurrentItemContext);
-  const { handleCloseModal } = useContext(ModalContext);
-  const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
-
+  // init history
+  let history = useHistory();
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
-
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
@@ -77,7 +74,8 @@ function EditBike(){
   const onSubmit = async (data: any) => {
     try {
       // endpoint
-      const url = config.apiBaseUrl + '/mybikes';
+      const id = currentItem._id;
+      const url = config.apiBaseUrl + '/mybikes/' + id + '/edit';
 
       // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
       const formData: any = new FormData();
@@ -99,9 +97,8 @@ function EditBike(){
       })
         .then( response => {
           console.log(response);
-          setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
-          handleCloseModal();
-          handleCloseForm();
+          // reloading the page to restart the embla carousel as embla's reInit() function on useEffect won't work for some reason
+          history.go(0);
         })
       
     } catch(err) {

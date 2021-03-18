@@ -7,7 +7,9 @@
 
 @media (max-width: 768px) {
   .embla {
+    width: calc(100% + 32px);
     margin-top: 8px;
+    margin-left: -16px;
   }
 }
 

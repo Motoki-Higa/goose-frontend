@@ -25,7 +25,7 @@ function CurrentImages() {
       // send request
       await axios.post(url, {'key': imageKey})
         .then( response => {
-          console.log(response);
+          // console.log(response);
           // update state, and trigger the component to render
           setPreviewImages(previewImages.filter( item => item['key'] !== imageKey));
           setDetectAnyFormSubmit(true);

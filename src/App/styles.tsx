@@ -71,9 +71,9 @@ const GlobalStyle = createGlobalStyle`
 
   .formPanel--modal {
     position: relative;
-    width: 90%;
+    width: 94%;
     max-width: 700px;
-    max-height: 83%;
+    max-height: 90%;
     margin: auto;
     overflow-y: scroll;
     z-index: 100;
@@ -129,6 +129,13 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid ${ props => props.theme.colors.pink };
   }
 
+  .formEditArea {
+    margin-top: 20px;
+    padding: 12px 12px 16px;
+    border-radius: 4px;
+    border: 1px solid ${ props => props.theme.colors.pink };
+  }
+  
   .formCurrentImgArea__ttl {
     font-size: 0.875rem;
     font-weight: 500;
@@ -152,12 +159,17 @@ const GlobalStyle = createGlobalStyle`
   .formPreviewImg {
     position: relative;
     max-width: 33.333%;
-    min-width: 30%;
+    min-width: 20%;
     height: auto;
     margin: 1%;
-    padding-top: 20%;
+    padding-top: 14%;
     border-radius: 5px;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      min-width: 30%;
+      padding-top: 20%;
+    }
 
     img {
       width: 100%;
@@ -172,6 +184,7 @@ const GlobalStyle = createGlobalStyle`
       margin: 0 6px 6px 0;
       padding: 2px;
       border-radius: 50%;
+      cursor: pointer;
       background-color: ${ props => props.theme.colors.pink };
     }
   }

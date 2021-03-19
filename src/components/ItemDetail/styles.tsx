@@ -32,12 +32,12 @@ const ScItemDetailBrand = styled.div`
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.025rem;
-  margin-top: 6px;
+  margin-top: 8px;
   color: ${ props => props.theme.colors.darkGrey };
 
   @media (max-width: 768px) {
     font-size: 0.625rem;
-    margin-top: 2px;
+    margin-top: 4px;
   }
 `
 

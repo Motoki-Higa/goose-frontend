@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
@@ -11,15 +10,22 @@ import CurrentImages from './CurrentImages';
 
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
+import { ModalContext } from '../../../context/ModalContext';
+import { FormContext } from '../../../context/FormContext';
 
 function EditBike(){
   // init context to use
   const { currentItem } = useContext(CurrentItemContext);
+  const { handleCloseModal } = useContext(ModalContext);
+  const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
+
   // init history
-  let history = useHistory();
+  // let history = useHistory();
+
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
+
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
@@ -96,9 +102,10 @@ function EditBike(){
         },
       })
         .then( response => {
-          console.log(response);
-          // reloading the page to restart the embla carousel as embla's reInit() function on useEffect won't work for some reason
-          history.go(0);
+          // console.log(response);
+          setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
+          handleCloseModal();
+          handleCloseForm();
         })
       
     } catch(err) {
@@ -114,142 +121,146 @@ function EditBike(){
       <CurrentImages></CurrentImages>
 
       {/* form 2: this handles new entries include images */}
-      <form 
-        className="form" 
-        onSubmit={ handleSubmit(onSubmit) }>
+      <div className="formEditArea">
+        <div className="formCurrentImgArea__ttl">Edit fields / Add images</div>
+        <form 
+          className="form" 
+          onSubmit={ handleSubmit(onSubmit) }>
 
-        {/* add image button */}
-        <div className="formImageAddBtnWrap">
-          <label htmlFor="image" >
+          {/* add image button */}
+          <div className="formImageAddBtnWrap">
+            <label htmlFor="image" >
+              <Button 
+                variant="contained" 
+                component="span"
+                size="small">
+                  Add more Images
+              </Button>
+            </label>
+            <input 
+              style={{ display: "none" }}
+              ref={ register } 
+              type="file" 
+              id="image" 
+              name="image" 
+              onChange={ handleChange } />
+          </div>
+
+          { // show preview images
+            images.length !== 0 ? 
+            <div className="formPreviewImgArea">
+              {
+                previewArr.map( (imageURI: any, index: any) => {
+                  return (
+                    <div 
+                      className="formPreviewImg"
+                      key={index}
+                      style={{
+                        backgroundImage: `url( ${ imageURI } )`,
+                        backgroundSize: `cover`,
+                        backgroundPosition: `center`
+                        }} >
+
+                      <HighlightOff 
+                        onClick={ () => handleRemoveImage(index) }
+                      />
+                    </div>
+                  )
+                })    
+              } 
+            </div>
+            :
+            null
+          }
+
+          <Controller 
+            name="name"
+            as={
+              <div className="formInputWrap">
+                <TextField 
+                  id="name" 
+                  name="name"
+                  label="Name" 
+                  variant="filled"
+                  defaultValue={ currentItem.name }
+                  helperText={ errors.name ? errors.name.message : null}
+                  error={ !!errors.name }
+                  />
+              </div>
+            }
+            control={control}
+            defaultValue={ currentItem.name }
+            rules={{
+              required: 'Required',
+            }}
+          />
+
+          <Controller 
+            name="brand"
+            as={
+              <div className="formInputWrap">
+                <TextField 
+                  id="brand" 
+                  name="brand"
+                  label="Brand" 
+                  variant="filled"
+                  defaultValue={ currentItem.brand }
+                  />
+              </div>
+            }
+            control={control}
+            defaultValue={ currentItem.brand }
+          />
+
+          <Controller 
+            name="builtby"
+            as={
+              <div className="formInputWrap">
+                <TextField 
+                  id="builtby" 
+                  name="builtby"
+                  label="Built by" 
+                  variant="filled"
+                  defaultValue={ currentItem.builtby }
+                  />
+              </div>
+            }
+            control={control}
+            defaultValue={ currentItem.builtby }
+          />
+
+          <Controller 
+            name="desc"
+            as={
+              <div className="formInputWrap">
+                <TextField 
+                  id="desc" 
+                  name="desc"
+                  multiline
+                  rows={3}
+                  rowsMax={4}
+                  label="Description" 
+                  variant="filled"
+                  defaultValue={ currentItem.desc }
+                  />
+              </div>
+            }
+            control={control}
+            defaultValue={ currentItem.desc }
+          />
+
+          {/* submit */}
+          <div className="formBtnWrap">
             <Button 
               variant="contained" 
-              component="span"
-              size="small">
-                Add more Images
-            </Button>
-          </label>
-          <input 
-            style={{ display: "none" }}
-            ref={ register } 
-            type="file" 
-            id="image" 
-            name="image" 
-            onChange={ handleChange } />
-        </div>
-
-        { // show preview images
-          images.length !== 0 ? 
-          <div className="formPreviewImgArea">
-            {
-              previewArr.map( (imageURI: any, index: any) => {
-                return (
-                  <div 
-                    className="formPreviewImg"
-                    key={index}
-                    style={{
-                      backgroundImage: `url( ${ imageURI } )`,
-                      backgroundSize: `cover`,
-                      backgroundPosition: `center`
-                      }} >
-
-                    <HighlightOff 
-                      onClick={ () => handleRemoveImage(index) }
-                    />
-                  </div>
-                )
-              })    
-            } 
+              color="primary" 
+              type="submit" 
+              disabled={ !isDirty }>Update</Button>
           </div>
-          :
-          null
-        }
 
-        <Controller 
-          name="name"
-          as={
-            <div className="formInputWrap">
-              <TextField 
-                id="name" 
-                name="name"
-                label="Name" 
-                variant="filled"
-                defaultValue={ currentItem.name }
-                helperText={ errors.name ? errors.name.message : null}
-                error={ !!errors.name }
-                />
-            </div>
-          }
-          control={control}
-          defaultValue={ currentItem.name }
-          rules={{
-            required: 'Required',
-          }}
-        />
-
-        <Controller 
-          name="brand"
-          as={
-            <div className="formInputWrap">
-              <TextField 
-                id="brand" 
-                name="brand"
-                label="Brand" 
-                variant="filled"
-                defaultValue={ currentItem.brand }
-                />
-            </div>
-          }
-          control={control}
-          defaultValue={ currentItem.brand }
-        />
-
-        <Controller 
-          name="builtby"
-          as={
-            <div className="formInputWrap">
-              <TextField 
-                id="builtby" 
-                name="builtby"
-                label="Built by" 
-                variant="filled"
-                defaultValue={ currentItem.builtby }
-                />
-            </div>
-          }
-          control={control}
-          defaultValue={ currentItem.builtby }
-        />
-
-        <Controller 
-          name="desc"
-          as={
-            <div className="formInputWrap">
-              <TextField 
-                id="desc" 
-                name="desc"
-                multiline
-                rows={3}
-                rowsMax={4}
-                label="Description" 
-                variant="filled"
-                defaultValue={ currentItem.desc }
-                />
-            </div>
-          }
-          control={control}
-          defaultValue={ currentItem.desc }
-        />
-
-        {/* submit */}
-        <div className="formBtnWrap">
-          <Button 
-            variant="contained" 
-            color="primary" 
-            type="submit" 
-            disabled={ !isDirty }>Update</Button>
-        </div>
-
-      </form>
+        </form>
+      </div>
+      
     </div>
   )
 }

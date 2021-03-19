@@ -48,7 +48,7 @@ function MyBike() {
 
       await axios.get(url)
         .then( (response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setBike(response.data);
           handleSetCurrentItem(response.data);
         });

@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useEmblaCarousel } from "embla-carousel/react";
 import { Thumb } from "./EmblaCarouselThumb";
-
-// context
-import { FormContext } from '../../context/FormContext';
-
 import "./css/embla.css";
 
 const PARALLAX_FACTOR = 1.2;
 
 const EmblaCarousel = ({ slides }: any) => {
-  const { detectAnyFormSubmit } = useContext(FormContext);
-
   const [parallaxValues, setParallaxValues] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainViewportRef, embla] = useEmblaCarousel();
@@ -52,9 +46,12 @@ const EmblaCarousel = ({ slides }: any) => {
   }, [embla, onSelect, onScroll]);
 
   useEffect(() => {
-    if (!embla) return;
-    embla.reInit();
-  }, [detectAnyFormSubmit])
+    if (embla && emblaThumbs) {
+      embla.reInit();
+      emblaThumbs.reInit();
+    }
+    
+  }, [embla, slides])
 
 
   return (

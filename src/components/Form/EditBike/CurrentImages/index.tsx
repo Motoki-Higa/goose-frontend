@@ -6,11 +6,13 @@ import { DeleteForever } from '@material-ui/icons';
 // contexts
 import { CurrentItemContext } from '../../../../context/CurrentItemContext';
 import { FormContext } from '../../../../context/FormContext';
+import { NotificationContext } from '../../../../context/NotificationContext';
 
 function CurrentImages() {
   // context
   const { currentItem } = useContext(CurrentItemContext);
   const { setDetectAnyFormSubmit } = useContext(FormContext);
+  const { handleSetNotification } = useContext(NotificationContext);
 
   // state
   const [ previewImages, setPreviewImages] = useState([]);
@@ -25,11 +27,14 @@ function CurrentImages() {
       // send request
       await axios.post(url, {'key': imageKey})
         .then( response => {
-          // console.log(response);
+          console.log(response);
           // update state, and trigger the component to render
           setPreviewImages(previewImages.filter( item => item['key'] !== imageKey));
           setDetectAnyFormSubmit(true);
           setDetectAnyFormSubmit(); // *IMPORTANT reset to initial state after true
+
+          // notification
+          handleSetNotification(response.data.message);
         })
       
     } catch(err) {

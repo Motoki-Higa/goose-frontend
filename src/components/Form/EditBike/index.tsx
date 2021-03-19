@@ -105,6 +105,8 @@ function EditBike(){
           setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
           handleCloseModal();
           handleCloseForm();
+
+          // notification
           handleSetNotification(response.data.message);
         })
       

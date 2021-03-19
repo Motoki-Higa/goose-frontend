@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const keyFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+`
 
 const ScItemDetail = styled.div`
   position: relative;
@@ -7,6 +19,7 @@ const ScItemDetail = styled.div`
   padding: 20px 20px 40px;
   border-radius: 10px;
   overflow: hidden;
+  animation: ${ keyFadeIn } 0.3s ease-in;
   background-color: ${ props => props.theme.colors.white};
 
   @media (max-width: 768px) {

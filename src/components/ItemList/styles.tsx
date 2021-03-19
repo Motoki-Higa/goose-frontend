@@ -1,9 +1,21 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 
 interface IScItemCard {
   key: number;
 }
+
+const keyFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+`
 
 const ScItemList = styled.div`
   position: relative;
@@ -12,6 +24,7 @@ const ScItemList = styled.div`
   flex-wrap: wrap-reverse;
   justify-content: center;
   margin-top: 5px;
+  animation: ${ keyFadeIn } 0.5s ease-in;
 `
 
 const ScItemCard = styled.div<IScItemCard>`

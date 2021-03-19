@@ -43,7 +43,7 @@ const ScNotificationBanner = styled.div`
   animation: ${ keyFadeIn } 0.3s ease-in;
   box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
   background-color: #6CA3B8;
-  z-index: 3;
+  z-index: 101;
 
   &.fadeOut {
     animation: ${ keyFadeOut } 0.3s ease-in;

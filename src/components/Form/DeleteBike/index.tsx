@@ -6,11 +6,13 @@ import config from './../../../config';
 
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
+import { NotificationContext } from '../../../context/NotificationContext';
 
 
 function DeleteBike(props: any){
   // init context
   const { currentItem } = useContext(CurrentItemContext);
+  const { handleSetNotification } = useContext(NotificationContext);
 
   // init history
   let history = useHistory();
@@ -26,6 +28,9 @@ function DeleteBike(props: any){
       .then( (response) => {
         console.log(response.data);
         history.goBack(); // send user back to the list page
+
+        // notification
+        handleSetNotification(response.data.message);
       });
   }
 

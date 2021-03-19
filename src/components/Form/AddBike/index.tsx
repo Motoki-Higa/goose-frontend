@@ -8,12 +8,14 @@ import { HighlightOff } from '@material-ui/icons';
 // contexts
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
+import { NotificationContext } from '../../../context/NotificationContext';
 
 
 function AddBike(){
   // init context to use
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
+  const { handleSetNotification } = useContext(NotificationContext);
 
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
@@ -97,8 +99,14 @@ function AddBike(){
         .then( response => {
           console.log(response);
           setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
+          // reset after
+          setDetectAnyFormSubmit();
+          
           handleCloseModal();
           handleCloseForm();
+
+          // notification
+          handleSetNotification(response.data.message);
         })
       
     } catch(err) {

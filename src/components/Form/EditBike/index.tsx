@@ -12,15 +12,14 @@ import CurrentImages from './CurrentImages';
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
+import { NotificationContext } from '../../../context/NotificationContext';
 
 function EditBike(){
   // init context to use
   const { currentItem } = useContext(CurrentItemContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
-
-  // init history
-  // let history = useHistory();
+  const { handleSetNotification } = useContext(NotificationContext);
 
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
@@ -102,10 +101,11 @@ function EditBike(){
         },
       })
         .then( response => {
-          // console.log(response);
+          // console.log(response.data);
           setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
           handleCloseModal();
           handleCloseForm();
+          handleSetNotification(response.data.message);
         })
       
     } catch(err) {

@@ -19,7 +19,7 @@ function CurrentImages() {
   const handleDeleteImage = async (imageKey: string) => {
     try {
       // endpoint
-      const id = currentItem._id;
+      const id = await currentItem._id;
       const url = config.apiBaseUrl + '/mybikes/' + id + '/edit/image';
 
       // send request
@@ -29,7 +29,7 @@ function CurrentImages() {
           // update state, and trigger the component to render
           setPreviewImages(previewImages.filter( item => item['key'] !== imageKey));
           setDetectAnyFormSubmit(true);
-          setDetectAnyFormSubmit(false);
+          setDetectAnyFormSubmit(); // *IMPORTANT reset to initial state after true
         })
       
     } catch(err) {

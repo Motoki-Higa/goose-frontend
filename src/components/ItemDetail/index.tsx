@@ -27,20 +27,47 @@ function ItemDetail(props: any) {
 
         {/* body area */}
         <ScItemDetailTxtArea>
-          <ScItemDetailRow>
-            <ScItemDetailDataKey>Built by</ScItemDetailDataKey>
-            <ScItemDetailDataVal>{ item.builtby }</ScItemDetailDataVal>
-          </ScItemDetailRow>
+          {
+            item.builtby ?
+            <ScItemDetailRow>
+              <ScItemDetailDataKey>Built by</ScItemDetailDataKey>
+              <ScItemDetailDataVal>{ item.builtby }</ScItemDetailDataVal>
+            </ScItemDetailRow>
+            :
+            null
+          }
 
-          <ScItemDetailCol>
-            <ScItemDetailDataKey>Description</ScItemDetailDataKey>
-            <ScItemDetailDataVal>{ item.desc }</ScItemDetailDataVal>
-          </ScItemDetailCol>
+          {
+            item.desc ?
+            <ScItemDetailCol>
+              <ScItemDetailDataKey>Description</ScItemDetailDataKey>
+              <ScItemDetailDataVal>{ item.desc }</ScItemDetailDataVal>
+            </ScItemDetailCol>
+            :
+            null
+          }
 
-          <ScItemDetailRow>
-            <ScItemDetailDataKey>Components</ScItemDetailDataKey>
-            <ScItemDetailDataVal></ScItemDetailDataVal>
-          </ScItemDetailRow>
+          {
+            item.condition ?
+            <ScItemDetailRow>
+              <ScItemDetailDataKey>Condition</ScItemDetailDataKey>
+              <ScItemDetailDataVal>{ item.condition }</ScItemDetailDataVal>
+            </ScItemDetailRow>
+            :
+            null
+          }
+
+          {
+            item.components ?
+            <ScItemDetailRow>
+              <ScItemDetailDataKey>Components</ScItemDetailDataKey>
+              <ScItemDetailDataVal></ScItemDetailDataVal>
+            </ScItemDetailRow>
+            :
+            null
+          }
+
+          
         </ScItemDetailTxtArea>
 
       </ScItemDetail>

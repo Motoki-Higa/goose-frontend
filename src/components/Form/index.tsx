@@ -4,6 +4,9 @@ import { FormContext } from '../../context/FormContext';
 import AddBike from './AddBike';
 import EditBike from './EditBike';
 import DeleteBike from './DeleteBike';
+import AddItem from './AddItem';
+import EditItem from './EditItem';
+import DeleteItem from './DeleteItem';
 
 function Form() {
   // destructure context to use
@@ -14,6 +17,9 @@ function Form() {
     'AddBike': AddBike,
     'EditBike': EditBike,
     'DeleteBike': DeleteBike,
+    'AddItem': AddItem,
+    'EditItem': EditItem,
+    'DeleteItem': DeleteItem,
   };
 
   // this returns a form component

@@ -23,8 +23,13 @@ const ScLi = styled.li`
   a {
     display: flex;
     align-items: center;
+    transition: all 0.3s ease;
     color: ${ props => props.theme.colors.black };
     text-decoration: none;
+
+    :hover {
+      color: ${ props => props.theme.colors.pink };
+    }
 
     &.active {
       color: ${ props => props.theme.colors.blue };

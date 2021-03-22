@@ -200,7 +200,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   .MuiFilledInput-input {
-    font-size: 14px!important;
+    font-size: 0.875rem!important;
     font-weight: 500;
     letter-spacing: 0.05rem;
   }
@@ -234,6 +234,16 @@ const GlobalStyle = createGlobalStyle`
     &:after {
       border-bottom-color: #6CA3B8!important;
     }
+  }
+
+  .MuiRating-root {
+    color: ${ props => props.theme.colors.pink }!important;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.875rem!important;
+    font-weight: 500!important;
+    color: ${ props => props.theme.colors.black };
   }
 
   input:-internal-autofill-selected {

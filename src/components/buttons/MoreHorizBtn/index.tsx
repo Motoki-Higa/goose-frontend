@@ -13,7 +13,7 @@ import {
 } from './styles';
 
 
-function MoreHorizBtn() {
+function MoreHorizBtn({editForm, deleteForm}: any) {
   // state for menu table
   const [ menu, setMenu ] = useState(false);
   const [ fadeClass, setFadeClass ] = useState('fadeOut');
@@ -64,8 +64,8 @@ function MoreHorizBtn() {
         menu ?
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
-            <li onClick={ () => handleModalForm('EditBike') }>Edit</li>
-            <li onClick={ () => handleModalForm('DeleteBike') }>Delete</li>
+            <li onClick={ () => handleModalForm(editForm) }>Edit</li>
+            <li onClick={ () => handleModalForm(deleteForm) }>Delete</li>
           </ul>
         </ScMoreOptionTable>
         :

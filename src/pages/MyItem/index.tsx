@@ -18,9 +18,9 @@ import {
   ScUtilsInner
 } from './styles';
 
-function MyBike() {
+function MyItem() {
 
-  interface IBike {
+  interface IItem {
     _id: string;
     name: string;
     brand: string;
@@ -32,24 +32,24 @@ function MyBike() {
     }];
   }
 
-  // state : mybikes
-  const [ bike, setBike ] = useState<IBike[]>([]);
+  // state : myitems
+  const [ item, setItem ] = useState<IItem[]>([]);
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);
   // id params
   const { id } = useParams<{ id: string }>();
 
-  // api call to get bikes
+  // api call to get items
   useEffect( () => {
     // async needs to be inside of useEffect instead of for the callback on useEffect
     (async() => { 
-      const url = config.apiBaseUrl + '/mybikes/' + id;
+      const url = config.apiBaseUrl + '/myitems/' + id;
 
       await axios.get(url)
         .then( (response) => {
           // console.log(response.data);
-          setBike(response.data);
+          setItem(response.data);
           handleSetCurrentItem(response.data);
         });
 
@@ -63,15 +63,15 @@ function MyBike() {
         <ScUtilsInner>
           <ArrowBackBtn />
           <MoreHorizBtn 
-            editForm="EditBike"
-            deleteForm="DeleteBike" />
+            editForm="EditItem"
+            deleteForm="DeleteItem" />
         </ScUtilsInner>
       </ScUtils>
 
       {/* Send data to ItemDetail component */}
-      <ItemDetail item={ bike } />
+      <ItemDetail item={ item } />
     </>
   )
 }
 
-export default MyBike;
+export default MyItem;

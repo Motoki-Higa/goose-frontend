@@ -14,6 +14,8 @@ import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import MyBikes from '../pages/MyBikes/index';
 import MyBike from '../pages/MyBike/index';
+import MyItems from '../pages/MyItems/index';
+import MyItem from '../pages/MyItem/index';
 import Authenticated from '../pages/Authenticated/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
@@ -68,6 +70,8 @@ function App() {
                       <Route path="/signout" component={ SignOut } />
                       <PrivateRoute exact path="/mybikes" component={ MyBikes } />
                       <PrivateRoute path="/mybikes/:id" component={ MyBike } />
+                      <PrivateRoute exact path="/myitems" component={ MyItems } />
+                      <PrivateRoute path="/myitems/:id" component={ MyItem } />
                       <PrivateRoute path="/authenticated" component={ Authenticated } />
                     </Switch>
                   </div>

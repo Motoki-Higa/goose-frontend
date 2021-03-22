@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useEmblaCarousel } from "embla-carousel/react";
 import { Thumb } from "./EmblaCarouselThumb";
 import "./css/embla.css";

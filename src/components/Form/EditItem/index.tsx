@@ -4,6 +4,9 @@ import axios from 'axios';
 import config from './../../../config';
 import { TextField, Button } from '@material-ui/core';
 import { HighlightOff } from '@material-ui/icons';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 // components
 import CurrentImages from './CurrentImages';
@@ -14,7 +17,7 @@ import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 
-function EditBike(){
+function EditItem(){
   // init context to use
   const { currentItem } = useContext(CurrentItemContext);
   const { handleCloseModal } = useContext(ModalContext);
@@ -25,6 +28,8 @@ function EditBike(){
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
 
+  // state for rating
+  const [ value, setValue ] = React.useState<number | null>(parseInt(currentItem.condition));
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
@@ -80,14 +85,14 @@ function EditBike(){
     try {
       // endpoint
       const id = currentItem._id;
-      const url = config.apiBaseUrl + '/mybikes/' + id + '/edit';
+      const url = config.apiBaseUrl + '/myitems/' + id + '/edit';
 
       // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
       const formData: any = new FormData();
       formData.append('name', data.name);
       formData.append('brand', data.brand);
-      formData.append('builtby', data.builtby);
       formData.append('desc', data.desc);
+      formData.append('condition', data.condition);
 
       // loop through the images state to append each images info into formData
       for (let i = 0; i < images.length; i++) {
@@ -120,7 +125,7 @@ function EditBike(){
 
   return (
     <div className="formPanel formPanel--modal">
-      <div className="formTitle">Edit your bike</div>
+      <div className="formTitle">Edit your item</div>
       
       {/* form 1: this handles deleting current images */}
       <CurrentImages></CurrentImages>
@@ -218,23 +223,6 @@ function EditBike(){
           />
 
           <Controller 
-            name="builtby"
-            as={
-              <div className="formInputWrap">
-                <TextField 
-                  id="builtby" 
-                  name="builtby"
-                  label="Built by" 
-                  variant="filled"
-                  defaultValue={ currentItem.builtby }
-                  />
-              </div>
-            }
-            control={control}
-            defaultValue={ currentItem.builtby }
-          />
-
-          <Controller 
             name="desc"
             as={
               <div className="formInputWrap">
@@ -254,6 +242,27 @@ function EditBike(){
             defaultValue={ currentItem.desc }
           />
 
+          <Controller 
+            name="condition"
+            as={
+              <div className="formInputWrap">
+                <Box component="fieldset" mb={3} borderColor="transparent">
+                  <Typography component="legend">Condition</Typography>
+                  <Rating
+                    name="simple-controlled"
+                    value={value}
+                    // defaultValue={ parseInt(currentItem.condition) }
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                  />
+                </Box>
+              </div>
+            }
+            control={control}
+            defaultValue=""
+          />
+
           {/* submit */}
           <div className="formBtnWrap">
             <Button 
@@ -270,4 +279,4 @@ function EditBike(){
   )
 }
 
-export default EditBike;
+export default EditItem;

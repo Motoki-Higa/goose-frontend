@@ -7,6 +7,7 @@ const PARALLAX_FACTOR = 1.2;
 
 const EmblaCarousel = ({ slides }: any) => {
   const [parallaxValues, setParallaxValues] = useState([]);
+  const [slideHeightValues, setSlideHeightValues] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainViewportRef, embla] = useEmblaCarousel();
   const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
@@ -50,8 +51,41 @@ const EmblaCarousel = ({ slides }: any) => {
       embla.reInit();
       emblaThumbs.reInit();
     }
-    
   }, [embla, slides])
+
+
+  // ********** custom dynamic slide height adjustment ***********
+  // below handles getting each slide heights
+  useEffect(() => {
+    (async () => {
+      if (!embla) return;
+      const emblaNodes: any = await embla.slideNodes().map(slide => {
+        return slide.children[0].scrollHeight;
+      });
+      setSlideHeightValues(emblaNodes);
+      
+      console.log(emblaNodes);
+    })()
+  },[embla])
+  // below sets the container height as same as the current slide
+  useEffect(() => {
+    if (!embla) return;
+    const adaptContainerToSlide = (embla: any, slideHeights: number[]) => {
+      const currentSlideHeight = slideHeights[embla.selectedScrollSnap()];
+      embla.containerNode().style.height = `${currentSlideHeight}px`;
+    };
+    adaptContainerToSlide(embla, slideHeightValues);
+  })
+  // on resize
+  if (embla){
+    embla.on('resize', async () => {
+      const emblaNodes: any = await embla.slideNodes().map(slide => {
+        return slide.children[0].scrollHeight;
+      });
+      setSlideHeightValues(emblaNodes);
+    })
+  }
+  // *************************************************************
 
 
   return (

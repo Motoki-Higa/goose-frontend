@@ -57,16 +57,16 @@ const EmblaCarousel = ({ slides }: any) => {
   // ********** custom dynamic slide height adjustment ***********
   // below handles getting each slide heights
   useEffect(() => {
-    (async () => {
+    setTimeout(() => {
       if (!embla) return;
-      const emblaNodes: any = await embla.slideNodes().map(slide => {
+      const emblaNodes: any = embla.slideNodes().map(slide => {
         return slide.children[0].scrollHeight;
       });
       setSlideHeightValues(emblaNodes);
       
       console.log(emblaNodes);
-    })()
-  },[embla])
+    }, 300)
+  },[embla, slides])
   // below sets the container height as same as the current slide
   useEffect(() => {
     if (!embla) return;

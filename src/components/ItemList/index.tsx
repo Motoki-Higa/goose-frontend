@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Public } from '@material-ui/icons';
 
 // styles
 import {
@@ -7,6 +8,7 @@ import {
   ScItemCard,
   ScItemCardImg,
   ScItemCardCat,
+  ScItemTxtArea,
   ScItemCardName,
   ScItemCardBbrand
 } from './styles';
@@ -24,8 +26,18 @@ function ItemList(props: any) {
                 item.category ? <ScItemCardCat>Category</ScItemCardCat> : null
               }
               
-              <ScItemCardName>{item.name}</ScItemCardName>
-              <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
+              <ScItemTxtArea>
+                <div>
+                  <ScItemCardName>{item.name}</ScItemCardName>
+                  <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
+                </div>
+                {
+                  item.public ? <Public></Public> : null
+                }
+                
+              </ScItemTxtArea>
+              
+              
 
               { // images
                 item.images.length > 0 ?

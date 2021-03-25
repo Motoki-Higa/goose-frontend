@@ -1,5 +1,6 @@
 import React from 'react';
 import EmblaCarousel from './../EmblaCarousel';
+import { Public } from '@material-ui/icons';
 
 // styles
 import {
@@ -7,6 +8,7 @@ import {
   ScItemDetailName,
   ScItemDetailBrand,
   ScItemDetailTxtArea,
+  ScItemDetailTtlArea,
   ScItemDetailRow,
   ScItemDetailCol,
   ScItemDetailDataKey,
@@ -19,8 +21,17 @@ function ItemDetail(props: any) {
     // even though it's just one item, it must be mapped since returned json is an array
     props.item.map( (item: any, index: any) => 
       <ScItemDetail key={ index }>
-        <ScItemDetailName>{ item.name }</ScItemDetailName>
-        <ScItemDetailBrand>{ item.brand }</ScItemDetailBrand>
+
+        <ScItemDetailTtlArea>
+          <div>
+            <ScItemDetailName>{ item.name }</ScItemDetailName>
+            <ScItemDetailBrand>{ item.brand }</ScItemDetailBrand>
+          </div>
+          {
+            item.public ? <Public></Public> : null
+          }
+        </ScItemDetailTtlArea>
+        
 
         {/* EmblaCarousel library */}
         <EmblaCarousel slides={ item.images } />

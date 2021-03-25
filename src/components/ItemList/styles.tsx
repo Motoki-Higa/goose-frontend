@@ -48,6 +48,10 @@ const ScItemCard = styled.div<IScItemCard>`
     display: block;
     text-decoration: none;
     padding: 16px 16px 0;
+
+    @media (max-width: 768px) {
+      padding: 12px 12px 0;
+    }
   }
 `
 
@@ -82,16 +86,31 @@ const ScItemCardCat = styled.div`
   }
 `
 
+const ScItemTxtArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 12px;
+
+  @media (max-width: 768px) {
+    margin-top: 8px;
+  }
+
+  svg {
+    font-size: 1rem !important;
+    transition: all 0.3s ease;
+    color: ${ props => props.theme.colors.darkGrey};
+  }
+`
+
 const ScItemCardName = styled.div`
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.025rem;
-  margin-top: 12px;
   color: ${ props => props.theme.colors.black };
 
   @media (max-width: 768px) {
     font-size: 0.75rem;
-    margin-top: 8px;
   }
 `
 
@@ -114,6 +133,7 @@ export {
   ScItemCard,
   ScItemCardImg,
   ScItemCardCat,
+  ScItemTxtArea,
   ScItemCardName,
   ScItemCardBbrand
 }

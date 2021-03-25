@@ -28,6 +28,22 @@ const ScItemDetail = styled.div`
   }
 `
 
+const ScItemDetailTtlArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  svg {
+    font-size: 1.125rem;
+    transition: all 0.3s ease;
+    color: ${ props => props.theme.colors.darkGrey};
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+`
+
 const ScItemDetailName = styled.div`
   font-size: 1.25rem;
   font-weight: 500;
@@ -112,6 +128,7 @@ const ScItemDetailDataVal = styled.div`
 
 export {
   ScItemDetail,
+  ScItemDetailTtlArea,
   ScItemDetailName,
   ScItemDetailBrand,
   ScItemDetailTxtArea,

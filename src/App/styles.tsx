@@ -189,6 +189,15 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .formPanelError {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #f44336;
+    letter-spacing: 0.03333em;
+    margin: 8px 14px;
+  }
+
   .MuiFormControl-root {
     width: 100%;   
   }

@@ -22,7 +22,7 @@ function Nav() {
         <ScNavWrapInner>
 
           <ScLi>
-            <NavLink exact to="/">
+            <NavLink to="/feed">
               <LocalFlorist />
               <p>Feed</p>
             </NavLink>

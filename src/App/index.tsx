@@ -12,6 +12,8 @@ import Home from '../pages/Home/index';
 import SignUp from '../pages/SignUp/index';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
+import Feed from '../pages/FeedAllBikes/index';
+import FeedSingleBike from '../pages/FeedSingleBike/index';
 import MyBikes from '../pages/MyBikes/index';
 import MyBike from '../pages/MyBike/index';
 import MyItems from '../pages/MyItems/index';
@@ -68,6 +70,8 @@ function App() {
                       <Route path="/signup" component={ SignUp } />
                       <Route path="/signin" component={ SignIn } />
                       <Route path="/signout" component={ SignOut } />
+                      <PrivateRoute exact path="/feed" component={ Feed } />
+                      <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
                       <PrivateRoute exact path="/mybikes" component={ MyBikes } />
                       <PrivateRoute path="/mybikes/:id" component={ MyBike } />
                       <PrivateRoute exact path="/myitems" component={ MyItems } />

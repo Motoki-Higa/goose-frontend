@@ -15,6 +15,8 @@ import {
 
 
 function ItemList(props: any) {
+  const currentPath = window.location.pathname;
+
   return (
     <ScItemList>
       {
@@ -32,11 +34,9 @@ function ItemList(props: any) {
                   <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
                 </div>
                 {
-                  item.public ? <Public></Public> : null
+                  item.public && currentPath !== '/feed' ? <Public></Public> : null
                 }
-                
               </ScItemTxtArea>
-              
               
 
               { // images

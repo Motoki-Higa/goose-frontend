@@ -7,13 +7,14 @@ import { TextField, Button } from '@material-ui/core';
 interface IFormInput {
   email: String;
   password: String;
+  err: any;
 }
 
 function SignIn(props: any) {
   // initialize context for use
   const context = useContext(UserContext);
 
-  const [ apiError, setApiError ] = useState([]); // for error handling from api
+  const [ apiError, setApiError ] = useState<string[]>([]); // for error handling from api
   const { from } = props.location.state || { from: { pathname: '/'} };
   const { control, handleSubmit, errors } = useForm();
 
@@ -22,10 +23,10 @@ function SignIn(props: any) {
 
     // api call with the utils (custom helper function)
     context.utils.getUser(data.email, data.password)
-      .then( (errors: any) => {
-        if (errors.length) {
-          setApiError(errors);
-          console.log(`Error message from api: ${errors}`);
+      .then( (user: any) => {
+        if (user.status === 401) {
+          setApiError([user.data.message]);
+          // console.log(user.data.message)
         }
         else {
           console.log(`SUCCESS! ${data.email} is now signed in!`);
@@ -49,6 +50,13 @@ function SignIn(props: any) {
       <form 
         className="form"
         onSubmit={ handleSubmit(onSubmit) } >
+
+        {
+          apiError ? 
+          <div className="formErrorMsg">{ apiError }</div>
+          : 
+          null
+        }
 
         <Controller
           name="email"

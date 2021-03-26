@@ -16,6 +16,7 @@ import {
 } from './styles';
 
 function ItemDetail(props: any) {
+  const currentPath = window.location.pathname.split('/')[1];
 
   return (
     // even though it's just one item, it must be mapped since returned json is an array
@@ -28,7 +29,7 @@ function ItemDetail(props: any) {
             <ScItemDetailBrand>{ item.brand }</ScItemDetailBrand>
           </div>
           {
-            item.public ? <Public></Public> : null
+            item.public && currentPath !== 'feed' ? <Public></Public> : null
           }
         </ScItemDetailTtlArea>
         

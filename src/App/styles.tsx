@@ -198,6 +198,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 8px 14px;
   }
 
+  .formErrorMsg {
+    font-size: 0.875rem;
+    text-align: center;
+    letter-spacing: 0.025rem;
+    line-height: 1.4;
+    color: ${ props => props.theme.colors.pink };
+  }
+
   .MuiFormControl-root {
     width: 100%;   
   }

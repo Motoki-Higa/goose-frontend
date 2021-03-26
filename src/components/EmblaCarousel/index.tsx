@@ -46,12 +46,13 @@ const EmblaCarousel = ({ slides }: any) => {
     embla.on("scroll", onScroll);
   }, [embla, onSelect, onScroll]);
 
+  // this handles updating embla after slides are added
   useEffect(() => {
     if (embla && emblaThumbs) {
       embla.reInit();
       emblaThumbs.reInit();
     }
-  }, [embla, slides])
+  }, [embla, emblaThumbs, slides])
 
 
   // ********** custom dynamic slide height adjustment ***********

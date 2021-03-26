@@ -61,7 +61,13 @@ export default class Utils {
       return response.json().then(data => data);
     }
     else if (response.status === 401) {
-      return null;
+      return response.json().then(data => {
+        return {
+          status: response.status,
+          data: data
+        }
+      })
+      // return null;
     }
     else {
       throw new Error();

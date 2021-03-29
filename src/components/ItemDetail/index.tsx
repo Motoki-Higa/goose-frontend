@@ -1,6 +1,8 @@
 import React from 'react';
 import EmblaCarousel from './../EmblaCarousel';
 import { Public } from '@material-ui/icons';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 // styles
 import {
@@ -63,7 +65,9 @@ function ItemDetail(props: any) {
             item.condition ?
             <ScItemDetailRow>
               <ScItemDetailDataKey>Condition</ScItemDetailDataKey>
-              <ScItemDetailDataVal>{ item.condition }</ScItemDetailDataVal>
+              <Box component="fieldset" mb={3} borderColor="transparent">
+                <Rating name="read-only" value={ parseInt(item.condition) } readOnly />
+              </Box>
             </ScItemDetailRow>
             :
             null

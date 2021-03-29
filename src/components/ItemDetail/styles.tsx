@@ -86,6 +86,10 @@ const ScItemDetailRow = styled.div`
   &:not(:last-of-type){
     border-bottom: 1px solid ${ props => props.theme.colors.lightGrey };
   }
+
+  .MuiBox-root {
+    margin-bottom: 0;
+  }
 `
 
 const ScItemDetailCol = styled.div`

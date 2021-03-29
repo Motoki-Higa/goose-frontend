@@ -8,11 +8,34 @@ import { HighlightOff } from '@material-ui/icons';
 // components
 import CurrentImages from './CurrentImages';
 
+// switch
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { indigo } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
+
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 import { NotificationContext } from '../../../context/NotificationContext';
+
+
+const BlueSwitch = withStyles({
+  switchBase: {
+    color: indigo[200],
+    '&$checked': {
+      color: indigo[300],
+    },
+    '&$checked + $track': {
+      backgroundColor: indigo[300],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
+
 
 function EditBike(){
   // init context to use
@@ -25,10 +48,19 @@ function EditBike(){
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
 
+  // state for switch
+  let isTrueSet = (currentItem.public === 'true');
+  const [ isPublic, setIsPublic ] = useState(isTrueSet);
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
   const [ images, setImages ] = useState<FileList | any>([]);
+
+
+  // handle switch change
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPublic(event.target.checked);
+  };
 
 
   // Store image URIs to its state for preview purpose
@@ -88,6 +120,7 @@ function EditBike(){
       formData.append('brand', data.brand);
       formData.append('builtby', data.builtby);
       formData.append('desc', data.desc);
+      formData.append('public', data.public);
 
       // loop through the images state to append each images info into formData
       for (let i = 0; i < images.length; i++) {
@@ -253,6 +286,20 @@ function EditBike(){
             control={control}
             defaultValue={ currentItem.desc }
           />
+
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <BlueSwitch
+                checked={ isPublic }
+                onChange={ handleSwitchChange }
+                inputRef={ register }
+                name="public"
+                color="primary"
+              />
+            }
+            label="Public" />
+        </FormGroup>
 
           {/* submit */}
           <div className="formBtnWrap">

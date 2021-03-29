@@ -264,6 +264,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input:-internal-autofill-selected {
+    padding: 6px 15px;
     background-color: #fff;
   }
 `

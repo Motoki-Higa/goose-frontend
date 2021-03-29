@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import config from '../../config';
 
@@ -27,33 +28,67 @@ function FeedAllBikes() {
     public: string;
   }
 
-  // state : mybikes
+  // state: bikes
   const [ bikes, setBikes ] = useState<IBikes[]>([]);
 
+  let history = useHistory();
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const query = params.get('q');
 
-  // api call to get bikes
-  useEffect( () => {
-    // async needs to be inside of useEffect instead of for the callback on useEffect
-    (async() => { 
-      const url = config.apiBaseUrl + '/feed';
 
+  const handleSearch = async (data: any) => {
+    try {
+      const BaseUrl = config.apiBaseUrl;
+      const path = '/feed/search?q=' + data.search;
+      const url = BaseUrl + path;
+
+      // send request
       await axios.get(url)
-      .then( (response) => {
-        // console.log(response.data);
-        setBikes(response.data);
-      });
+        .then( response => {
+          setBikes(response.data);
+          history.push(path);
+        })
+      
+    } catch(err) {
+      console.log(err);
+    }
+  }
+  
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const BaseUrl = config.apiBaseUrl;
+        let url = '';
+
+        // check if query exist or not in the url
+        query ? url = await BaseUrl + '/feed/search?q=' + query
+              : url = await BaseUrl + '/feed';
+  
+        // send request
+        await axios.get(url)
+          .then( response => {
+            setBikes(response.data);
+          })
+        
+      } catch(err) {
+        console.log(err);
+      }
     })()
-  }, []) 
+  },[query])
+  // update list if query changes in the url
+  // this helps for browser back button as well
+
 
   return (
     <>
       <h1 className="Title">Feed</h1>
 
-      {/* utility bar: AddBtn & SearchBar & Total number */}
+      {/* utility bar: AddBtn & SearchBar */}
       <ScUtils>
         <ScUtilsInner>          
-          <SearchBar />
+          <SearchBar onSubmit={ handleSearch }/>
         </ScUtilsInner>
       </ScUtils>
 

@@ -71,6 +71,7 @@ function App() {
                       <Route path="/signin" component={ SignIn } />
                       <Route path="/signout" component={ SignOut } />
                       <PrivateRoute exact path="/feed" component={ Feed } />
+                      <PrivateRoute exact path="/feed/search" component={ Feed } />
                       <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
                       <PrivateRoute exact path="/mybikes" component={ MyBikes } />
                       <PrivateRoute path="/mybikes/:id" component={ MyBike } />

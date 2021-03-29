@@ -31,7 +31,7 @@ function ItemDetail(props: any) {
             <ScItemDetailBrand>{ item.brand }</ScItemDetailBrand>
           </div>
           {
-            item.public && currentPath !== 'feed' ? <Public></Public> : null
+            item.public === 'true' && currentPath !== 'feed' ? <Public></Public> : null
           }
         </ScItemDetailTtlArea>
         

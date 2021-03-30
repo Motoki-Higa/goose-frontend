@@ -28,6 +28,7 @@ import { UserProvider } from '../context/UserContext';
 import { ModalProvider } from '../context/ModalContext';
 import { FormProvider } from '../context/FormContext';
 import { CurrentItemProvider } from '../context/CurrentItemContext';
+import { InfiniteScrollProvider } from '../context/InfiniteScrollContext';
 import { NotificationProvider } from '../context/NotificationContext';
 
 // private route with context
@@ -50,42 +51,44 @@ function App() {
           <ModalProvider>
             <FormProvider>
               <NotificationProvider>
+                <InfiniteScrollProvider>
 
-                <div className="App">
-                  {/* modal */}
-                  <Modal>
-                    <Form></Form>
-                  </Modal>
-                  
-                  {/* header */}
-                  <Header></Header>
+                  <div className="App">
+                    {/* modal */}
+                    <Modal>
+                      <Form></Form>
+                    </Modal>
+                    
+                    {/* header */}
+                    <Header></Header>
 
-                  {/* nav */}
-                  <Nav></Nav>
-                  
-                  {/* body */}
-                  <div className="AppInner">
-                    <Switch>
-                      <Route exact path="/" component={ Home } />
-                      <Route path="/signup" component={ SignUp } />
-                      <Route path="/signin" component={ SignIn } />
-                      <Route path="/signout" component={ SignOut } />
-                      <PrivateRoute exact path="/feed" component={ Feed } />
-                      <PrivateRoute exact path="/feed/search" component={ Feed } />
-                      <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
-                      <PrivateRoute exact path="/mybikes" component={ MyBikes } />
-                      <PrivateRoute path="/mybikes/:id" component={ MyBike } />
-                      <PrivateRoute exact path="/myitems" component={ MyItems } />
-                      <PrivateRoute path="/myitems/:id" component={ MyItem } />
-                      <PrivateRoute path="/authenticated" component={ Authenticated } />
-                    </Switch>
+                    {/* nav */}
+                    <Nav></Nav>
+                    
+                    {/* body */}
+                    <div className="AppInner">
+                      <Switch>
+                        <Route exact path="/" component={ Home } />
+                        <Route path="/signup" component={ SignUp } />
+                        <Route path="/signin" component={ SignIn } />
+                        <Route path="/signout" component={ SignOut } />
+                        <PrivateRoute exact path="/feed" component={ Feed } />
+                        <PrivateRoute exact path="/feed/search" component={ Feed } />
+                        <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
+                        <PrivateRoute exact path="/mybikes" component={ MyBikes } />
+                        <PrivateRoute path="/mybikes/:id" component={ MyBike } />
+                        <PrivateRoute exact path="/myitems" component={ MyItems } />
+                        <PrivateRoute path="/myitems/:id" component={ MyItem } />
+                        <PrivateRoute path="/authenticated" component={ Authenticated } />
+                      </Switch>
+                    </div>
+
+                    {/* notification */}
+                    <Notification></Notification>
+
                   </div>
-
-                  {/* notification */}
-                  <Notification></Notification>
-
-                </div>
-
+                  
+                </InfiniteScrollProvider>
               </NotificationProvider>
             </FormProvider>
           </ModalProvider>

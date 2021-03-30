@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import config from '../../config';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+// contexts
+import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
 
 // components
 import SearchBar from '../../components/SearchBar';
@@ -29,10 +32,18 @@ function FeedAllBikes() {
     public: string;
   }
 
-  // state: bikes
+  // state
   const [ bikes, setBikes ] = useState<IBikes[]>([]);
-  const [ state, setState ] = useState<IBikes[]>([]);
+  // below two states are for infinite scroll
+  const [ items, setItems ] = useState<IBikes[]>([]);
   const [ hasMore, setHasMore ] = useState<boolean>(true);
+
+  // destructure context to use
+  const { 
+    loadedItems, 
+    scrollPosition, 
+    handleClearLoadedItems,
+    handleClearScrollPosition } = useContext(InfiniteScrollContext);
 
   let history = useHistory();
   const search = window.location.search;
@@ -57,23 +68,35 @@ function FeedAllBikes() {
       console.log(err);
     }
   }
-  
+
   // onload or/and search to get items
   useEffect(() => {
     (async () => {
       try {
-        const BaseUrl = config.apiBaseUrl;
-        let url = '';
+        
 
+        const BaseUrl = config.apiBaseUrl;
         // check if query exist or not in the url
-        query ? url = await BaseUrl + '/feed/search?q=' + query
-              : url = await BaseUrl + '/feed';
+        let url = query ? BaseUrl + '/feed/search?q=' + query
+                        : BaseUrl + '/feed';
   
         // send request
         await axios.get(url)
           .then( response => {
+            // this state sets all bikes data
             setBikes(response.data.reverse());
-            setState(response.data.slice(0, 5));
+
+            // this state controls infinite scroll items.
+            // check if user came back from list detail page. if true, load previously loaded items.
+            if (loadedItems.length !== 0){
+              setItems(loadedItems);
+              window.scrollTo(0,scrollPosition);
+              handleClearLoadedItems();
+              handleClearScrollPosition()
+            } else {
+              setItems(response.data.slice(0, 5));
+            }
+            
           })
         
       } catch(err) {
@@ -87,12 +110,11 @@ function FeedAllBikes() {
 
   // infinit scroll
   const fetchMoreData = () => {
-    if (bikes.length > state.length){
-      let moreItems = bikes.slice(state.length, state.length + 6);
-      console.log(moreItems);
+    if (bikes.length > items.length){
+      let moreItems = bikes.slice(items.length, items.length + 6);
 
       setTimeout(() => {
-        setState( state.concat(moreItems) );
+        setItems( items.concat(moreItems) );
       }, 1000);
     } else {
       setHasMore(false);
@@ -116,7 +138,7 @@ function FeedAllBikes() {
         route={ '/feed' } /> */}
 
       <InfiniteScroll
-        dataLength={state.length} //This is important field to render the next data
+        dataLength={items.length} //This is important field to render the next data
         next={fetchMoreData}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
@@ -129,7 +151,7 @@ function FeedAllBikes() {
 
         {/* Send data to ItemList component */}
         <ItemList 
-          items={ state }
+          items={ items }
           route={ '/feed' } />
 
       </InfiniteScroll>

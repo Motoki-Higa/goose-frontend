@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Public } from '@material-ui/icons';
+
+// contexts
+import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
 
 // styles
 import {
@@ -15,14 +18,25 @@ import {
 
 
 function ItemList(props: any) {
+  // this is used for determining whether it's on /feed or not.
   const currentPath = window.location.pathname.split('/')[1];
-  
+
+  // destructure context to use
+  const { handleSetLoadedItems, handleSetScrollPosition } = useContext(InfiniteScrollContext);
+
+  const handleInfiniteScrollContext = (e: any) => {
+    handleSetScrollPosition(window.pageYOffset);
+    handleSetLoadedItems(props.items);
+  }
+
   return (
     <ScItemList>
       {
         props.items.map( (item: any, index: number) => 
           <ScItemCard key={ index }>
-            <NavLink to={ props.route + '/' +  item._id}>
+            <NavLink 
+              onClick={ handleInfiniteScrollContext }
+              to={ props.route + '/' +  item._id}>
 
               { // category
                 item.category ? <ScItemCardCat>Category</ScItemCardCat> : null

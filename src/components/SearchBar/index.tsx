@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
+
+// contexts
+import { FormContext } from '../../context/FormContext';
 
 import {
   ScSearchBarWrap,
@@ -9,6 +12,16 @@ import {
 function SearchBar({onSubmit}:any) {
   // form
   const { control, handleSubmit, formState } = useForm();
+
+  // init context
+  const { setDetectAnyFormSubmit } = useContext(FormContext);
+
+  
+  useEffect(() => {
+    setDetectAnyFormSubmit(formState);
+    setDetectAnyFormSubmit(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formState])
 
   return (
     <form onSubmit={ handleSubmit(onSubmit) }>

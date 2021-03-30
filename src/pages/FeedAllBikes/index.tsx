@@ -103,6 +103,7 @@ function FeedAllBikes() {
         console.log(err);
       }
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[query])
   // update list if query changes in the url
   // this helps for browser back button as well

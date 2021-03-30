@@ -20,21 +20,13 @@ function MoreHorizBtn({editForm, deleteForm}: any) {
 
   // init context to use
   const { handleModal, handleCloseModal } = useContext(ModalContext);
-  const { handleSetForm, handleCloseForm } = useContext(FormContext);
+  const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
 
   // onClick event: setting which form to use
   const handleModalForm = (formName: string) => {
     handleModal();
     handleSetForm(formName);
   }
-
-  // close the modal and form on browser back
-  useEffect( () => {
-    window.onpopstate = () => {
-      handleCloseModal();
-      handleCloseForm();
-    }
-  }) 
 
   // handle class and boolean toggle
   const handleMoreOption = () => {
@@ -47,6 +39,22 @@ function MoreHorizBtn({editForm, deleteForm}: any) {
       setMenu(fadeClass === 'fadeIn' ? false : true);
     }, ms)
   };
+
+  // close more option menu on any form submittion
+  useEffect(() => {
+    setMenu(false);
+    setFadeClass('fadeOut');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detectAnyFormSubmit])
+
+  // close the modal and form on browser back
+  useEffect( () => {
+    window.onpopstate = () => {
+      handleCloseModal();
+      handleCloseForm();
+    }
+  }) 
 
   
   return (

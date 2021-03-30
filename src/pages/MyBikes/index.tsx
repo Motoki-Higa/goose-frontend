@@ -60,7 +60,7 @@ function MyBikes() {
       await axios.get(url)
       .then( (response) => {
         // console.log(response.data);
-        setMyBikes(response.data);
+        setMyBikes(response.data.reverse());
       });
 
     })()

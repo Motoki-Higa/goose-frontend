@@ -20,11 +20,12 @@ const keyFadeIn = keyframes`
 const ScItemList = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: wrap-reverse;
+  /* flex-direction: row-reverse;
+  flex-wrap: wrap-reverse; */
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: 5px;
-  animation: ${ keyFadeIn } 0.5s ease-in;
 `
 
 const ScItemCard = styled.div<IScItemCard>`
@@ -36,7 +37,13 @@ const ScItemCard = styled.div<IScItemCard>`
   margin: 1%;
   border-radius: 10px;
   overflow: hidden;
+  animation: ${ keyFadeIn } 0.5s ease-in;
   background-color: ${ props => props.theme.colors.white};
+
+  &:nth-of-type(-n + 1){
+    min-width: 40%;
+    max-width: 50%;
+  }
 
   @media (max-width: 768px) {
     min-width: 48%;

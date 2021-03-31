@@ -38,7 +38,7 @@ function FeedAllBikes() {
   const [ items, setItems ] = useState<IBikes[]>([]);
   const [ hasMore, setHasMore ] = useState<boolean>(true);
 
-  // destructure context to use
+  // infinite scroll context
   const { 
     loadedItems, 
     scrollPosition, 
@@ -73,8 +73,6 @@ function FeedAllBikes() {
   useEffect(() => {
     (async () => {
       try {
-        
-
         const BaseUrl = config.apiBaseUrl;
         // check if query exist or not in the url
         let url = query ? BaseUrl + '/feed/search?q=' + query
@@ -94,9 +92,9 @@ function FeedAllBikes() {
               handleClearLoadedItems();
               handleClearScrollPosition()
             } else {
+              // show 5 items onload
               setItems(response.data.slice(0, 5));
             }
-            
           })
         
       } catch(err) {
@@ -112,6 +110,7 @@ function FeedAllBikes() {
   // infinit scroll
   const fetchMoreData = () => {
     if (bikes.length > items.length){
+      // load 6 more items
       let moreItems = bikes.slice(items.length, items.length + 6);
 
       setTimeout(() => {
@@ -134,10 +133,6 @@ function FeedAllBikes() {
         </ScUtilsInner>
       </ScUtils>
 
-      {/* <ItemList 
-        items={ bikes }
-        route={ '/feed' } /> */}
-
       <InfiniteScroll
         dataLength={items.length} //This is important field to render the next data
         next={fetchMoreData}
@@ -147,8 +142,7 @@ function FeedAllBikes() {
           <p style={{ textAlign: 'center' }}>
             <b>You have seen it all!</b>
           </p>
-        }
-        >
+        } >
 
         {/* Send data to ItemList component */}
         <ItemList 

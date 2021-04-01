@@ -115,20 +115,26 @@ const EmblaCarousel = ({ slides }: any) => {
       </div>
 
       {/* thumbnails */}
-      <div className="embla embla--thumb">
-        <div className="embla__viewport" ref={ thumbViewportRef }>
-          <div className="embla__container embla__container--thumb">
-            {slides.map((slide: any, index: number) => (
-              <Thumb
-                onClick={ () => onThumbClick(index) }
-                selected={ index === selectedIndex }
-                imgSrc={ slide.location }
-                key={ index }
-              />
-            ))}
+      {
+        slides.length > 1 ?
+        <div className="embla embla--thumb">
+          <div className="embla__viewport" ref={ thumbViewportRef }>
+            <div className="embla__container embla__container--thumb">
+              {slides.map((slide: any, index: number) => (
+                <Thumb
+                  onClick={ () => onThumbClick(index) }
+                  selected={ index === selectedIndex }
+                  imgSrc={ slide.location }
+                  key={ index }
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+        :
+        null
+      }
+      
       
     </div>
   );

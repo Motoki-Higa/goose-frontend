@@ -10,7 +10,7 @@ import {
 interface IFormInput {
   email: String;
   name: String;
-  username: String;
+  // username: String;
   password: String;
 }
 
@@ -32,7 +32,7 @@ function SignUp(props: any) {
           console.log(`Error message from api: ${errors}`);
         }
         else {
-          console.log(`${data.username} is successfully signed up and authenticated!`);
+          console.log(`${data.name} is successfully signed up and authenticated!`);
 
           // store user info in cookie and redirect to authenticated page
           context.actions.signIn(data.email, data.password)
@@ -107,7 +107,7 @@ function SignUp(props: any) {
           }}
         />
 
-        <Controller 
+        {/* <Controller 
           name="username"
           as={
             <div className="formInputWrap">
@@ -126,7 +126,7 @@ function SignUp(props: any) {
           rules={{
             required: 'Required',
           }}
-        />
+        /> */}
 
         <Controller 
           name="password"

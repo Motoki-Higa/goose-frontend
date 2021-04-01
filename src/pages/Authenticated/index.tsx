@@ -11,7 +11,6 @@ function Authenticated() {
     <div>
       <div>
         <h1>{authUser.name} is authenticated!</h1>
-        <p>Your username is {authUser.username}.</p>
       </div>
     </div>
   )

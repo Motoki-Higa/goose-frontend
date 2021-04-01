@@ -4,38 +4,48 @@ export const InfiniteScrollContext = createContext({} as any);
 
 export const InfiniteScrollProvider: React.FC = (props) => {
   // state
+  const [ path, setPath ] = useState('');
   const [ loadedItems, setLoadedItems ] = useState([]);
   const [ scrollPosition, setScrollPosition ] = useState(0);
 
+
+  // store location path
+  const handleSetPath = (path: string) => {
+    setPath(path);
+  }
+  const handleClearPath = (path: string) => {
+    setPath('');
+  }
+
+
   // store loaded items onClick
-  const handleSetLoadedItems = (items: any) => {
+  const handleSetLoadedItems = (items: any, path: string) => {
     setLoadedItems(items);
-    // console.log('The number of loaded item is: ' + items);
   }
-
-  // store scroll position onClick
-  const handleSetScrollPosition = (px: any) => {
-    setScrollPosition(px);
-    // console.log('current position is: ' + px);
-  }
-
-  // clear loadedItems
   const handleClearLoadedItems = () => {
     setLoadedItems([]);
   }
 
-  // clear position
+
+  // store scroll position onClick
+  const handleSetScrollPosition = (px: any, path: string) => {
+    setScrollPosition(px);
+  }
   const handleClearScrollPosition = () => {
     setScrollPosition(0);
   }
 
+  
   // value to pass to the provider
   const value = {
+    path,
     loadedItems,
     scrollPosition,
+    handleSetPath,
+    handleClearPath,
     handleSetLoadedItems,
-    handleSetScrollPosition,
     handleClearLoadedItems,
+    handleSetScrollPosition,
     handleClearScrollPosition
   };
 

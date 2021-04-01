@@ -94,8 +94,6 @@ function EditItem(){
       formData.append('desc', data.desc);
       formData.append('condition', data.condition);
 
-      console.log(typeof value);
-
       // loop through the images state to append each images info into formData
       for (let i = 0; i < images.length; i++) {
         formData.append('image', images[i]);

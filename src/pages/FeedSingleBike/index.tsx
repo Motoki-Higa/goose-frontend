@@ -38,7 +38,7 @@ function FeedSingleBike() {
   }  
 
   // state : bikes
-  const [ bike, setBike ] = useState<IBike>({
+  const [ bike, setBike ] = useState<IBike | void>({
     _id: "",
     user_id: "",
     username: "",
@@ -51,7 +51,7 @@ function FeedSingleBike() {
       location: "",
     }]
   });
-  const [ user, setUser ] = useState<IUser>({
+  const [ user, setUser ] = useState<IUser | void>({
     _id: "", 
     user_id: "", 
     username: "", 
@@ -65,28 +65,39 @@ function FeedSingleBike() {
 
   // api call to get bikes
   useEffect( () => {
-    // async needs to be inside of useEffect instead of for the callback on useEffect
-    (async() => { 
+    // api call to get item
+    async function getItem(){
       const urlFeed = config.apiBaseUrl + '/feed/' + id;
 
-      await axios.get(urlFeed)
+      return axios.get(urlFeed)
         .then( response => {
-          setBike(response.data);
-          handleSetCurrentItem(response.data);
-          console.log(response.data)
-
-          return response.data.username;
+          return response.data;
         })
+    };
+
+    // api call to get user
+    async function getUser(){
+      const urlFeed = config.apiBaseUrl + '/feed/' + id;
+
+      return axios.get(urlFeed)
         .then( response => {
-          const urlUser = config.apiBaseUrl + '/profile/' + response;
-          
-          axios.get(urlUser)
+          const urlUser = config.apiBaseUrl + '/profile/' + response.data.username;
+
+          return axios.get(urlUser)
             .then(response => {
-              setUser(response.data)
+              return response.data
             })
         })
+    };
 
-    })()
+    // use promise.all to load both together
+    Promise.all([getItem(), getUser()])
+      .then( results => {
+        const [ itemData, userData ] = results;
+
+        setBike(itemData);
+        setUser(userData)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

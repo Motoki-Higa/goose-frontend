@@ -22,11 +22,13 @@ function ItemList(props: any) {
   const currentPath = window.location.pathname.split('/')[1];
 
   // destructure context to use
-  const { handleSetLoadedItems, handleSetScrollPosition } = useContext(InfiniteScrollContext);
+  const { handleSetPath, handleSetLoadedItems, handleSetScrollPosition } = useContext(InfiniteScrollContext);
 
-  const handleInfiniteScrollContext = (e: any) => {
-    handleSetScrollPosition(window.pageYOffset);
+  const handleInfiniteScrollContext = () => {
+    // since this component is used for feed / mybikes / items, current path has to be stored in context for avoiding loading different items when user moves from detail page (items) -> list page (feed) for example
+    handleSetPath(currentPath)
     handleSetLoadedItems(props.items);
+    handleSetScrollPosition(window.pageYOffset);
   }
 
   return (

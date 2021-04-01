@@ -40,6 +40,7 @@ function FeedAllBikes() {
 
   // infinite scroll context
   const { 
+    path,
     loadedItems, 
     scrollPosition, 
     handleClearLoadedItems,
@@ -49,6 +50,9 @@ function FeedAllBikes() {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const query = params.get('q');
+
+  // this is used for comparing the current path and the path stored in infinite context
+  const currentPath = window.location.pathname.split('/')[1];
 
   // for search
   const handleSearch = async (data: any) => {
@@ -86,7 +90,7 @@ function FeedAllBikes() {
 
             // this state controls infinite scroll items.
             // check if user came back from list detail page. if true, load previously loaded items.
-            if (loadedItems.length !== 0){
+            if (loadedItems.length !== 0 && currentPath === path){
               setItems(loadedItems);
               window.scrollTo(0,scrollPosition);
               handleClearLoadedItems();

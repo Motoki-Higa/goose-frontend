@@ -6,6 +6,11 @@ const keyFadeIn = keyframes`
     transform: translateY(5px);
   }
 
+  50% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
   100% {
     opacity: 1;
     transform: translate(0);
@@ -19,7 +24,7 @@ const ScItemDetail = styled.div`
   padding: 20px 20px 40px;
   border-radius: 10px;
   overflow: hidden;
-  animation: ${ keyFadeIn } 0.3s ease-in;
+  animation: ${ keyFadeIn } 0.6s ease-in;
   background-color: ${ props => props.theme.colors.white};
 
   @media (max-width: 768px) {

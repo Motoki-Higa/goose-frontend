@@ -19,6 +19,7 @@ const ScSearchBarWrap = styled.div`
 
     /* &:-internal-autofill-selected, */
     &:-webkit-autofill {
+      padding: 6px 15px;
       -webkit-text-fill-color: ${ props => props.theme.colors.pink }!important;
       -webkit-box-shadow: 0 0 0px 1000px ${ props => props.theme.colors.midGrey } inset !important;
       box-shadow: 0 0 0px 1000px ${ props => props.theme.colors.midGrey } inset !important;

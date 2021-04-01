@@ -33,7 +33,18 @@ function MyItem() {
   }
 
   // state : myitems
-  const [ item, setItem ] = useState<IItem[]>([]);
+  const [ item, setItem ] = useState<IItem>({
+    _id: "",
+    name: "",
+    brand: "",
+    builtby: "",
+    desc: "",
+    images: [{
+      key: "",
+      location: "",
+    }]
+  });
+
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);

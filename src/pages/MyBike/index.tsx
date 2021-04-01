@@ -22,6 +22,8 @@ function MyBike() {
 
   interface IBike {
     _id: string;
+    user_id: string;
+    username: string;
     name: string;
     brand: string;
     builtby: string;
@@ -32,8 +34,21 @@ function MyBike() {
     }];
   }
 
-  // state : mybikes
-  const [ bike, setBike ] = useState<IBike[]>([]);
+  // state : bikes
+  const [ bike, setBike ] = useState<IBike>({
+    _id: "",
+    user_id: "",
+    username: "",
+    name: "",
+    brand: "",
+    builtby: "",
+    desc: "",
+    images: [{
+      key: "",
+      location: "",
+    }]
+  });
+
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);

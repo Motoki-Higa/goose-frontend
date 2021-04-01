@@ -37,6 +37,14 @@
   transition: height 1s ease;
 }
 
+.embla__container--single {
+  transform: none!important;
+}
+
+.embla__container--single .embla__slide {
+  padding-left: 0px;
+}
+
 .embla__slide {
   padding-left: 4px;
   min-width: 93%;

@@ -29,7 +29,7 @@ function EditItem(){
   const { isDirty } = formState;
 
   // state for rating
-  const [ value, setValue ] = React.useState<number | null>(parseInt(currentItem.condition));
+  const [ value, setValue ] = React.useState<any>(parseInt(currentItem.condition));
   // state for preview image (display purpose)
   const [ previewArr, setPreviewArr ] = useState<FileList | any>([]);
   // state for images to be used for api request call
@@ -93,6 +93,8 @@ function EditItem(){
       formData.append('brand', data.brand);
       formData.append('desc', data.desc);
       formData.append('condition', data.condition);
+
+      console.log(typeof value);
 
       // loop through the images state to append each images info into formData
       for (let i = 0; i < images.length; i++) {
@@ -248,10 +250,18 @@ function EditItem(){
               <div className="formInputWrap">
                 <Box component="fieldset" mb={3} borderColor="transparent">
                   <Typography component="legend">Condition</Typography>
-                  <Rating
-                    name="simple-controlled"
+                  <input
+                    name="condition"
+                    type="number"
                     value={value}
-                    // defaultValue={ parseInt(currentItem.condition) }
+                    ref={register}
+                    hidden
+                    readOnly
+                  />
+                  <Rating
+                    id="condition"
+                    name="condition"
+                    value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
                     }}

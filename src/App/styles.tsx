@@ -263,11 +263,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${ props => props.theme.colors.black };
   }
 
-  input:-internal-autofill-selected {
-    padding: 6px 15px;
-    background-color: #fff;
-  }
-
   // react-infinite-scroll-component
   .infinite-scroll-component {
     overflow: unset!important;

@@ -75,8 +75,6 @@ function App() {
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
 
-                        <PrivateRoute exact path="/profile" component={ UserProfile } />
-
                         <PrivateRoute exact path="/feed" component={ Feed } />
                         <PrivateRoute exact path="/feed/search" component={ Feed } />
                         <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
@@ -87,6 +85,8 @@ function App() {
                         <PrivateRoute path="/myitems/:id" component={ MyItem } />
 
                         <PrivateRoute path="/authenticated" component={ Authenticated } />
+
+                        <PrivateRoute path="/:username" component={ UserProfile } />
                       </Switch>
                     </div>
 

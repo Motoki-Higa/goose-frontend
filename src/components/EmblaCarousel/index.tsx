@@ -55,6 +55,7 @@ const EmblaCarousel = ({ slides }: any) => {
   }, [embla, emblaThumbs, slides])
 
 
+  // *************************************************************
   // ********** custom dynamic slide height adjustment ***********
   // below handles getting each slide heights
   useEffect(() => {
@@ -64,10 +65,10 @@ const EmblaCarousel = ({ slides }: any) => {
         return slide.children[0].scrollHeight;
       });
       setSlideHeightValues(emblaNodes);
-      
-      console.log(emblaNodes);
+      // console.log(emblaNodes);
     }, 300)
   },[embla, slides])
+  
   // below sets the container height as same as the current slide
   useEffect(() => {
     if (!embla) return;
@@ -77,6 +78,7 @@ const EmblaCarousel = ({ slides }: any) => {
     };
     adaptContainerToSlide(embla, slideHeightValues);
   })
+
   // on resize
   if (embla){
     embla.on('resize', async () => {
@@ -87,12 +89,15 @@ const EmblaCarousel = ({ slides }: any) => {
     })
   }
   // *************************************************************
+  // *************************************************************
 
 
   return (
     <div className="embla">
       <div className="embla__viewport" ref={mainViewportRef}>
-        <div className="embla__container">
+
+        
+        <div className={ slides.length > 1 ? `embla__container` : `embla__container--single`}>
 
           {slides.map((slide: any, index: number) => (
             <div className="embla__slide" key={index}>

@@ -17,9 +17,10 @@ import {
 } from './styles';
 
 function FeedSingleBike() {
-
   interface IBike {
     _id: string;
+    user_id: string;
+    username: string;
     name: string;
     brand: string;
     builtby: string;
@@ -29,11 +30,36 @@ function FeedSingleBike() {
       location: string;
     }];
   }
+  interface IUser {
+    _id: string;
+    user_id: string;
+    username: string;
+    bio: string;
+  }  
 
-  // state : mybikes
-  const [ bike, setBike ] = useState<IBike[]>([]);
+  // state : bikes
+  const [ bike, setBike ] = useState<IBike>({
+    _id: "",
+    user_id: "",
+    username: "",
+    name: "",
+    brand: "",
+    builtby: "",
+    desc: "",
+    images: [{
+      key: "",
+      location: "",
+    }]
+  });
+  const [ user, setUser ] = useState<IUser>({
+    _id: "", 
+    user_id: "", 
+    username: "", 
+    bio: "", });
+
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
+
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -41,14 +67,24 @@ function FeedSingleBike() {
   useEffect( () => {
     // async needs to be inside of useEffect instead of for the callback on useEffect
     (async() => { 
-      const url = config.apiBaseUrl + '/feed/' + id;
+      const urlFeed = config.apiBaseUrl + '/feed/' + id;
 
-      await axios.get(url)
-        .then( (response) => {
-          // console.log(response.data);
+      await axios.get(urlFeed)
+        .then( response => {
           setBike(response.data);
           handleSetCurrentItem(response.data);
-        });
+          console.log(response.data)
+
+          return response.data.username;
+        })
+        .then( response => {
+          const urlUser = config.apiBaseUrl + '/profile/' + response;
+          
+          axios.get(urlUser)
+            .then(response => {
+              setUser(response.data)
+            })
+        })
 
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +100,9 @@ function FeedSingleBike() {
       </ScUtils>
 
       {/* Send data to ItemDetail component */}
-      <ItemDetail item={ bike } />
+      <ItemDetail 
+        item={ bike }
+        user={ user } />
     </>
   )
 }

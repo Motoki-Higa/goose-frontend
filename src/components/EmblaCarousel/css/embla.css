@@ -44,6 +44,9 @@
 .embla__container--single .embla__slide {
   padding-left: 0px;
 }
+.embla__container--single .embla__slide__parallax {
+  transform: translateX(0%)!important;
+}
 
 .embla__slide {
   padding-left: 4px;

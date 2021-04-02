@@ -1,10 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import config from './../../config';
-
-// contexts
-import { CurrentItemContext } from '../../context/CurrentItemContext';
 
 // components
 import ItemDetail from './../../components/ItemDetail';
@@ -57,9 +54,6 @@ function FeedSingleBike() {
     username: "", 
     bio: "", });
 
-  // context
-  const { handleSetCurrentItem } = useContext(CurrentItemContext);
-
   // id params
   const { id } = useParams<{ id: string }>();
 
@@ -75,7 +69,7 @@ function FeedSingleBike() {
         })
     };
 
-    // api call to get user
+    // api call to get associate user
     async function getUser(){
       const urlFeed = config.apiBaseUrl + '/feed/' + id;
 

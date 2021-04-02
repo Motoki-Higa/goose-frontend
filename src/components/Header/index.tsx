@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
+import AccountThumb from './AccountThumb';
 import { ReactComponent as Logo } from './../../assets/goose-logo.svg';
 
 import { 
   ScHeader, 
   ScLogo, 
   ScAccountBlock,
-  ScUsername, 
-  ScAccountCircle,
+  ScUsername,
   ScLink,
 } from './styles';
 
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         <ScAccountBlock>
           <ScLink to="/signout">Sign Out</ScLink>
           <ScUsername>{ authUser.name }</ScUsername>
-          <ScAccountCircle></ScAccountCircle>   
+          <AccountThumb />
         </ScAccountBlock>
       :
         <ScAccountBlock>

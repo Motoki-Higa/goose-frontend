@@ -24,7 +24,9 @@ function ItemDetail(props: any) {
 
       <ScItemDetail>
         { /* show user profile icon only on /feed */
-          currentPath === 'feed' ? <div>{ props.user.username }</div> : null
+          currentPath === 'feed' ? 
+          <div>{ props.user.username }</div> 
+          : null
         }
 
         <ScItemDetailTtlArea>

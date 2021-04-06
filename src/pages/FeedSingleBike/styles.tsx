@@ -8,6 +8,10 @@ const ScUtils = styled.div`
   margin-top: 24px;
   padding: 0 10px;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    margin-top: 0px;
+  }
 `;
 
 const ScUtilsInner = styled.div`

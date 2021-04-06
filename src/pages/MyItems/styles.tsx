@@ -6,6 +6,10 @@ const ScUtils = styled.div`
   align-items: center;
   margin-top: 24px;
   padding: 0 10px;
+
+  @media (max-width: 768px) {
+    margin-top: 12px;
+  }
 `;
 
 const ScUtilsInner = styled.div`
@@ -15,6 +19,8 @@ const ScUtilsInner = styled.div`
 
 const ScUtilsCounter = styled.div`
   display: flex;
+  font-size: 0.875rem;
+  letter-spacing: 0.05rem;
   color: ${ props => props.theme.colors.black };
 `;
 

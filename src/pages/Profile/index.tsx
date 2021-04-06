@@ -105,7 +105,7 @@ function UserProfile(){
       {/* Send data to ItemList component */}
         <ItemList 
           items={ myBikes }
-          route={ '/feed' } />
+          route={ '/mybikes' } />
     </>
   )
 }

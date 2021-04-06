@@ -12,10 +12,12 @@ const ScHeader = styled.header`
   top: 0;
   padding: 0 24px;
   box-sizing: border-box;
+  z-index: 1;
   
   @media (max-width: 768px) {
     justify-content: space-between;
     height: 50px;
+    padding: 0 12px;
   }
 `
 
@@ -37,6 +39,10 @@ const ScAccountBlock = styled.div`
   position: absolute;
   right: 0;
   margin-right: 24px;
+
+  @media (max-width: 768px) {
+    margin-right: 12px;
+  }
 `
 
 const ScUsername = styled.p`

@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const keyFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+`
 
 const ScProfile = styled.div`
   display: flex;
@@ -6,9 +18,11 @@ const ScProfile = styled.div`
   align-items: center;
   width: 100%;
   margin: 0 auto;
+  animation: ${ keyFadeIn } 0.5s ease-in;
 
   @media (max-width: 768px) {
     width: 100%;
+    padding: 0 2px;
   }
 `;
 

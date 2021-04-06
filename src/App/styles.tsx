@@ -46,9 +46,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .Title {
-    font-size: 1.125rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.25rem;
     color: ${ props => props.theme.colors.black };
     text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+    }
   }
 
 

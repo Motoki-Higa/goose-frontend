@@ -29,9 +29,9 @@ function Nav() {
           </ScLi>
 
           <ScLi>
-            <NavLink to="/dashboard">
-              <Dashboard />
-              <p>Dashboard</p>
+            <NavLink to="/saved">
+              <Bookmark />
+              <p>Saved</p>
             </NavLink>
           </ScLi>
 
@@ -41,14 +41,7 @@ function Nav() {
               <p>My bikes</p>
             </NavLink>
           </ScLi>
-
-          <ScLi>
-            <NavLink to="/saved">
-              <Bookmark />
-              <p>Saved</p>
-            </NavLink>
-          </ScLi>
-
+          
           <ScLi>
             <NavLink to="/myitems">
               <Category />

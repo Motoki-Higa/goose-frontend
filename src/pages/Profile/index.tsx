@@ -4,6 +4,19 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import config from './../../config';
 
+// components
+import ItemList from '../../components/ItemList';
+
+// styles
+import {
+  ScProfile,
+  ScProfileImg,
+  ScProfileTxtArea,
+  ScProfileName,
+  ScProfileBio,
+  ScProfileWebsite
+} from './styles';
+
 function UserProfile(){
 
   interface IUser {
@@ -11,38 +24,88 @@ function UserProfile(){
     user_id: string;
     username: string;
     bio: string;
+    website: string;
+  }
+
+  interface IMyBikes {
+    name: string;
+    brand: string;
+    builtby: string;
+    desc: string;
+    images: [{
+      key: string;
+      location: string;
+    }];
   }
 
   // state
-  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", });
+  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", });
+  // state : mybikes
+  const [ myBikes, setMyBikes ] = useState<IMyBikes[]>([]);
 
   // username params
   const { username } = useParams<{ username: string }>();
 
+
   useEffect(() => {
     (async() => {
-      const url = config.apiBaseUrl + '/profile/' + username;
+      const profileApi = config.apiBaseUrl + '/profile/' + username;
+      const mybikesApi = config.apiBaseUrl + '/mybikes';
 
-      await axios.get(url)
-        .then( (response) => {          
-          setUser(response.data);
-        });
+      async function getProfile(){
+        return await axios.get(profileApi)
+          .then( (response) => {          
+            return response.data;
+          });
+      }
+
+      async function getMyBikes(){
+        return await axios.get(mybikesApi)
+          .then( (response) => {
+            return response.data.reverse()
+            
+          });
+      }
+
+
+      Promise.all([getProfile(), getMyBikes()])
+        .then( response => {
+          const [ profileData, myBikesData ] = response;
+
+          setUser(profileData);
+          setMyBikes(myBikesData);
+        })
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+
   return (
     <>
-    {
-      user ? 
-      <div>
-        User Profile
-        <h1>{ user.username }</h1>
-        <p>{ user.bio }</p>
-      </div>
-      :
-      <Redirect to="/" />
-    }
+      {
+        user ? 
+        <ScProfile>
+          <ScProfileImg><img src="" alt=""/></ScProfileImg>
+
+          <ScProfileTxtArea>
+            <ScProfileName>{ user.username }</ScProfileName>
+            <ScProfileBio>{ user.bio }</ScProfileBio>
+            <ScProfileWebsite>
+              <a 
+                href={ user.website }
+                rel="noreferrer"
+                target="_blank" >{ user.website.replace(/^https?\:\/\//i, "") }</a>
+            </ScProfileWebsite>
+          </ScProfileTxtArea>
+        </ScProfile>
+        :
+        <Redirect to="/" />
+      }
+
+      {/* Send data to ItemList component */}
+        <ItemList 
+          items={ myBikes }
+          route={ '/feed' } />
     </>
   )
 }

@@ -25,7 +25,7 @@ const ScItemList = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 5px;
+  margin-top: 10px;
 `
 
 const ScItemCard = styled.div<IScItemCard>`

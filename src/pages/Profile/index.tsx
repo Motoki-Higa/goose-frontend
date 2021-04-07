@@ -25,6 +25,10 @@ function UserProfile(){
     username: string;
     bio: string;
     website: string;
+    image:[{
+      key: string;
+      location: string;
+    }]
   }
 
   interface IMyBikes {
@@ -39,7 +43,7 @@ function UserProfile(){
   }
 
   // state
-  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", });
+  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", image: [{key: "", location: ""}]});
   // state : mybikes
   const [ myBikes, setMyBikes ] = useState<IMyBikes[]>([]);
 
@@ -85,7 +89,13 @@ function UserProfile(){
       {
         user ? 
         <ScProfile>
-          <ScProfileImg><img src="" alt=""/></ScProfileImg>
+          <ScProfileImg 
+            style={{
+              backgroundImage: `url( ${user.image[0].location} )`,
+              backgroundSize: `cover`,
+              backgroundPosition: `center`
+              }}
+          />
 
           <ScProfileTxtArea>
             <ScProfileName>{ user.username }</ScProfileName>

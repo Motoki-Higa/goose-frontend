@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { AccountCircle } from '@material-ui/icons';
 
 const keyFadeIn = keyframes`
   0% {
@@ -9,6 +10,23 @@ const keyFadeIn = keyframes`
   50% {
     opacity: 0;
     transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+`
+
+const keyFadeInProfileImg = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+
+  50% {
+    opacity: 0;
+    transform: translateX(5px);
   }
 
   100% {
@@ -36,7 +54,7 @@ const ScItemDetail = styled.div`
 const ScItemDetailTtlArea = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
 
   svg {
     font-size: 1.125rem;
@@ -134,6 +152,39 @@ const ScItemDetailDataVal = styled.div`
   }
 `
 
+const ScAccountCircleImg = styled.div`
+  width: 36px;
+  height: 36px;
+  margin: 0 0 0 auto;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  animation: ${ keyFadeInProfileImg } 0.6s ease-in;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+const ScAccountCircle = styled(AccountCircle)`
+  && {
+    font-size: 2.625rem;
+    color: ${ props => props.theme.colors.darkGrey };
+    margin-left: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  &:hover {
+    color: ${ props => props.theme.colors.blue };
+  }
+`
+
 
 export {
   ScItemDetail,
@@ -144,5 +195,7 @@ export {
   ScItemDetailRow,
   ScItemDetailCol,
   ScItemDetailDataKey,
-  ScItemDetailDataVal
+  ScItemDetailDataVal,
+  ScAccountCircleImg,
+  ScAccountCircle
 }

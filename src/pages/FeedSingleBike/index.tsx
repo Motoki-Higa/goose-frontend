@@ -32,6 +32,11 @@ function FeedSingleBike() {
     user_id: string;
     username: string;
     bio: string;
+    website: string;
+    image:[{
+      key: string;
+      location: string;
+    }]
   }  
 
   // state : bikes
@@ -52,46 +57,45 @@ function FeedSingleBike() {
     _id: "", 
     user_id: "", 
     username: "", 
-    bio: "", });
+    bio: "",
+    website: "",
+    image: [{
+      key: "", 
+      location: ""
+    }] 
+  });
 
   // id params
   const { id } = useParams<{ id: string }>();
 
+  // console.log(user);
+
   // api call to get bikes
   useEffect( () => {
-    // api call to get item
-    async function getItem(){
-      const urlFeed = config.apiBaseUrl + '/feed/' + id;
+    ( async () => {
+      try {
+        const urlFeed = config.apiBaseUrl + '/feed/' + id;
+        let data: any = [];
 
-      return axios.get(urlFeed)
-        .then( response => {
-          return response.data;
-        })
-    };
+        await axios.get(urlFeed)
+          .then( response => {
+            const urlUser = config.apiBaseUrl + '/profile/' + response.data.username;
+            data.push(response.data);
 
-    // api call to get associate user
-    async function getUser(){
-      const urlFeed = config.apiBaseUrl + '/feed/' + id;
-
-      return axios.get(urlFeed)
-        .then( response => {
-          const urlUser = config.apiBaseUrl + '/profile/' + response.data.username;
-
-          return axios.get(urlUser)
-            .then(response => {
-              return response.data
-            })
-        })
-    };
-
-    // use promise.all to load both together
-    Promise.all([getItem(), getUser()])
-      .then( results => {
-        const [ itemData, userData ] = results;
-
-        setBike(itemData);
-        setUser(userData)
-      })
+            axios.get(urlUser)
+              .then(response => {
+                data.push(response.data);
+              })
+              .then(() => {
+                setBike(data[0]);
+                setUser(data[1]);
+              })
+          })
+    
+      } catch(err) {
+        console.log(err)
+      }
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

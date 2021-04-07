@@ -30,6 +30,19 @@ const ScAccountCircleWrapper = styled.div`
   z-index: 10;
 `
 
+const ScAccountCircleImg = styled.div`
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
 const ScAccountCircle = styled(AccountCircle)`
   && {
     font-size: 1.75rem;
@@ -84,6 +97,7 @@ const ScMoreOptionTable = styled.div`
 
 export { 
   ScAccountCircleWrapper,
+  ScAccountCircleImg,
   ScAccountCircle,
   ScMoreOptionTable
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import EmblaCarousel from './../EmblaCarousel';
 import { Public } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating';
@@ -15,27 +16,46 @@ import {
   ScItemDetailCol,
   ScItemDetailDataKey,
   ScItemDetailDataVal,
+  ScAccountCircleImg,
+  ScAccountCircle
 } from './styles';
 
 function ItemDetail(props: any) {
   const currentPath = window.location.pathname.split('/')[1];
 
   return (
-
       <ScItemDetail>
-        { /* show user profile icon only on /feed */
-          currentPath === 'feed' ? 
-          <div>{ props.user.username }</div> 
-          : null
-        }
-
         <ScItemDetailTtlArea>
           <div>
             <ScItemDetailName>{ props.item.name }</ScItemDetailName>
             <ScItemDetailBrand>{ props.item.brand }</ScItemDetailBrand>
           </div>
+
           { // show public icon only if the publicity is true and /feed page
             props.item.public === 'true' && currentPath !== 'feed' ? <Public></Public> : null
+          }
+
+          { /* show user profile icon only on /feed */
+            currentPath === 'feed' ?
+            <>
+             {  
+                props.user.image[0] ?
+                <NavLink to={`/${ props.user.username }`}>
+                  <ScAccountCircleImg
+                  style={{
+                    backgroundImage: `url( ${ props.user.image[0].location } )`,
+                    backgroundSize: `cover`,
+                    backgroundPosition: `center`
+                    }} />
+                </NavLink>
+                :
+                <NavLink to={`/${ props.user.username }`}>
+                  <ScAccountCircle />
+                </NavLink>
+             }
+            </>
+            :
+            null
           }
         </ScItemDetailTtlArea>
         
@@ -86,9 +106,7 @@ function ItemDetail(props: any) {
             null
           }
 
-          
         </ScItemDetailTxtArea>
-
       </ScItemDetail>
     ) 
 }

@@ -8,6 +8,7 @@ import { UserContext } from '../../../context/UserContext';
 // stles
 import { 
   ScAccountCircleWrapper,
+  ScAccountCircleImg,
   ScAccountCircle,
   ScMoreOptionTable
 } from './styles';
@@ -41,7 +42,18 @@ function AccountThumb() {
     <>
       <ScAccountCircleWrapper onClick={ handleMenu }>
         <ClickAwayListener onClickAway={ handleClickAway }>
-          <ScAccountCircle></ScAccountCircle>
+          {
+            userProfile ?
+            <ScAccountCircleImg
+            style={{
+              backgroundImage: `url( ${userProfile.image[0].location} )`,
+              backgroundSize: `cover`,
+              backgroundPosition: `center`
+              }} />
+            :
+            <ScAccountCircle></ScAccountCircle>
+          }
+          
         </ClickAwayListener>
       </ScAccountCircleWrapper>
 

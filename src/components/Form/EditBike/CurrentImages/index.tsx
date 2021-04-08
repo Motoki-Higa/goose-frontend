@@ -22,7 +22,7 @@ function CurrentImages() {
     try {
       // endpoint
       const id = await currentItem._id;
-      const url = config.apiBaseUrl + '/mybikes/' + id + '/edit/image';
+      const url = config.apiBaseUrl + '/bikes/' + id + '/edit/image';
 
       // send request
       await axios.post(url, {'key': imageKey})

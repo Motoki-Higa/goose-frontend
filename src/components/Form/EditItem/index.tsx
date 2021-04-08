@@ -85,7 +85,7 @@ function EditItem(){
     try {
       // endpoint
       const id = currentItem._id;
-      const url = config.apiBaseUrl + '/myitems/' + id + '/edit';
+      const url = config.apiBaseUrl + '/items/' + id + '/edit';
 
       // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
       const formData: any = new FormData();

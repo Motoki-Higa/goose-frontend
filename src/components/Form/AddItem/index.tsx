@@ -79,7 +79,7 @@ function AddItem(){
   const onSubmit = async (data: any) => {
     try {
       // endpoint
-      const url = config.apiBaseUrl + '/myitems';
+      const url = config.apiBaseUrl + '/items';
 
       // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
       const formData: any = new FormData();

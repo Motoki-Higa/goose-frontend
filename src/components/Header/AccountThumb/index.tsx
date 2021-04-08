@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import config from './../../../config';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
-// contexts
-import { UserContext } from '../../../context/UserContext';
 
 // stles
 import { 
@@ -13,12 +12,11 @@ import {
   ScMoreOptionTable
 } from './styles';
 
-function AccountThumb() {
+function AccountThumb(props: any) {
   // state
+  const [ userData, setUserData ] = useState<any>();
   const [ menu, setMenu ] = useState(false);
   const [ fadeClass, setFadeClass ] = useState('fadeOut');
-  // context
-  const { userProfile } = useContext(UserContext);
 
   const handleMenu = () => {
     // fadeClass
@@ -38,22 +36,33 @@ function AccountThumb() {
     }, 300)
   };
 
+  useEffect( () => {
+    if (props.userId){
+      const apiUser = config.apiBaseUrl + '/' + props.userId + '/profile';
+
+      axios.get(apiUser)
+        .then( response => {
+          setUserData(response.data);
+        })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   return(
     <>
       <ScAccountCircleWrapper onClick={ handleMenu }>
         <ClickAwayListener onClickAway={ handleClickAway }>
           {
-            userProfile ?
+            userData ?
             <ScAccountCircleImg
             style={{
-              backgroundImage: `url( ${userProfile.image[0].location} )`,
+              backgroundImage: `url( ${ userData.image[0].location } )`,
               backgroundSize: `cover`,
               backgroundPosition: `center`
               }} />
             :
             <ScAccountCircle></ScAccountCircle>
           }
-          
         </ClickAwayListener>
       </ScAccountCircleWrapper>
 
@@ -62,7 +71,7 @@ function AccountThumb() {
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
             <li>
-              <NavLink to={`/${userProfile ? userProfile.username : null}`}>My Profile</NavLink>
+              <NavLink to={`/${ userData.username }`}>My Profile</NavLink>
             </li>
           </ul>
         </ScMoreOptionTable>

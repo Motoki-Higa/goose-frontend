@@ -68,8 +68,6 @@ function FeedSingleBike() {
   // id params
   const { id } = useParams<{ id: string }>();
 
-  // console.log(user);
-
   // api call to get bikes
   useEffect( () => {
     ( async () => {
@@ -79,7 +77,7 @@ function FeedSingleBike() {
 
         await axios.get(urlFeed)
           .then( response => {
-            const urlUser = config.apiBaseUrl + '/profile/' + response.data.username;
+            const urlUser = config.apiBaseUrl + '/' + response.data.user_id + '/profile'
             data.push(response.data);
 
             axios.get(urlUser)

@@ -109,7 +109,7 @@ function AddBike(){
       } else {
         try {
           // endpoint
-          const url = config.apiBaseUrl + '/mybikes';
+          const url = config.apiBaseUrl + '/bikes';
     
           // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
           const formData: any = new FormData();

@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { ModalContext } from '../../context/ModalContext';
-import { FormContext } from '../../context/FormContext';
+import { useParams } from 'react-router-dom';
+import { ModalContext } from '../../../context/ModalContext';
+import { FormContext } from '../../../context/FormContext';
 import axios from 'axios';
-import config from './../../config';
+import config from '../../../config';
 
 // components
-import AddBtn from '../../components/buttons/AddBtn';
-import SearchBar from './../../components/SearchBar';
-import ItemList from '../../components/ItemList';
+import AddBtn from '../../../components/buttons/AddBtn';
+import SearchBar from '../../../components/SearchBar';
+import ItemList from '../../../components/ItemList';
 
 // styles
 import {
@@ -17,9 +18,9 @@ import {
 } from './styles';
 
 
-function MyBikes() {
+function Items() {
 
-  interface IMyBikes {
+  interface IItems {
     name: string;
     brand: string;
     builtby: string;
@@ -30,8 +31,8 @@ function MyBikes() {
     }];
   }
 
-  // state : mybikes
-  const [ myBikes, setMyBikes ] = useState<IMyBikes[]>([]);
+  // state : items
+  const [ items, setItems ] = useState<IItems[]>([]);
   
   // destructure context to use
   const { handleModal, handleCloseModal } = useContext(ModalContext);
@@ -40,7 +41,7 @@ function MyBikes() {
   // AddBtn onClick event
   const handleModalForm = () => {
     handleModal();
-    handleSetForm('AddBike');
+    handleSetForm('AddItem');
   }
 
   // close the modal and form on browser back
@@ -51,24 +52,33 @@ function MyBikes() {
     }
   }) 
 
-  // api call to get bikes
+  // username params
+  const { username } = useParams<{ username: string }>();
+
+  // api call to get items
   useEffect( () => {
     // async needs to be inside of useEffect instead of for the callback on useEffect
     (async() => { 
-      const url = config.apiBaseUrl + '/mybikes';
+      const profileApi = config.apiBaseUrl + '/profile/' + username;
 
-      await axios.get(url)
-      .then( (response) => {
-        // console.log(response.data);
-        setMyBikes(response.data.reverse());
-      });
+      await axios.get(profileApi)
+        .then( (response) => {     
+          const userId = response.data.user_id;
+          const itemsApi = config.apiBaseUrl + '/' + userId + '/items';
 
+          axios.get(itemsApi)
+            .then( (response) => {
+              setItems(response.data.reverse());
+            });
+        })
+    
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detectAnyFormSubmit]) // detectAnyFormSubmit makes sure to re-render useEffect
 
   return (
     <>
-      <h1 className="Title">My Bikes</h1>
+      <h1 className="Title">Items</h1>
 
       {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>
@@ -80,16 +90,16 @@ function MyBikes() {
           <SearchBar />
         </ScUtilsInner>
 
-        <ScUtilsCounter>Total: { myBikes.length }</ScUtilsCounter>
+        <ScUtilsCounter>Total: { items.length }</ScUtilsCounter>
       </ScUtils>
 
       {/* Send data to ItemList component */}
       <ItemList 
-        items={ myBikes }
-        route={ '/mybikes' } />
+        items={ items }
+        route={ 'items' } />
     </>
     
   )
 }
 
-export default MyBikes;
+export default Items;

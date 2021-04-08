@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         <ScAccountBlock>
           <ScLink to="/signout">Sign Out</ScLink>
           <ScUsername>{ authUser.name }</ScUsername>
-          <AccountThumb />
+          <AccountThumb userId={ authUser.id } />
         </ScAccountBlock>
       :
         <ScAccountBlock>

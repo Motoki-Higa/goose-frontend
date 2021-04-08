@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Route, Switch, useParams, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../config';
+import config from '../../config';
 
 // components
-import ItemList from '../../components/ItemList';
+import Bikes from './Bikes';
+import SingleBike from './SingleBike';
+import Items from './Items';
+import SingleItem from './SingleItem';
 
 // styles
 import {
@@ -31,54 +34,28 @@ function UserProfile(){
     }]
   }
 
-  interface IMyBikes {
-    name: string;
-    brand: string;
-    builtby: string;
-    desc: string;
-    images: [{
-      key: string;
-      location: string;
-    }];
-  }
-
   // state
   const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", image: [{key: "", location: ""}]});
-  // state : mybikes
-  const [ myBikes, setMyBikes ] = useState<IMyBikes[]>([]);
+
 
   // username params
   const { username } = useParams<{ username: string }>();
 
-
   useEffect(() => {
     (async() => {
       const profileApi = config.apiBaseUrl + '/profile/' + username;
-      const mybikesApi = config.apiBaseUrl + '/mybikes';
+      
+      await axios.get(profileApi)
+        .then( (response) => {     
+          const userId = response.data.user_id;
+          const profileApi = config.apiBaseUrl + '/' + userId + '/profile';
 
-      async function getProfile(){
-        return await axios.get(profileApi)
-          .then( (response) => {          
-            return response.data;
-          });
-      }
-
-      async function getMyBikes(){
-        return await axios.get(mybikesApi)
-          .then( (response) => {
-            return response.data.reverse()
-            
-          });
-      }
-
-
-      Promise.all([getProfile(), getMyBikes()])
-        .then( response => {
-          const [ profileData, myBikesData ] = response;
-
-          setUser(profileData);
-          setMyBikes(myBikesData);
+          axios.get(profileApi)
+            .then( (response) => {
+              setUser(response.data);
+            });
         })
+          
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
@@ -104,7 +81,7 @@ function UserProfile(){
               <a 
                 href={ user.website }
                 rel="noreferrer"
-                target="_blank" >{ user.website.replace(/^https?\:\/\//i, "") }</a>
+                target="_blank" >{ user.website.replace(/^https?:\/\//i, "") }</a>
             </ScProfileWebsite>
           </ScProfileTxtArea>
         </ScProfile>
@@ -112,10 +89,26 @@ function UserProfile(){
         <Redirect to="/" />
       }
 
+      <ul>
+        <NavLink to={`/${ user.username }/bikes`}>Bikes</NavLink>
+        <NavLink to={`/${ user.username }/items`}>Items</NavLink>
+      </ul>
+
+      <Switch>
+        <Route exact path="/:username/bikes" component={ Bikes } />
+        <Route path="/:username/bikes/:id" component={ SingleBike } />
+        <Route exact path="/:username/items" component={ Items } />
+        <Route path="/:username/items/:id" component={ SingleItem } />
+        {/* <Route exact path="/:username/items" component={ MyItems } /> */}
+          {/* <ItemList 
+            items={ myBikes }
+            route={ '/mybikes' } /> */}
+      </Switch>
+
       {/* Send data to ItemList component */}
-        <ItemList 
+        {/* <ItemList 
           items={ myBikes }
-          route={ '/mybikes' } />
+          route={ '/mybikes' } /> */}
     </>
   )
 }

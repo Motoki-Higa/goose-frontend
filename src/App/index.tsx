@@ -12,13 +12,9 @@ import Home from '../pages/Home/index';
 import SignUp from '../pages/SignUp/index';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
-import UserProfile from '../pages/Profile';
+import UserProfile from '../pages/UserProfile';
 import Feed from '../pages/FeedAllBikes/index';
 import FeedSingleBike from '../pages/FeedSingleBike/index';
-import MyBikes from '../pages/MyBikes/index';
-import MyBike from '../pages/MyBike/index';
-import MyItems from '../pages/MyItems/index';
-import MyItem from '../pages/MyItem/index';
 import Authenticated from '../pages/Authenticated/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
@@ -39,7 +35,6 @@ import { PrivateRoute } from '../PrivateRoute';
 import {
   GlobalStyle,
 } from './styles';
-
 
 
 
@@ -78,11 +73,6 @@ function App() {
                         <PrivateRoute exact path="/feed" component={ Feed } />
                         <PrivateRoute exact path="/feed/search" component={ Feed } />
                         <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
-
-                        <PrivateRoute exact path="/mybikes" component={ MyBikes } />
-                        <PrivateRoute path="/mybikes/:id" component={ MyBike } />
-                        <PrivateRoute exact path="/myitems" component={ MyItems } />
-                        <PrivateRoute path="/myitems/:id" component={ MyItem } />
 
                         <PrivateRoute path="/authenticated" component={ Authenticated } />
 

@@ -52,14 +52,9 @@ function AccountThumb(props: any) {
     <>
       <ScAccountCircleWrapper onClick={ handleMenu }>
         <ClickAwayListener onClickAway={ handleClickAway }>
-          {
-            userData ?
-            <ScAccountCircleImg
-            style={{
-              backgroundImage: `url( ${ userData.image[0].location } )`,
-              backgroundSize: `cover`,
-              backgroundPosition: `center`
-              }} />
+          { // if user data is ready to load and has image
+            userData && userData.image[0] ?
+            <ScAccountCircleImg style={{backgroundImage: `url( ${ userData.image[0].location } )`}} />
             :
             <ScAccountCircle></ScAccountCircle>
           }
@@ -71,6 +66,7 @@ function AccountThumb(props: any) {
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
             <li>
+              <NavLink to="/dashboard">Dashboard</NavLink>
               <NavLink to={`/${ userData.username }`}>My Profile</NavLink>
             </li>
           </ul>

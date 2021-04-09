@@ -4,6 +4,7 @@ import { Public } from '@material-ui/icons';
 
 // contexts
 import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
+import { IsMyDashboard } from '../../context/IsMyDashboardContext';
 
 // styles
 import {
@@ -21,8 +22,9 @@ function ItemList(props: any) {
   // this is used for determining whether it's on /feed or not.
   const currentPath = window.location.pathname.split('/')[1];
 
-  // destructure context to use
+  // context
   const { handleSetPath, handleSetLoadedItems, handleSetScrollPosition } = useContext(InfiniteScrollContext);
+  const { isMyDashboard } = useContext(IsMyDashboard);
 
   const handleInfiniteScrollContext = () => {
     // since this component is used for feed / mybikes / items, current path has to be stored in context for avoiding loading different items when user moves from detail page (items) -> list page (feed) for example
@@ -49,8 +51,9 @@ function ItemList(props: any) {
                   <ScItemCardName>{item.name}</ScItemCardName>
                   <ScItemCardBbrand>{item.brand}</ScItemCardBbrand>
                 </div>
-                {
-                  item.public === 'true' && currentPath !== 'feed' ? <Public></Public> : null
+                
+                {// show public icon if publicity is TRUE and NOT /feed page and Is your own dashboard
+                  item.public === 'true' && currentPath !== 'feed' && isMyDashboard ? <Public></Public> : null
                 }
               </ScItemTxtArea>
               

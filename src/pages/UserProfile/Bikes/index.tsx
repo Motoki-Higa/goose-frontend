@@ -35,6 +35,7 @@ function Bikes() {
   }
 
   // state : bikes
+  const [ isMyDashboard, setIsMyDashboard ] = useState(false);
   const [ bikes, setBikes ] = useState<IBikes[]>([]);
   
   // destructure context to use
@@ -59,19 +60,27 @@ function Bikes() {
   // username params
   const { username } = useParams<{ username: string }>();
 
+
   // api call to get bikes
   useEffect( () => {
-    // async needs to be inside of useEffect instead of for the callback on useEffect
     (async() => { 
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
       await axios.get(profileApi)
         .then( (response) => {     
-          const authUserId = authenticatedUser.id;
+          // const authUserId = authenticatedUser.id;
           const userId = response.data.user_id;
-          // const bikesApi = config.apiBaseUrl + '/' + userId + '/bikes';
-          const bikesApi = authUserId === userId ? config.apiBaseUrl + '/' + userId + '/myBikes'
-                                                 : config.apiBaseUrl + '/' + userId + '/bikes'
+          let bikesApi = '';
+
+          if (authenticatedUser.username === username){
+            setIsMyDashboard(true);
+            bikesApi = config.apiBaseUrl + '/' + userId + '/myBikes';
+          } else {
+            bikesApi = config.apiBaseUrl + '/' + userId + '/bikes';
+          }
+          // // if visiting your own dashboard, then call myBikes api, otherwise bikes api
+          // const bikesApi = authUserId === userId ? config.apiBaseUrl + '/' + userId + '/myBikes'
+          //                                        : config.apiBaseUrl + '/' + userId + '/bikes'
 
           axios.get(bikesApi)
             .then( (response) => {
@@ -90,9 +99,15 @@ function Bikes() {
       {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>
         <ScUtilsInner>
-          <div onClick={ handleModalForm }>
-            <AddBtn />
-          </div>
+          {
+            isMyDashboard ?
+            <div onClick={ handleModalForm }>
+              <AddBtn />
+            </div>
+            :
+            null
+          }
+          
           
           <SearchBar />
         </ScUtilsInner>

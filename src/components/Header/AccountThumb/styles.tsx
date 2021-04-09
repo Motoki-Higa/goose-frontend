@@ -27,14 +27,17 @@ const keyFadeOutTop = keyframes`
 
 const ScAccountCircleWrapper = styled.div`
   position: relative;
+  margin-left: 12px;
   z-index: 10;
 `
 
 const ScAccountCircleImg = styled.div`
-  width: 24px;
-  height: 24px;
-  margin-left: 12px;
+  position: relative;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
+  background-size: cover;
+  background-position: center;
   transition: all 0.3s ease;
   cursor: pointer;
 
@@ -45,11 +48,12 @@ const ScAccountCircleImg = styled.div`
 
 const ScAccountCircle = styled(AccountCircle)`
   && {
+    position: relative;
     font-size: 1.75rem;
     color: ${ props => props.theme.colors.darkGrey };
-    margin-left: 12px;
     transition: all 0.3s ease;
     cursor: pointer;
+    vertical-align: top;
   }
 
   &:hover {

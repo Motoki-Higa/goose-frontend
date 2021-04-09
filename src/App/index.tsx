@@ -27,6 +27,7 @@ import { FormProvider } from '../context/FormContext';
 import { CurrentItemProvider } from '../context/CurrentItemContext';
 import { InfiniteScrollProvider } from '../context/InfiniteScrollContext';
 import { NotificationProvider } from '../context/NotificationContext';
+import { IsMyDashboardProvider } from '../context/IsMyDashboardContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -76,7 +77,9 @@ function App() {
 
                         <PrivateRoute path="/authenticated" component={ Authenticated } />
 
-                        <PrivateRoute path="/:username" component={ UserProfile } />
+                        <IsMyDashboardProvider>
+                          <PrivateRoute path="/:username" component={ UserProfile } />
+                        </IsMyDashboardProvider>
                       </Switch>
                     </div>
 

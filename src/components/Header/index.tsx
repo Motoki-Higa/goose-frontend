@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
 import AccountThumb from './AccountThumb';
 import { ReactComponent as Logo } from './../../assets/goose-logo.svg';
 
+// contexts
+import { UserContext } from '../../context/UserContext';
+
+// style
 import { 
   ScHeader, 
   ScLogo, 

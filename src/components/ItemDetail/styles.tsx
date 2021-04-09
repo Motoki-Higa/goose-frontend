@@ -160,6 +160,8 @@ const ScAccountCircleImg = styled.div`
   transition: all 0.3s ease;
   animation: ${ keyFadeInProfileImg } 0.6s ease-in;
   cursor: pointer;
+  background-size: cover;
+  background-position: center;
 
   @media (max-width: 768px) {
     width: 24px;
@@ -176,8 +178,8 @@ const ScAccountCircle = styled(AccountCircle)`
     font-size: 2.625rem;
     color: ${ props => props.theme.colors.darkGrey };
     margin-left: 12px;
-    transition: all 0.3s ease;
     cursor: pointer;
+    animation: ${ keyFadeInProfileImg } 0.6s ease-in;
   }
 
   &:hover {

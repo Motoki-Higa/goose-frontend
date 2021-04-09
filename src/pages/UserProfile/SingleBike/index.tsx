@@ -6,6 +6,7 @@ import config from './../../../config';
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { FormContext } from '../../../context/FormContext';
+import { IsMyDashboard } from '../../../context/IsMyDashboardContext';
 
 // components
 import ItemDetail from './../../../components/ItemDetail';
@@ -52,6 +53,7 @@ function SingleBike(props: any) {
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);
+  const { isMyDashboard } = useContext(IsMyDashboard);
 
   // id params
   const { username } = useParams<{ username: string }>();
@@ -85,9 +87,16 @@ function SingleBike(props: any) {
       <ScUtils>
         <ScUtilsInner>
           <ArrowBackBtn />
-          <MoreHorizBtn 
-            editForm="EditBike"
-            deleteForm="DeleteBike" />
+
+          { // show more option ONLY if it's logged in users dashboard
+            isMyDashboard ?
+            <MoreHorizBtn 
+              editForm="EditBike"
+              deleteForm="DeleteBike" />
+            :
+            null
+          }
+          
         </ScUtilsInner>
       </ScUtils>
 

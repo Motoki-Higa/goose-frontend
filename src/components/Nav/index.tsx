@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../context/UserContext';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LocalFlorist, Bookmark, Dashboard } from '@material-ui/icons';
-import axios from 'axios';
-import config from './../../config';
 
+// contexts
+import { UserContext } from '../../context/UserContext';
+
+// styles
 import { 
   ScNavWrap,
   ScNavWrapInner,
@@ -12,25 +13,9 @@ import {
 } from './styles';
 
 function Nav() {
-  // state
-  const [ userData, setUserData ] = useState<any>(null);
-
   // initialize context for use
-  const context = useContext(UserContext);
-  const authUser: any = context.authenticatedUser;
-
-  useEffect( () => {
-    if (authUser){
-      const apiUser = config.apiBaseUrl + '/' + authUser.id + '/profile';
-
-      axios.get(apiUser)
-        .then( response => {
-          // console.log(response.data)
-          setUserData(response.data);
-        })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  const { authenticatedUser } = useContext(UserContext);
+  const authUser: any = authenticatedUser;
 
   return (
     <>
@@ -54,25 +39,11 @@ function Nav() {
           </ScLi>
 
           <ScLi>
-            <NavLink to={`/${ userData ? userData.username : null }`}>
+            <NavLink to={`/${ authUser.username }`}>
               <Dashboard />
               <p>Dashboard</p>
             </NavLink>
           </ScLi>
-
-          {/* <ScLi>
-            <NavLink to="/mybikes">
-              <Album />
-              <p>My bikes</p>
-            </NavLink>
-          </ScLi>
-          
-          <ScLi>
-            <NavLink to="/myitems">
-              <Category />
-              <p>My items</p>
-            </NavLink>
-          </ScLi> */}
           
         </ScNavWrapInner> 
       </ScNavWrap>

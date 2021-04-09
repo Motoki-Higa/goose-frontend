@@ -31,7 +31,9 @@ const ScProfileImg = styled.div`
   width: 125px;
   height: 125px;
   border-radius: 50%;
-  /* background-color: ${ props => props.theme.colors.darkGrey }; */
+  background-size: cover;
+  background-position: center;
+  background-color: ${ props => props.theme.colors.lightGrey};
 
   @media (max-width: 768px) {
     width: 80px;

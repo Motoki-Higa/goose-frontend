@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import EmblaCarousel from './../EmblaCarousel';
 import { Public } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+
+// context
+import { IsMyDashboard } from '../../context/IsMyDashboardContext';
 
 // styles
 import {
@@ -23,6 +26,9 @@ import {
 function ItemDetail(props: any) {
   const currentPath = window.location.pathname.split('/')[1];
 
+  // contexts
+  const { isMyDashboard } = useContext(IsMyDashboard);
+
   return (
       <ScItemDetail>
         <ScItemDetailTtlArea>
@@ -31,29 +37,20 @@ function ItemDetail(props: any) {
             <ScItemDetailBrand>{ props.item.brand }</ScItemDetailBrand>
           </div>
 
-          { // show public icon only if the publicity is true and /feed page
-            props.item.public === 'true' && currentPath !== 'feed' ? <Public></Public> : null
+          { // show public icon if publicity is TRUE and NOT /feed page and Is your own dashboard
+            props.item.public === 'true' && currentPath !== 'feed' && isMyDashboard ? <Public></Public> : null
           }
 
           { /* show user profile icon only on /feed */
             currentPath === 'feed' ?
-            <>
+            <NavLink to={`/${ props.user.username }`}>
              {  
                 props.user.image[0] ?
-                <NavLink to={`/${ props.user.username }`}>
-                  <ScAccountCircleImg
-                  style={{
-                    backgroundImage: `url( ${ props.user.image[0].location } )`,
-                    backgroundSize: `cover`,
-                    backgroundPosition: `center`
-                    }} />
-                </NavLink>
+                <ScAccountCircleImg style={{backgroundImage: `url( ${ props.user.image[0].location } )`}} />
                 :
-                <NavLink to={`/${ props.user.username }`}>
-                  <ScAccountCircle />
-                </NavLink>
+                <ScAccountCircle />
              }
-            </>
+            </NavLink>
             :
             null
           }

@@ -1,9 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { ModalContext } from '../../../context/ModalContext';
-import { FormContext } from '../../../context/FormContext';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config';
+
+// contexts
+import { UserContext } from '../../../context/UserContext';
+import { ModalContext } from '../../../context/ModalContext';
+import { FormContext } from '../../../context/FormContext';
 
 // components
 import AddBtn from '../../../components/buttons/AddBtn';
@@ -32,11 +35,15 @@ function Items() {
   }
 
   // state : items
+  const [ isMyDashboard, setIsMyDashboard ] = useState(false);
   const [ items, setItems ] = useState<IItems[]>([]);
   
   // destructure context to use
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleModal, handleCloseModal } = useContext(ModalContext);
   const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
+
+  let history = useHistory();
 
   // AddBtn onClick event
   const handleModalForm = () => {
@@ -66,10 +73,21 @@ function Items() {
           const userId = response.data.user_id;
           const itemsApi = config.apiBaseUrl + '/' + userId + '/items';
 
-          axios.get(itemsApi)
-            .then( (response) => {
-              setItems(response.data.reverse());
-            });
+          // check if it's auth users dashboard
+          if (authenticatedUser.username === username){
+            setIsMyDashboard(true);
+
+            axios.get(itemsApi)
+              .then( (response) => {
+                setItems(response.data.reverse());
+              });
+          } else {
+            setIsMyDashboard(false);
+            history.push("/" + username);
+
+            return
+          }
+
         })
     
     })()
@@ -83,9 +101,14 @@ function Items() {
       {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>
         <ScUtilsInner>
-          <div onClick={ handleModalForm }>
-            <AddBtn />
-          </div>
+          {
+            isMyDashboard ?
+            <div onClick={ handleModalForm }>
+              <AddBtn />
+            </div>
+            :
+            null
+          }
           
           <SearchBar />
         </ScUtilsInner>

@@ -47,12 +47,14 @@ function UserProfile(){
   // username params
   const { username } = useParams<{ username: string }>();
 
+
   useEffect( () => {
     if(authenticatedUser.username === username){
       handleSetIsMyDashboard(true);
     } else {
       handleSetIsMyDashboard(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[username])
 
 
@@ -97,7 +99,14 @@ function UserProfile(){
       {/* sub nav */}
       <ul>
         <NavLink to={`/${ user.username }/bikes`}>Bikes</NavLink>
-        <NavLink to={`/${ user.username }/items`}>Items</NavLink>
+
+        {
+          isMyDashboard ?
+          <NavLink to={`/${ user.username }/items`}>Items</NavLink>
+          :
+          null
+        }
+        
       </ul>
 
       {/* components */}

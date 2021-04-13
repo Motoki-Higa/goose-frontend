@@ -1,7 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
+
+// context
+import { UserContext } from '../../context/UserContext';
+
+// styles
 import {
   ScError
 } from './styles'

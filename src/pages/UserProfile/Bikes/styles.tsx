@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const keyFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+`
 
 const ScUtils = styled.div`
   display: flex;
@@ -6,6 +18,7 @@ const ScUtils = styled.div`
   align-items: center;
   margin-top: 24px;
   padding: 0 10px;
+  animation: ${ keyFadeIn } 0.5s ease-in;
 
   @media (max-width: 768px) {
     margin-top: 12px;

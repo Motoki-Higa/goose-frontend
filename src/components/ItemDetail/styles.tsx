@@ -180,6 +180,10 @@ const ScAccountCircle = styled(AccountCircle)`
     margin-left: 12px;
     cursor: pointer;
     animation: ${ keyFadeInProfileImg } 0.6s ease-in;
+
+    @media (max-width: 768px) {
+      font-size: 1.8125rem;
+    }
   }
 
   &:hover {

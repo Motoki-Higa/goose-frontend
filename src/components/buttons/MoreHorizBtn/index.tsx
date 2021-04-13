@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { MoreHoriz, CloseRounded } from '@material-ui/icons';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 // contexts
 import { ModalContext } from '../../../context/ModalContext';
@@ -40,6 +41,14 @@ function MoreHorizBtn({editForm, deleteForm}: any) {
     }, ms)
   };
 
+  // handle click away (material UI's Click away listener)
+  const handleClickAway = () => {
+    setFadeClass('fadeOut');
+    setTimeout(() => {
+      setMenu(false);
+    }, 300)
+  };
+
   // close more option menu on any form submittion
   useEffect(() => {
     setMenu(false);
@@ -70,12 +79,14 @@ function MoreHorizBtn({editForm, deleteForm}: any) {
 
       { // toggle option table
         menu ?
-        <ScMoreOptionTable className={ fadeClass }>
-          <ul>
-            <li onClick={ () => handleModalForm(editForm) }>Edit</li>
-            <li onClick={ () => handleModalForm(deleteForm) }>Delete</li>
-          </ul>
-        </ScMoreOptionTable>
+        <ClickAwayListener onClickAway={ handleClickAway }>
+          <ScMoreOptionTable className={ fadeClass }>
+            <ul>
+              <li onClick={ () => handleModalForm(editForm) }>Edit</li>
+              <li onClick={ () => handleModalForm(deleteForm) }>Delete</li>
+            </ul>
+          </ScMoreOptionTable>
+        </ClickAwayListener>
         :
         null
       }

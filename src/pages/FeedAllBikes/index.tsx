@@ -56,21 +56,7 @@ function FeedAllBikes() {
 
   // for search
   const handleSearch = async (data: any) => {
-    try {
-      const BaseUrl = config.apiBaseUrl;
-      const path = '/feed/search?q=' + data.search;
-      const url = BaseUrl + path;
-
-      // send request
-      await axios.get(url)
-        .then( response => {
-          setBikes(response.data);
-          history.push(path);
-        })
-      
-    } catch(err) {
-      console.log(err);
-    }
+    history.push('/feed/search?q=' + data.search);
   }
 
   // onload or/and search to get items
@@ -151,7 +137,7 @@ function FeedAllBikes() {
         {/* Send data to ItemList component */}
         <ItemList 
           items={ items }
-          route={ '/feed' } />
+          route={ 'feed' } />
 
       </InfiniteScroll>
     </>

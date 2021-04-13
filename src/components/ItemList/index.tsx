@@ -21,6 +21,7 @@ import {
 function ItemList(props: any) {
   // this is used for determining whether it's on /feed or not.
   const currentPath = window.location.pathname.split('/')[1];
+  const search = window.location.search;
 
   // context
   const { handleSetPath, handleSetLoadedItems, handleSetScrollPosition } = useContext(InfiniteScrollContext);
@@ -40,7 +41,10 @@ function ItemList(props: any) {
           <ScItemCard key={ index }>
             <NavLink 
               onClick={ handleInfiniteScrollContext }
-              to={ props.route + '/' +  item._id}>
+              to={ // since search result component inherits category slug, just set item id, if it's searched list
+                search ? item._id
+                       : props.route + '/' +  item._id
+                } >
 
               { // category
                 item.category ? <ScItemCardCat>Category</ScItemCardCat> : null

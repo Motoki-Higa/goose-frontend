@@ -116,8 +116,10 @@ function UserProfile(){
       {/* components */}
       <Switch>
         <Route exact path="/:username/bikes" component={ Bikes } />
+        <Route exact path="/:username/bikes/search" component={ Bikes } />
         <Route path="/:username/bikes/:id" component={ SingleBike } />
         <Route exact path="/:username/items" component={ Items } />
+        <Route exact path="/:username/items/search" component={ Items } />
         <Route path="/:username/items/:id" component={ SingleItem } />
       </Switch>
     </>

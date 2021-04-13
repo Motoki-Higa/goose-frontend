@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config';
 
@@ -44,6 +44,19 @@ function Bikes() {
   const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
   const { isMyDashboard } = useContext(IsMyDashboard);
 
+  // username params
+  const { username } = useParams<{ username: string }>();
+
+  let history = useHistory();
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const query = params.get('q');
+
+  // for search
+  const handleSearch = async (data: any) => {
+    history.push('/' + username + '/bikes/search?q=' + data.search);
+  }
+
   // AddBtn onClick event
   const handleModalForm = () => {
     handleModal();
@@ -58,24 +71,28 @@ function Bikes() {
     }
   }) 
 
-  // username params
-  const { username } = useParams<{ username: string }>();
-
   // api call to get bikes
   useEffect( () => {
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
       axios.get(profileApi)
-        .then( (response) => {     
-          // const authUserId = authenticatedUser.id;
+        .then( response => {     
           const userId = response.data.user_id;
           let bikesApi = '';
 
           // if visiting your own dashboard, then call myBikes api, otherwise bikes api
           if (authenticatedUser.username === username){
-            bikesApi = config.apiBaseUrl + '/' + userId + '/myBikes';
+            if (query){
+              bikesApi = config.apiBaseUrl + '/' + userId + '/myBikes/search?q=' + query;
+            } else {
+              bikesApi = config.apiBaseUrl + '/' + userId + '/myBikes';
+            }
           } else {
-            bikesApi = config.apiBaseUrl + '/' + userId + '/bikes';
+            if (query){
+              bikesApi = config.apiBaseUrl + '/' + userId + '/bikes/search?q=' + query;
+            } else {
+              bikesApi = config.apiBaseUrl + '/' + userId + '/bikes';
+            }
           }
 
           axios.get(bikesApi)
@@ -84,7 +101,7 @@ function Bikes() {
             });
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detectAnyFormSubmit, username]) // detectAnyFormSubmit makes sure to re-render useEffect
+  }, [detectAnyFormSubmit, username, query]) // detectAnyFormSubmit makes sure to re-render useEffect
 
 
   return (
@@ -100,7 +117,7 @@ function Bikes() {
             :
             null
           }
-          <SearchBar />
+          <SearchBar onSubmit={ handleSearch }/>
         </ScUtilsInner>
 
         <ScUtilsCounter>Total: { bikes.length }</ScUtilsCounter>

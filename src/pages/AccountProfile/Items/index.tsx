@@ -44,6 +44,14 @@ function Items() {
   const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
 
   let history = useHistory();
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const query = params.get('q');
+
+  // for search
+  const handleSearch = async (data: any) => {
+    history.push('/' + username + '/items/search?q=' + data.search);
+  }
 
   // AddBtn onClick event
   const handleModalForm = () => {
@@ -69,13 +77,19 @@ function Items() {
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
       await axios.get(profileApi)
-        .then( (response) => {     
+        .then( response => {     
           const userId = response.data.user_id;
-          const itemsApi = config.apiBaseUrl + '/' + userId + '/items';
+          let itemsApi = config.apiBaseUrl + '/' + userId + '/items';
 
           // check if it's auth users dashboard
           if (authenticatedUser.username === username){
             setIsMyDashboard(true);
+
+            if (query){
+              itemsApi = config.apiBaseUrl + '/' + userId + '/items/search?q=' + query;
+            } else {
+              itemsApi = config.apiBaseUrl + '/' + userId + '/items';
+            }
 
             axios.get(itemsApi)
               .then( (response) => {
@@ -83,16 +97,15 @@ function Items() {
               });
           } else {
             setIsMyDashboard(false);
+            // if someone tries to access to other users /items url, then redirect to the users main page
             history.push("/" + username);
-
-            return
           }
 
         })
     
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detectAnyFormSubmit]) // detectAnyFormSubmit makes sure to re-render useEffect
+  }, [detectAnyFormSubmit, query]) // detectAnyFormSubmit makes sure to re-render useEffect
 
   return (
     <>
@@ -110,7 +123,7 @@ function Items() {
             null
           }
           
-          <SearchBar />
+          <SearchBar onSubmit={ handleSearch } />
         </ScUtilsInner>
 
         <ScUtilsCounter>Total: { items.length }</ScUtilsCounter>

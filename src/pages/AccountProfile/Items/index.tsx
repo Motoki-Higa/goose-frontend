@@ -96,7 +96,7 @@ function Items() {
 
   return (
     <>
-      <h1 className="Title">Items</h1>
+      {/* <h1 className="Title">Items</h1> */}
 
       {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>

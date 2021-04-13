@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Route, Switch, useParams, Redirect, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../config';
+import { Album, Category } from '@material-ui/icons';
 
 // context
 import { UserContext } from '../../context/UserContext';
@@ -20,7 +21,8 @@ import {
   ScProfileTxtArea,
   ScProfileName,
   ScProfileBio,
-  ScProfileWebsite
+  ScProfileWebsite,
+  ScSubNav
 } from './styles';
 
 function UserProfile(){
@@ -48,18 +50,15 @@ function UserProfile(){
   const { username } = useParams<{ username: string }>();
 
 
-  useEffect( () => {
-    if(authenticatedUser.username === username){
-      handleSetIsMyDashboard(true);
-    } else {
-      handleSetIsMyDashboard(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[username])
-
-
   useEffect(() => {
     (async() => {
+      // check if it's your own dashboard
+      if(authenticatedUser.username === username){
+        handleSetIsMyDashboard(true);
+      } else {
+        handleSetIsMyDashboard(false);
+      }
+
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
       // get profile by username
@@ -97,17 +96,22 @@ function UserProfile(){
       }
 
       {/* sub nav */}
-      <ul>
-        <NavLink to={`/${ user.username }/bikes`}>Bikes</NavLink>
+      <ScSubNav>
+        <NavLink to={`/${ user.username }/bikes`}>
+          <Album></Album>
+          <p>Bikes</p>
+        </NavLink>
 
         {
           isMyDashboard ?
-          <NavLink to={`/${ user.username }/items`}>Items</NavLink>
+          <NavLink to={`/${ user.username }/items`}>
+            <Category></Category>
+            <p>Items</p>
+          </NavLink>
           :
           null
         }
-        
-      </ul>
+      </ScSubNav>
 
       {/* components */}
       <Switch>

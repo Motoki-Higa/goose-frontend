@@ -12,7 +12,7 @@ import Home from '../pages/Home/index';
 import SignUp from '../pages/SignUp/index';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
-import UserProfile from '../pages/UserProfile';
+import AccountProfile from '../pages/AccountProfile';
 import Feed from '../pages/FeedAllBikes/index';
 import FeedSingleBike from '../pages/FeedSingleBike/index';
 import Authenticated from '../pages/Authenticated/index';
@@ -78,7 +78,7 @@ function App() {
                         <PrivateRoute path="/authenticated" component={ Authenticated } />
 
                         <IsMyDashboardProvider>
-                          <PrivateRoute path="/:username" component={ UserProfile } />
+                          <PrivateRoute path="/:username" component={ AccountProfile } />
                         </IsMyDashboardProvider>
                       </Switch>
                     </div>

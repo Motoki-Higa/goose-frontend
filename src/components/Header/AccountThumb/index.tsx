@@ -66,8 +66,7 @@ function AccountThumb(props: any) {
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
             <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
-              <NavLink to={`/${ userData.username }`}>My Profile</NavLink>
+              <NavLink to={`/${ userData.username }/bikes`}>Dashboard</NavLink>
             </li>
           </ul>
         </ScMoreOptionTable>

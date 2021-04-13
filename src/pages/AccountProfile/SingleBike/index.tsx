@@ -1,14 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../../config';
+import config from '../../../config';
 
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { FormContext } from '../../../context/FormContext';
+import { IsMyDashboard } from '../../../context/IsMyDashboardContext';
 
 // components
-import ItemDetail from './../../../components/ItemDetail';
+import ItemDetail from '../../../components/ItemDetail';
 import ArrowBackBtn from '../../../components/buttons/ArrowBackBtn';
 import MoreHorizBtn from '../../../components/buttons/MoreHorizBtn';
 
@@ -18,10 +19,12 @@ import {
   ScUtilsInner
 } from './styles';
 
-function SingleItem(props: any) {
+function SingleBike(props: any) {
 
-  interface IItem {
+  interface IBike {
     _id: string;
+    user_id: string;
+    username: string;
     name: string;
     brand: string;
     builtby: string;
@@ -32,9 +35,11 @@ function SingleItem(props: any) {
     }];
   }
 
-  // state : item
-  const [ item, setItem ] = useState<IItem>({
+  // state : bikes
+  const [ bike, setBike ] = useState<IBike>({
     _id: "",
+    user_id: "",
+    username: "",
     name: "",
     brand: "",
     builtby: "",
@@ -48,12 +53,13 @@ function SingleItem(props: any) {
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);
+  const { isMyDashboard } = useContext(IsMyDashboard);
 
-  // params
+  // id params
   const { username } = useParams<{ username: string }>();
   const { id } = useParams<{ id: string }>();
 
-  // api call to get an item
+  // api call to get a bike
   useEffect( () => {
     // async needs to be inside of useEffect instead of for the callback on useEffect
     (async() => { 
@@ -62,11 +68,11 @@ function SingleItem(props: any) {
       await axios.get(profileApi)
         .then( (response) => {     
           const userId = response.data.user_id;
-          const itemApi = config.apiBaseUrl + '/' + userId + '/items/' + id;
+          const bikeApi = config.apiBaseUrl + '/' + userId + '/bikes/' + id;
 
-          axios.get(itemApi)
+          axios.get(bikeApi)
             .then( (response) => {
-              setItem(response.data);
+              setBike(response.data);
               handleSetCurrentItem(response.data);
             });
         })
@@ -81,16 +87,23 @@ function SingleItem(props: any) {
       <ScUtils>
         <ScUtilsInner>
           <ArrowBackBtn />
-          <MoreHorizBtn 
-            editForm="EditItem"
-            deleteForm="DeleteItem" />
+
+          { // show more option ONLY if it's logged in users dashboard
+            isMyDashboard ?
+            <MoreHorizBtn 
+              editForm="EditBike"
+              deleteForm="DeleteBike" />
+            :
+            null
+          }
+          
         </ScUtilsInner>
       </ScUtils>
 
       {/* Send data to ItemDetail component */}
-      <ItemDetail item={ item } />
+      <ItemDetail item={ bike } />
     </>
   )
 }
 
-export default SingleItem;
+export default SingleBike;

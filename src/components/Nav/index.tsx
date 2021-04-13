@@ -39,7 +39,7 @@ function Nav() {
           </ScLi>
 
           <ScLi>
-            <NavLink to={`/${ authUser.username }`}>
+            <NavLink to={`/${ authUser.username }/bikes`}>
               <Dashboard />
               <p>Dashboard</p>
             </NavLink>

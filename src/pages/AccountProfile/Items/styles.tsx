@@ -16,7 +16,7 @@ const ScUtils = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
+  margin-top: 20px;
   padding: 0 10px;
   animation: ${ keyFadeIn } 0.5s ease-in;
 

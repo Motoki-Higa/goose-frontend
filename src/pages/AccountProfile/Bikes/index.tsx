@@ -7,6 +7,7 @@ import config from '../../../config';
 import { UserContext } from '../../../context/UserContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
+import { IsMyDashboard } from '../../../context/IsMyDashboardContext';
 
 // components
 import AddBtn from '../../../components/buttons/AddBtn';
@@ -35,13 +36,13 @@ function Bikes() {
   }
 
   // state : bikes
-  const [ isMyDashboard, setIsMyDashboard ] = useState(false);
   const [ bikes, setBikes ] = useState<IBikes[]>([]);
   
-  // destructure context to use
+  // context to use
   const { authenticatedUser } = useContext<any>(UserContext);
   const { handleModal, handleCloseModal } = useContext(ModalContext);
   const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
+  const { isMyDashboard } = useContext(IsMyDashboard);
 
   // AddBtn onClick event
   const handleModalForm = () => {
@@ -60,42 +61,34 @@ function Bikes() {
   // username params
   const { username } = useParams<{ username: string }>();
 
-
   // api call to get bikes
   useEffect( () => {
-    (async() => { 
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
-      await axios.get(profileApi)
+      axios.get(profileApi)
         .then( (response) => {     
           // const authUserId = authenticatedUser.id;
           const userId = response.data.user_id;
           let bikesApi = '';
 
+          // if visiting your own dashboard, then call myBikes api, otherwise bikes api
           if (authenticatedUser.username === username){
-            setIsMyDashboard(true);
             bikesApi = config.apiBaseUrl + '/' + userId + '/myBikes';
           } else {
             bikesApi = config.apiBaseUrl + '/' + userId + '/bikes';
           }
-          // // if visiting your own dashboard, then call myBikes api, otherwise bikes api
-          // const bikesApi = authUserId === userId ? config.apiBaseUrl + '/' + userId + '/myBikes'
-          //                                        : config.apiBaseUrl + '/' + userId + '/bikes'
 
           axios.get(bikesApi)
             .then( (response) => {
               setBikes(response.data.reverse());
             });
         })
-    
-    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detectAnyFormSubmit]) // detectAnyFormSubmit makes sure to re-render useEffect
+  }, [detectAnyFormSubmit, username]) // detectAnyFormSubmit makes sure to re-render useEffect
+
 
   return (
     <>
-      <h1 className="Title">Bikes</h1>
-
       {/* utility bar: AddBtn & SearchBar & Total number */}
       <ScUtils>
         <ScUtilsInner>
@@ -107,8 +100,6 @@ function Bikes() {
             :
             null
           }
-          
-          
           <SearchBar />
         </ScUtilsInner>
 
@@ -120,7 +111,6 @@ function Bikes() {
         items={ bikes }
         route={ 'bikes' } />
     </>
-    
   )
 }
 

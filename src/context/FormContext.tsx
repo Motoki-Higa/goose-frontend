@@ -5,7 +5,7 @@ export const FormContext = createContext({} as any);
 export const FormProvider: React.FC = (props) => {
   // state
   const [ formName, setFormName ] = useState('');
-  const [ detectAnyFormSubmit, setDetectAnyFormSubmit ] = useState();
+  const [ detectAnyFormSubmit, setDetectAnyFormSubmit ] = useState(false);
 
   // function to be used for onClick
   const handleSetForm = (form: string) => {

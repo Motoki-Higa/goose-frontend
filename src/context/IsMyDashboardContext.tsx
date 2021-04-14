@@ -8,7 +8,6 @@ export const IsMyDashboardProvider: React.FC = (props) => {
 
   const handleSetIsMyDashboard = (bool: boolean) => {
     setIsMyDashboard(bool);
-    console.log('setIsMyDashboard is: ' + bool);
   }
 
   // value to pass to the provider

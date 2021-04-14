@@ -41,7 +41,7 @@ function ItemList(props: any) {
           <ScItemCard key={ index }>
             <NavLink 
               onClick={ handleInfiniteScrollContext }
-              to={ // since search result component inherits category slug, just set item id, if it's searched list
+              to={ // since search result component inherits category slug, set only item id, if it's searched list
                 search ? item._id
                        : props.route + '/' +  item._id
                 } >

@@ -7,6 +7,7 @@ import DeleteBike from './DeleteBike';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
 import DeleteItem from './DeleteItem';
+import EditProfile from './EditProfile';
 
 function Form() {
   // destructure context to use
@@ -20,6 +21,7 @@ function Form() {
     'AddItem': AddItem,
     'EditItem': EditItem,
     'DeleteItem': DeleteItem,
+    'EditProfile': EditProfile,
   };
 
   // this returns a form component

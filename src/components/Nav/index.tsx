@@ -23,13 +23,17 @@ function Nav() {
 
   // username params (useParams() can't be used for nav component, so use below)
   const location = useLocation()
-  const username = location.pathname.split('/')[1]
+  
 
   useEffect( () => {
-    if (authUser.username === username){
-      setActiveClass('active');
-    } else {
-      setActiveClass('');
+    if (authUser){
+      const username = location.pathname.split('/')[1];
+
+      if (authUser.username === username){
+        setActiveClass('active');
+      } else {
+        setActiveClass('');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])

@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import config from './../../../config';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
+// contexts
+import { UserContext } from '../../../context/UserContext';
+import { ModalContext } from '../../../context/ModalContext';
+import { FormContext } from '../../../context/FormContext';
 
 // stles
 import { 
@@ -12,12 +15,25 @@ import {
   ScMoreOptionTable
 } from './styles';
 
-function AccountThumb(props: any) {
+function AccountThumb() {
   // state
   const [ userData, setUserData ] = useState<any>();
   const [ menu, setMenu ] = useState(false);
   const [ fadeClass, setFadeClass ] = useState('fadeOut');
 
+  // context
+  const { isProfileUpdated, authUserProfile } = useContext<any>(UserContext);
+  const { handleModal } = useContext(ModalContext);
+  const { handleSetForm } = useContext(FormContext);
+
+
+  // onClick event: setting which form to use
+  const handleModalForm = (formName: string) => {
+    handleModal();
+    handleSetForm(formName);
+  }
+
+  // handle toggle menu
   const handleMenu = () => {
     // fadeClass
     setFadeClass(fadeClass === 'fadeIn' ? 'fadeOut' : 'fadeIn');
@@ -37,24 +53,19 @@ function AccountThumb(props: any) {
   };
 
   useEffect( () => {
-    if (props.userId){
-      const apiUser = config.apiBaseUrl + '/' + props.userId + '/profile';
-
-      axios.get(apiUser)
-        .then( response => {
-          setUserData(response.data);
-        })
+    if (authUserProfile._id !== ''){
+      setUserData(authUserProfile);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[isProfileUpdated, authUserProfile])
 
   return(
     <>
       <ScAccountCircleWrapper onClick={ handleMenu }>
         <ClickAwayListener onClickAway={ handleClickAway }>
           { // if user data is ready to load and has image
-            userData && userData.image[0] ?
-            <ScAccountCircleImg style={{backgroundImage: `url( ${ userData.image[0].location } )`}} />
+            userData && userData.image.location !== '' ?
+            <ScAccountCircleImg style={{backgroundImage: `url( ${ userData.image.location } )`}} />
             :
             <ScAccountCircle></ScAccountCircle>
           }
@@ -67,6 +78,9 @@ function AccountThumb(props: any) {
           <ul>
             <li>
               <NavLink to={`/${ userData.username }/bikes`}>Dashboard</NavLink>
+            </li>
+            <li onClick={ () => handleModalForm('EditProfile') }>
+              Edit profile
             </li>
           </ul>
         </ScMoreOptionTable>

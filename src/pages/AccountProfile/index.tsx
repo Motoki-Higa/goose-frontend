@@ -33,17 +33,17 @@ function UserProfile(){
     username: string;
     bio: string;
     website: string;
-    image:[{
+    image:{
       key: string;
       location: string;
-    }]
+    }
   }
 
   // state
-  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", image: [{key: "", location: ""}]});
+  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", image: {key: "", location: ""}});
 
   // contenxt
-  const { authenticatedUser } = useContext<any>(UserContext);
+  const { isProfileUpdated, authenticatedUser } = useContext<any>(UserContext);
   const { isMyDashboard, handleSetIsMyDashboard } = useContext(IsMyDashboard);
 
   // username params
@@ -69,7 +69,7 @@ function UserProfile(){
           
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[username])
+  },[username, isProfileUpdated])
 
 
   return (
@@ -78,7 +78,7 @@ function UserProfile(){
         user ? 
         <ScProfile>
           <ScProfileImg 
-            style={{backgroundImage:`url(${ user.image[0] ? user.image[0].location : null})`}}/>
+            style={{backgroundImage:`url(${ user.image ? user.image.location : null})`}}/>
 
           <ScProfileTxtArea>
             <ScProfileName>{ user.username }</ScProfileName>

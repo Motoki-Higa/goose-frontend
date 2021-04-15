@@ -93,6 +93,11 @@ const ScItemDetailBrand = styled.div`
   }
 `
 
+const ScIconsBlock = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const ScItemDetailTxtArea = styled.div`
   width: 100%;
   max-width: 700px;
@@ -153,9 +158,10 @@ const ScItemDetailDataVal = styled.div`
 `
 
 const ScAccountCircleImg = styled.div`
+  display: inline-block;
   width: 36px;
   height: 36px;
-  margin: 0 0 0 auto;
+  margin: 0 0 0 8px;
   border-radius: 50%;
   transition: all 0.3s ease;
   animation: ${ keyFadeInProfileImg } 0.6s ease-in;
@@ -183,6 +189,7 @@ const ScAccountCircle = styled(AccountCircle)`
 
     @media (max-width: 768px) {
       font-size: 1.8125rem;
+      margin-left: 6px;
     }
   }
 
@@ -197,6 +204,7 @@ export {
   ScItemDetailTtlArea,
   ScItemDetailName,
   ScItemDetailBrand,
+  ScIconsBlock,
   ScItemDetailTxtArea,
   ScItemDetailRow,
   ScItemDetailCol,

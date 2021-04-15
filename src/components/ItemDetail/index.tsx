@@ -8,11 +8,15 @@ import Box from '@material-ui/core/Box';
 // context
 import { IsMyDashboard } from '../../context/IsMyDashboardContext';
 
+// components
+import BookmarkBtn from '../../components/buttons/BookmarkBtn/index';
+
 // styles
 import {
   ScItemDetail,
   ScItemDetailName,
   ScItemDetailBrand,
+  ScIconsBlock,
   ScItemDetailTxtArea,
   ScItemDetailTtlArea,
   ScItemDetailRow,
@@ -37,25 +41,28 @@ function ItemDetail(props: any) {
             <ScItemDetailBrand>{ props.item.brand }</ScItemDetailBrand>
           </div>
 
-          { // show public icon if publicity is TRUE and NOT /feed page and Is your own dashboard
-            props.item.public === 'true' && currentPath !== 'feed' && isMyDashboard ? <Public></Public> : null
-          }
+          <ScIconsBlock>
+            { // show public icon if publicity is TRUE and NOT /feed page and Is your own dashboard
+              props.item.public === 'true' && currentPath !== 'feed' && isMyDashboard ? <Public></Public> : null
+            }
 
-          { /* show user profile icon only on /feed */
-            currentPath === 'feed' ?
-            <NavLink to={`/${ props.user.username }/bikes`}>
-
-             {  // set image url once it's loaded from db
-                props.user.image.location !== '' ?
-                <ScAccountCircleImg style={{backgroundImage: `url( ${ props.user.image.location } )`}} />
-                :
-                <ScAccountCircle />
-             }
-
-            </NavLink>
-            :
-            null
-          }
+            {/* bookmark */}
+            <BookmarkBtn />
+            
+            { /* show user profile icon only on /feed */
+              currentPath === 'feed' ?
+              <NavLink to={`/${ props.user.username }/bikes`}>
+                {  // set image url once it's loaded from db
+                  props.user.image.location !== '' ?
+                  <ScAccountCircleImg style={{backgroundImage: `url( ${ props.user.image.location } )`}} />
+                  :
+                  <ScAccountCircle />
+                }
+              </NavLink>
+              :
+              null
+            }
+          </ScIconsBlock>
         </ScItemDetailTtlArea>
         
         {/* EmblaCarousel library */}

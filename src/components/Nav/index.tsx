@@ -53,7 +53,7 @@ function Nav() {
           </ScLi>
 
           <ScLi>
-            <NavLink to="/saved">
+            <NavLink to="/bookmarks">
               <Bookmark />
               <p>Saved</p>
             </NavLink>

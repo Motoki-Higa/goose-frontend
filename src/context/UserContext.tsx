@@ -1,15 +1,17 @@
 import { useState, createContext, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Utils from '../Utils';
-import axios from 'axios';
+import axios, { Method } from 'axios';
 import config from '../config';
 
 // set the type of state you want to handle with context e.g.
 interface ContextState {
-  isProfileUpdated: boolean;
-  handleSetIsProfileUpdated: any;
   authenticatedUser: string | null;
   authUserProfile: any;
+  authUserBookmark: any;
+  isProfileUpdated: boolean;
+  handleBookmarkUpdate: Function;
+  handleSetIsProfileUpdated: any;
   utils: any;
   actions: {
     signIn: Function;
@@ -22,26 +24,56 @@ export const UserContext = createContext({} as ContextState);
 // export Provider
 export const UserProvider: React.FC = (props) => {
 
-  interface IAuthUserProfile {
-    _id: string;
-    user_id: string;
-    username: string;
-    bio: string;
-    website: string;
-    image:[{
-      key: string;
-      location: string;
-    }]
+  const profileObj = {
+    _id: "", 
+    user_id: "", 
+    username: "", 
+    bio: "", 
+    website: "", 
+    image: [{key: "", location: ""}]
   }
 
+
   // state
-  const [ isProfileUpdated, setIsProfileUpdated ] = useState(false);
   const [ authenticatedUser, setAuthenticatedUser ] = useState(Cookies.getJSON('authenticatedUser') || null);
-  const [ authUserProfile, setAuthUserProfile ] = useState<IAuthUserProfile>({_id: "", user_id: "", username: "", bio: "", website: "", image: [{key: "", location: ""}]});
+  const [ authUserProfile, setAuthUserProfile ] = useState(profileObj);
+  const [ authUserBookmark, setAuthUserBookmark ] = useState<string[]>([])
+  const [ isProfileUpdated, setIsProfileUpdated ] = useState(false);
+
+
+  // handle bookmark update
+  const handleBookmarkUpdate = (itemId: string, bookmarked: boolean | undefined) => {
+    const bookmarkApi = config.apiBaseUrl + '/bookmark/bikes/' + itemId;
+    const method = bookmarked ? 'DELETE' : 'POST';
+
+    axios({
+      method: method,
+      url: bookmarkApi
+    })
+    .then(response => {
+
+      if (method === 'POST'){
+        // if POST, then push a new item(id) to array
+        setAuthUserBookmark(prevArray => [...prevArray, response.data.id]);
+      } else {
+        // if GET, then remove the item(id) from array
+        setAuthUserBookmark(prevArray => prevArray.filter(item => item !== response.data.id));
+      }
+      
+    })
+    
+  }
+  
+
+  // this is used for re-rendering components by notifiying
+  const handleSetIsProfileUpdated = () => {
+    setIsProfileUpdated(true);
+    setIsProfileUpdated(false);
+  }
+
 
   // get utils with object constructor. (Utils comes with 'createUser' and 'getUser' functions)
   const utils = new Utils();
-
 
   // signin
   const signIn = async (email: string, password: string) => {
@@ -54,7 +86,6 @@ export const UserProvider: React.FC = (props) => {
     return user;
   }
 
-
   // signout
   const signOut = () => {
     // empty out user
@@ -63,21 +94,27 @@ export const UserProvider: React.FC = (props) => {
   };
 
 
-  const handleSetIsProfileUpdated = () => {
-    setIsProfileUpdated(true);
-    setIsProfileUpdated(false);
-  }
-
-
   // set authenticated user's profile
   useEffect(() => {
     if (authenticatedUser){
       const profileApi = config.apiBaseUrl + '/profile/' + authenticatedUser.username;
+      const bookmarkApi = config.apiBaseUrl + '/' + authenticatedUser._id + '/bookmark';
 
       // get profile by username
-      axios.get(profileApi)
-        .then( (response) => {
-          setAuthUserProfile(response.data);
+      const profile = axios.get(profileApi)
+        .then( (response) => response.data)
+
+      // get bookmark
+      const bookmark = axios.get(bookmarkApi)
+        .then( (response) => response.data)
+
+      Promise.all([profile, bookmark])
+        .then( response => {
+          const [ profileObj, bookmarkObj ]: any = response
+
+          setAuthUserProfile(profileObj);
+          setAuthUserBookmark(bookmarkObj.bike_ids);
+          console.log(bookmarkObj.bike_ids);
         })
     }
   },[authenticatedUser, isProfileUpdated])
@@ -85,10 +122,12 @@ export const UserProvider: React.FC = (props) => {
 
   // value to pass to the provider
   const value = {
-    isProfileUpdated,
-    handleSetIsProfileUpdated,
     authenticatedUser,
     authUserProfile,
+    authUserBookmark,
+    isProfileUpdated,
+    handleBookmarkUpdate,
+    handleSetIsProfileUpdated,
     utils,
     actions: {
       signIn,

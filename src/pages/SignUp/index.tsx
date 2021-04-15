@@ -38,10 +38,10 @@ function SignUp(props: any) {
         else {
           console.log(`${data.username} is successfully signed up and authenticated!`);
 
-          // store user info in cookie and redirect to authenticated page
+          // store user info in cookie and redirect to /dashboard/bikes page
           context.actions.signIn(data.email, data.password)
             .then(() => {
-              props.history.push('/authenticated')
+              props.history.push('/dashboard/bikes')
             })
         }
       })

@@ -15,7 +15,7 @@ import SignOut from '../pages/SignOut/index';
 import AccountProfile from '../pages/AccountProfile';
 import Feed from '../pages/FeedAllBikes/index';
 import FeedSingleBike from '../pages/FeedSingleBike/index';
-import Authenticated from '../pages/Authenticated/index';
+import Bookmarks from '../pages/AccountProfile/Bookmarks/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
 import Notification from '../components/Notification';
@@ -75,7 +75,7 @@ function App() {
                         <PrivateRoute exact path="/feed/search" component={ Feed } />
                         <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
 
-                        <PrivateRoute path="/authenticated" component={ Authenticated } />
+                        <PrivateRoute path="/bookmarks" component={ Bookmarks } />
 
                         <IsMyDashboardProvider>
                           <PrivateRoute path="/:username" component={ AccountProfile } />

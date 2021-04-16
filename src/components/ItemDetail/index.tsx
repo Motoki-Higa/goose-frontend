@@ -47,7 +47,7 @@ function ItemDetail(props: any) {
             }
 
             {/* bookmark */}
-            <BookmarkBtn />
+            <BookmarkBtn bike={props.item} />
             
             { /* show user profile icon only on /feed */
               currentPath === 'feed' ?

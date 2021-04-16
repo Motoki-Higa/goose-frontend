@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Utils from '../Utils';
-import axios, { Method } from 'axios';
+import axios from 'axios';
 import config from '../config';
 
 // set the type of state you want to handle with context e.g.
@@ -71,7 +71,6 @@ export const UserProvider: React.FC = (props) => {
     setIsProfileUpdated(false);
   }
 
-
   // get utils with object constructor. (Utils comes with 'createUser' and 'getUser' functions)
   const utils = new Utils();
 
@@ -94,7 +93,7 @@ export const UserProvider: React.FC = (props) => {
   };
 
 
-  // set authenticated user's profile
+  // set auth user's profile AND bookmark objects
   useEffect(() => {
     if (authenticatedUser){
       const profileApi = config.apiBaseUrl + '/profile/' + authenticatedUser.username;
@@ -113,8 +112,11 @@ export const UserProvider: React.FC = (props) => {
           const [ profileObj, bookmarkObj ]: any = response
 
           setAuthUserProfile(profileObj);
-          setAuthUserBookmark(bookmarkObj.bike_ids);
-          console.log(bookmarkObj.bike_ids);
+
+          if (bookmarkObj){
+            setAuthUserBookmark(bookmarkObj.bike_ids);
+          }
+          
         })
     }
   },[authenticatedUser, isProfileUpdated])

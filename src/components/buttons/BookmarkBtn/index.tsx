@@ -10,7 +10,7 @@ import {
   ScBookmarkWrap,
 } from './styles';
 
-function BookmarkBtn(){
+function BookmarkBtn(props: any){
   // state
   const [ isBookmarked, setIsBookmarked ] = useState(false);
 
@@ -34,7 +34,7 @@ function BookmarkBtn(){
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[authUserBookmark])
 
-  
+
   return (
     <ScBookmarkWrap 
       onClick={ handleOnClick } 

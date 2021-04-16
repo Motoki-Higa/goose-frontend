@@ -18,7 +18,7 @@ import {
 } from './styles';
 
 
-function FeedAllBikes() {
+function FeedAllBikes(){
 
   interface IBikes {
     name: string;
@@ -141,7 +141,6 @@ function FeedAllBikes() {
 
       </InfiniteScroll>
     </>
-    
   )
 }
 

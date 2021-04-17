@@ -89,6 +89,8 @@ export const UserProvider: React.FC = (props) => {
   const signOut = () => {
     // empty out user
     setAuthenticatedUser(null);
+    setAuthUserProfile(profileObj);
+    setAuthUserBookmark([])
     Cookies.remove('authenticatedUser');
   };
 

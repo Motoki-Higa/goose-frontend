@@ -15,7 +15,7 @@ function SignIn(props: any) {
   const context = useContext(UserContext);
 
   const [ apiError, setApiError ] = useState<string[]>([]); // for error handling from api
-  const { from } = props.location.state || { from: { pathname: '/'} };
+  // const { from } = props.location.state || { from: { pathname: '/'} };
   const { control, handleSubmit, errors } = useForm();
 
   // handle submit
@@ -34,7 +34,7 @@ function SignIn(props: any) {
           // store user info in cookie and redirect to authenticated page
           context.actions.signIn(data.email, data.password)
             .then(() => {
-              props.history.push(from)
+              props.history.push('/feed')
             })
         }
       })

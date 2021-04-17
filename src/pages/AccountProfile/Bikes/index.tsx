@@ -47,6 +47,7 @@ function Bikes() {
   // username params
   const { username } = useParams<{ username: string }>();
 
+  // below are used for search function
   let history = useHistory();
   const search = window.location.search;
   const params = new URLSearchParams(search);
@@ -73,6 +74,8 @@ function Bikes() {
 
   // api call to get bikes
   useEffect( () => {
+    // async needs to be inside of useEffect instead of for the callback on useEffect
+    (async() => { 
       const profileApi = config.apiBaseUrl + '/profile/' + username;
 
       axios.get(profileApi)
@@ -100,6 +103,7 @@ function Bikes() {
               setBikes(response.data.reverse());
             });
         })
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detectAnyFormSubmit, username, query]) // detectAnyFormSubmit makes sure to re-render useEffect
 

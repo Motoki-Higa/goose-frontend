@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config';
 
@@ -7,6 +8,15 @@ import { UserContext } from '../../../context/UserContext';
 
 // components
 import ItemList from '../../../components/ItemList';
+import SearchBar from '../../../components/SearchBar';
+
+// styles
+import {
+  ScUtils,
+  ScUtilsInner,
+  // ScUtilsCounter
+} from './styles';
+
 
 function Bookmarks(){
   // state
@@ -14,14 +24,35 @@ function Bookmarks(){
   // context
   const { authenticatedUser, authUserBookmark }: any = useContext(UserContext);
 
+  // below are used for search function
+  let history = useHistory();
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const query = params.get('q');
+
+  // username params
+  const { username } = useParams<{ username: string }>();
+
+  // for search
+  const handleSearch = async (data: any) => {
+    history.push('/bookmarks/bikes/search?q=' + data.search);
+  }
+
   // get all saved bike by calling api with bike ids which are stored in 'authUserBookmark'
   useEffect(() => {
     if (authUserBookmark.length > 0){
-      const getSavedBikesApi = config.apiBaseUrl + '/' + authenticatedUser.id + '/bookmark/bikes';
+      // const getSavedBikesApi = config.apiBaseUrl + '/' + authenticatedUser.id + '/bookmark/bikes';
+      let apiUrl = '';
+
+      if (query){
+        apiUrl = config.apiBaseUrl + '/' + authenticatedUser.id + '/bookmark/bikes/search?q=' + query;
+      } else {
+        apiUrl = config.apiBaseUrl + '/' + authenticatedUser.id + '/bookmark/bikes';
+      }
 
       axios({
         method: 'post',
-        url: getSavedBikesApi,
+        url: apiUrl,
         data: {
           bikeIds: authUserBookmark
         }
@@ -32,11 +63,18 @@ function Bookmarks(){
 
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[authUserBookmark])
+  },[authUserBookmark, query])
 
   return (
     <>
       <h1 className="Title">Bookmarks</h1>
+
+      {/* utility bar: AddBtn & SearchBar */}
+      <ScUtils>
+        <ScUtilsInner>          
+          <SearchBar onSubmit={ handleSearch }/>
+        </ScUtilsInner>
+      </ScUtils>
       
       {
         bookmarks ?

@@ -41,7 +41,7 @@ function SignUp(props: any) {
           // store user info in cookie and redirect to /dashboard/bikes page
           context.actions.signIn(data.email, data.password)
             .then(() => {
-              props.history.push('/dashboard/bikes')
+              props.history.push('/feed')
             })
         }
       })

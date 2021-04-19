@@ -10,8 +10,10 @@ interface ContextState {
   authUserProfile: any;
   authUserBookmark: any;
   isProfileUpdated: boolean;
+  isAccountUpdated: boolean;
   handleBookmarkUpdate: Function;
   handleSetIsProfileUpdated: any;
+  handleSetIsAccountUpdated: any;
   utils: any;
   actions: {
     signIn: Function;
@@ -39,6 +41,7 @@ export const UserProvider: React.FC = (props) => {
   const [ authUserProfile, setAuthUserProfile ] = useState(profileObj);
   const [ authUserBookmark, setAuthUserBookmark ] = useState<string[]>([])
   const [ isProfileUpdated, setIsProfileUpdated ] = useState(false);
+  const [ isAccountUpdated, setIsAccountUpdated ] = useState(false);
 
 
   // handle bookmark update
@@ -70,6 +73,13 @@ export const UserProvider: React.FC = (props) => {
     setIsProfileUpdated(true);
     setIsProfileUpdated(false);
   }
+
+  // this is used for re-rendering components by notifiying
+  const handleSetIsAccountUpdated = () => {
+    setIsAccountUpdated(true);
+    setIsAccountUpdated(false);
+  }
+
 
   // get utils with object constructor. (Utils comes with 'createUser' and 'getUser' functions)
   const utils = new Utils();
@@ -115,6 +125,7 @@ export const UserProvider: React.FC = (props) => {
 
           setAuthUserProfile(profileObj);
 
+          // this condition makes sure that it wont run for the new user who doesn't have bookmark object created yet
           if (bookmarkObj){
             setAuthUserBookmark(bookmarkObj.bike_ids);
           }
@@ -130,8 +141,10 @@ export const UserProvider: React.FC = (props) => {
     authUserProfile,
     authUserBookmark,
     isProfileUpdated,
+    isAccountUpdated,
     handleBookmarkUpdate,
     handleSetIsProfileUpdated,
+    handleSetIsAccountUpdated,
     utils,
     actions: {
       signIn,

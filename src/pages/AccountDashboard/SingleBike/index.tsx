@@ -6,7 +6,7 @@ import config from '../../../config';
 // contexts
 import { CurrentItemContext } from '../../../context/CurrentItemContext';
 import { FormContext } from '../../../context/FormContext';
-import { IsMyDashboard } from '../../../context/IsMyDashboardContext';
+import { IsMyAccount } from '../../../context/IsMyAccountContext';
 
 // components
 import ItemDetail from '../../../components/ItemDetail';
@@ -53,7 +53,7 @@ function SingleBike(props: any) {
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
   const { detectAnyFormSubmit } = useContext(FormContext);
-  const { isMyDashboard } = useContext(IsMyDashboard);
+  const { isMyAccount } = useContext(IsMyAccount);
 
   // id params
   const { username } = useParams<{ username: string }>();
@@ -89,7 +89,7 @@ function SingleBike(props: any) {
           <ArrowBackBtn />
 
           { // show more option ONLY if it's logged in users dashboard
-            isMyDashboard ?
+            isMyAccount ?
             <MoreHorizBtn 
               editForm="EditBike"
               deleteForm="DeleteBike" />

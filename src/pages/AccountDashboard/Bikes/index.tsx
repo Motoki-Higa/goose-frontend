@@ -7,7 +7,7 @@ import config from '../../../config';
 import { UserContext } from '../../../context/UserContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
-import { IsMyDashboard } from '../../../context/IsMyDashboardContext';
+import { IsMyAccount } from '../../../context/IsMyAccountContext';
 
 // components
 import AddBtn from '../../../components/buttons/AddBtn';
@@ -42,7 +42,7 @@ function Bikes() {
   const { authenticatedUser } = useContext<any>(UserContext);
   const { handleModal, handleCloseModal } = useContext(ModalContext);
   const { handleSetForm, handleCloseForm, detectAnyFormSubmit } = useContext(FormContext);
-  const { isMyDashboard } = useContext(IsMyDashboard);
+  const { isMyAccount } = useContext(IsMyAccount);
 
   // username params
   const { username } = useParams<{ username: string }>();
@@ -114,7 +114,7 @@ function Bikes() {
       <ScUtils>
         <ScUtilsInner>
           {
-            isMyDashboard ?
+            isMyAccount ?
             <div onClick={ handleModalForm }>
               <AddBtn />
             </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config';
 
@@ -29,9 +29,6 @@ function Bookmarks(){
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const query = params.get('q');
-
-  // username params
-  const { username } = useParams<{ username: string }>();
 
   // for search
   const handleSearch = async (data: any) => {

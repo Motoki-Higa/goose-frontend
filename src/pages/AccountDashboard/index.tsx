@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Route, Switch, useParams, Redirect, NavLink } from 'react-router-dom';
-import axios from 'axios';
-import config from '../../config';
 import { Album, Category } from '@material-ui/icons';
 
 // context
 import { UserContext } from '../../context/UserContext';
-import { IsMyDashboard } from '../../context/IsMyDashboardContext';
+import { IsMyAccount } from '../../context/IsMyAccountContext';
 
 // components
 import Bikes from './Bikes';
@@ -25,69 +23,44 @@ import {
   ScSubNav
 } from './styles';
 
-function UserProfile(){
 
-  interface IUser {
-    _id: string;
-    user_id: string;
-    username: string;
-    bio: string;
-    website: string;
-    image:{
-      key: string;
-      location: string;
-    }
-  }
-
-  // state
-  const [user, setUser] = useState<IUser>({_id: "", user_id: "", username: "", bio: "", website: "", image: {key: "", location: ""}});
-
+function AccountDashboard(){
   // contenxt
-  const { isProfileUpdated, authenticatedUser } = useContext<any>(UserContext);
-  const { isMyDashboard, handleSetIsMyDashboard } = useContext(IsMyDashboard);
+  const { authUserProfile, isProfileUpdated, authenticatedUser } = useContext<any>(UserContext);
+  const { isMyAccount, handleSetIsMyAccount } = useContext(IsMyAccount);
 
   // username params
   const { username } = useParams<{ username: string }>();
 
 
   useEffect(() => {
-    (async() => {
-      // check if it's your own dashboard
-      if(authenticatedUser.username === username){
-        handleSetIsMyDashboard(true);
-      } else {
-        handleSetIsMyDashboard(false);
-      }
-
-      const profileApi = config.apiBaseUrl + '/profile/' + username;
-
-      // get profile by username
-      await axios.get(profileApi)
-        .then( (response) => {     
-          setUser(response.data);
-        })
-          
-    })()
+    // check if it's your own dashboard
+    if(authenticatedUser.username === username){
+      handleSetIsMyAccount(true);
+    } else {
+      handleSetIsMyAccount(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[username, isProfileUpdated])
 
 
   return (
     <>
+      <h1 className="Title">Dashboard</h1>
       {
-        user ? 
+        authUserProfile ? 
         <ScProfile>
           <ScProfileImg 
-            style={{backgroundImage:`url(${ user.image ? user.image.location : null})`}}/>
+            style={{backgroundImage:`url(${ authUserProfile.image ? authUserProfile.image.location : null})`}}/>
 
           <ScProfileTxtArea>
-            <ScProfileName>{ user.username }</ScProfileName>
-            <ScProfileBio>{ user.bio }</ScProfileBio>
+            <ScProfileName>{ authUserProfile.username }</ScProfileName>
+            <ScProfileBio>{ authUserProfile.bio }</ScProfileBio>
             <ScProfileWebsite>
               <a 
-                href={ user.website }
+                href={ authUserProfile.website }
                 rel="noreferrer"
-                target="_blank" >{ user.website.replace(/^https?:\/\//i, "") }</a>
+                target="_blank" >{ authUserProfile.website.replace(/^https?:\/\//i, "") }</a>
             </ScProfileWebsite>
           </ScProfileTxtArea>
         </ScProfile>
@@ -97,14 +70,14 @@ function UserProfile(){
 
       {/* sub nav */}
       <ScSubNav>
-        <NavLink to={`/${ user.username }/dashboard/bikes`}>
+        <NavLink to={`/${ authUserProfile.username }/dashboard/bikes`}>
           <Album></Album>
           <p>Bikes</p>
         </NavLink>
 
         {
-          isMyDashboard ?
-          <NavLink to={`/${ user.username }/dashboard/items`}>
+          isMyAccount ?
+          <NavLink to={`/${ authUserProfile.username }/dashboard/items`}>
             <Category></Category>
             <p>Items</p>
           </NavLink>
@@ -115,16 +88,18 @@ function UserProfile(){
 
       {/* components */}
       <Switch>
+        {/* /dashboard/bikes */}
         <Route exact path="/:username/dashboard/bikes" component={ Bikes } />
         <Route exact path="/:username/dashboard/bikes/search" component={ Bikes } />
         <Route path="/:username/dashboard/bikes/:id" component={ SingleBike } />
-        
+        {/* /dashboard/imtes */}
         <Route exact path="/:username/dashboard/items" component={ Items } />
         <Route exact path="/:username/dashboard/items/search" component={ Items } />
         <Route path="/:username/dashboard/items/:id" component={ SingleItem } />
+        {/* /settings */}
       </Switch>
     </>
   )
 }
 
-export default UserProfile;
+export default AccountDashboard;

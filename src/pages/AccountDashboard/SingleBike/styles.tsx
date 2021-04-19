@@ -10,7 +10,7 @@ const ScUtils = styled.div`
   z-index: 2;
 
   @media (max-width: 768px) {
-    margin-top: 0px;
+    margin-top: 12px;
   }
 `;
 

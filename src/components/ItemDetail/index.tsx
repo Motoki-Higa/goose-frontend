@@ -6,7 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
 // context
-import { IsMyDashboard } from '../../context/IsMyDashboardContext';
+import { IsMyAccount } from '../../context/IsMyAccountContext';
 
 // components
 import BookmarkBtn from '../../components/buttons/BookmarkBtn/index';
@@ -31,7 +31,7 @@ function ItemDetail(props: any) {
   const currentPath = window.location.pathname.split('/')[1];
 
   // contexts
-  const { isMyDashboard } = useContext(IsMyDashboard);
+  const { isMyAccount } = useContext(IsMyAccount);
 
   return (
       <ScItemDetail>
@@ -43,7 +43,7 @@ function ItemDetail(props: any) {
 
           <ScIconsBlock>
             { // show public icon if publicity is TRUE and NOT /feed page and Is your own dashboard
-              props.item.public === 'true' && currentPath !== 'feed' && isMyDashboard ? <Public></Public> : null
+              props.item.public === 'true' && currentPath !== 'feed' && isMyAccount ? <Public></Public> : null
             }
 
             {/* bookmark */}

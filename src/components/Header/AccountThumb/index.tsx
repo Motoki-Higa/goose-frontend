@@ -4,8 +4,6 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 // contexts
 import { UserContext } from '../../../context/UserContext';
-import { ModalContext } from '../../../context/ModalContext';
-import { FormContext } from '../../../context/FormContext';
 
 // stles
 import { 
@@ -23,15 +21,7 @@ function AccountThumb() {
 
   // context
   const { isProfileUpdated, authUserProfile } = useContext<any>(UserContext);
-  const { handleModal } = useContext(ModalContext);
-  const { handleSetForm } = useContext(FormContext);
 
-
-  // onClick event: setting which form to use
-  const handleModalForm = (formName: string) => {
-    handleModal();
-    handleSetForm(formName);
-  }
 
   // handle toggle menu
   const handleMenu = () => {
@@ -80,10 +70,7 @@ function AccountThumb() {
               <NavLink to={`/${ userData.username }/bikes`}>Dashboard</NavLink>
             </li> */}
             <li>
-              <NavLink to={`/${ userData.username }/dashboard/bikes`}>Dashboard</NavLink>
-            </li>
-            <li onClick={ () => handleModalForm('EditProfile') }>
-              Edit profile
+              <NavLink to={`/${ userData.username }/settings/profile`}>Settings</NavLink>
             </li>
           </ul>
         </ScMoreOptionTable>

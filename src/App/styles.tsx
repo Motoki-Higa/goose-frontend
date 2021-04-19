@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
   .Title {
     font-size: 1rem;
     font-weight: 600;
-    letter-spacing: 0.25rem;
+    letter-spacing: 0.125rem;
     color: ${ props => props.theme.colors.black };
     text-align: center;
 

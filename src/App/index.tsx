@@ -12,10 +12,11 @@ import Home from '../pages/Home/index';
 import SignUp from '../pages/SignUp/index';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
-import AccountProfile from '../pages/AccountProfile';
+import AccountDashboard from '../pages/AccountDashboard';
+import AccountSettings from '../pages/AccountSettings';
 import Feed from '../pages/FeedAllBikes/index';
 import FeedSingleBike from '../pages/FeedSingleBike/index';
-import Bookmarks from '../pages/AccountProfile/Bookmarks/index';
+import Bookmarks from '../pages/AccountDashboard/Bookmarks/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
 import Notification from '../components/Notification';
@@ -27,7 +28,7 @@ import { FormProvider } from '../context/FormContext';
 import { CurrentItemProvider } from '../context/CurrentItemContext';
 import { InfiniteScrollProvider } from '../context/InfiniteScrollContext';
 import { NotificationProvider } from '../context/NotificationContext';
-import { IsMyDashboardProvider } from '../context/IsMyDashboardContext';
+import { IsMyAccountProvider } from '../context/IsMyAccountContext';
 
 // private route with context
 import { PrivateRoute } from '../PrivateRoute';
@@ -77,9 +78,10 @@ function App() {
 
                         <PrivateRoute path="/bookmarks" component={ Bookmarks } />
 
-                        <IsMyDashboardProvider>
-                          <PrivateRoute path="/:username/dashboard" component={ AccountProfile } />
-                        </IsMyDashboardProvider>
+                        <IsMyAccountProvider>
+                          <PrivateRoute path="/:username/dashboard" component={ AccountDashboard } />
+                          <PrivateRoute path="/:username/settings" component={ AccountSettings } />
+                        </IsMyAccountProvider>
                       </Switch>
                     </div>
 

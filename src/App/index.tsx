@@ -78,7 +78,7 @@ function App() {
                         <PrivateRoute path="/bookmarks" component={ Bookmarks } />
 
                         <IsMyDashboardProvider>
-                          <PrivateRoute path="/:username" component={ AccountProfile } />
+                          <PrivateRoute path="/:username/dashboard" component={ AccountProfile } />
                         </IsMyDashboardProvider>
                       </Switch>
                     </div>

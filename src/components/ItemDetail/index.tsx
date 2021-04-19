@@ -51,7 +51,7 @@ function ItemDetail(props: any) {
             
             { /* show user profile icon only on /feed */
               currentPath === 'feed' ?
-              <NavLink to={`/${ props.user.username }/bikes`}>
+              <NavLink to={`/${ props.user.username }/dashboard/bikes`}>
                 {  // set image url once it's loaded from db
                   props.user.image.location !== '' ?
                   <ScAccountCircleImg style={{backgroundImage: `url( ${ props.user.image.location } )`}} />

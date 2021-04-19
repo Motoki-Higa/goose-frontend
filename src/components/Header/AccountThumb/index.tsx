@@ -76,8 +76,11 @@ function AccountThumb() {
         menu ?
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
-            <li>
+            {/* <li>
               <NavLink to={`/${ userData.username }/bikes`}>Dashboard</NavLink>
+            </li> */}
+            <li>
+              <NavLink to={`/${ userData.username }/dashboard/bikes`}>Dashboard</NavLink>
             </li>
             <li onClick={ () => handleModalForm('EditProfile') }>
               Edit profile

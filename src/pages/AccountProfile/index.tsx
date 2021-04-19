@@ -97,14 +97,14 @@ function UserProfile(){
 
       {/* sub nav */}
       <ScSubNav>
-        <NavLink to={`/${ user.username }/bikes`}>
+        <NavLink to={`/${ user.username }/dashboard/bikes`}>
           <Album></Album>
           <p>Bikes</p>
         </NavLink>
 
         {
           isMyDashboard ?
-          <NavLink to={`/${ user.username }/items`}>
+          <NavLink to={`/${ user.username }/dashboard/items`}>
             <Category></Category>
             <p>Items</p>
           </NavLink>
@@ -115,13 +115,13 @@ function UserProfile(){
 
       {/* components */}
       <Switch>
-        <Route exact path="/:username/bikes" component={ Bikes } />
-        <Route exact path="/:username/bikes/search" component={ Bikes } />
-        <Route path="/:username/bikes/:id" component={ SingleBike } />
+        <Route exact path="/:username/dashboard/bikes" component={ Bikes } />
+        <Route exact path="/:username/dashboard/bikes/search" component={ Bikes } />
+        <Route path="/:username/dashboard/bikes/:id" component={ SingleBike } />
         
-        <Route exact path="/:username/items" component={ Items } />
-        <Route exact path="/:username/items/search" component={ Items } />
-        <Route path="/:username/items/:id" component={ SingleItem } />
+        <Route exact path="/:username/dashboard/items" component={ Items } />
+        <Route exact path="/:username/dashboard/items/search" component={ Items } />
+        <Route path="/:username/dashboard/items/:id" component={ SingleItem } />
       </Switch>
     </>
   )

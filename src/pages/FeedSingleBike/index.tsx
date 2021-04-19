@@ -77,7 +77,8 @@ function FeedSingleBike() {
 
         await axios.get(urlFeed)
           .then( response => {
-            const urlUser = config.apiBaseUrl + '/' + response.data.user_id + '/profile'
+            // const urlUser = config.apiBaseUrl + '/' + response.data.user_id + '/profile';
+            const urlUser = config.apiBaseUrl + '/profile/userId/' + response.data.user_id;
             data.push(response.data);
 
             axios.get(urlUser)

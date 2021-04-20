@@ -101,7 +101,9 @@ function SingleBike(props: any) {
       </ScUtils>
 
       {/* Send data to ItemDetail component */}
-      <ItemDetail item={ bike } />
+      <ItemDetail 
+        item={ bike }
+        cat="item" />
     </>
   )
 }

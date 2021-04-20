@@ -47,7 +47,13 @@ function ItemDetail(props: any) {
             }
 
             {/* bookmark */}
-            <BookmarkBtn bike={props.item} />
+            {
+              props.cat ?
+              <BookmarkBtn bike={props.item} />
+              :
+              null
+            }
+            
             
             { /* show user profile icon only on /feed */
               currentPath === 'feed' ?

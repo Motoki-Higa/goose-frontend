@@ -12,7 +12,7 @@ const ScHeader = styled.header`
   top: 0;
   padding: 0 24px;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 3;
   
   @media (max-width: 768px) {
     justify-content: space-between;

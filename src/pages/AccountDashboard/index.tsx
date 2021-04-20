@@ -1,6 +1,8 @@
-import { useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Route, Switch, useParams, Redirect, NavLink } from 'react-router-dom';
 import { Album, Category } from '@material-ui/icons';
+import axios from 'axios';
+import config from '../../config';
 
 // context
 import { UserContext } from '../../context/UserContext';
@@ -25,6 +27,31 @@ import {
 
 
 function AccountDashboard(){
+  interface IProfile {
+    _id: string;
+    user_id: string;
+    username: string;
+    bio: string;
+    website: string;
+    image: {
+      key: string;
+      location: string;
+    };
+  }
+
+  // state
+  const [ userData, setUserData ] = useState<IProfile>({
+    _id: '',
+    user_id: '',
+    username: '',
+    bio: '',
+    website: '',
+    image: {
+      key: '',
+      location: '',
+    },
+  });
+
   // contenxt
   const { authUserProfile, isProfileUpdated, authenticatedUser } = useContext<any>(UserContext);
   const { isMyAccount, handleSetIsMyAccount } = useContext(IsMyAccount);
@@ -37,30 +64,38 @@ function AccountDashboard(){
     // check if it's your own dashboard
     if(authenticatedUser.username === username){
       handleSetIsMyAccount(true);
+      setUserData(authUserProfile)
+      
     } else {
+      const userApi = config.apiBaseUrl + '/profile/' + username;
+
+      axios.get(userApi)
+        .then(response => {
+          setUserData(response.data);
+        })
       handleSetIsMyAccount(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[username, isProfileUpdated])
+  },[username, isProfileUpdated, authUserProfile])
 
 
   return (
     <>
       <h1 className="Title">Dashboard</h1>
       {
-        authUserProfile ? 
+        userData ? 
         <ScProfile>
           <ScProfileImg 
-            style={{backgroundImage:`url(${ authUserProfile.image ? authUserProfile.image.location : null})`}}/>
+            style={{backgroundImage:`url(${ userData.image ? userData.image.location : null})`}}/>
 
           <ScProfileTxtArea>
-            <ScProfileName>{ authUserProfile.username }</ScProfileName>
-            <ScProfileBio>{ authUserProfile.bio }</ScProfileBio>
+            <ScProfileName>{ userData.username }</ScProfileName>
+            <ScProfileBio>{ userData.bio }</ScProfileBio>
             <ScProfileWebsite>
               <a 
-                href={ authUserProfile.website }
+                href={ userData.website }
                 rel="noreferrer"
-                target="_blank" >{ authUserProfile.website.replace(/^https?:\/\//i, "") }</a>
+                target="_blank" >{ userData.website.replace(/^https?:\/\//i, "") }</a>
             </ScProfileWebsite>
           </ScProfileTxtArea>
         </ScProfile>
@@ -70,14 +105,14 @@ function AccountDashboard(){
 
       {/* sub nav */}
       <ScSubNav>
-        <NavLink to={`/${ authUserProfile.username }/dashboard/bikes`}>
+        <NavLink to={`/${ userData.username }/dashboard/bikes`}>
           <Album></Album>
           <p>Bikes</p>
         </NavLink>
 
         {
           isMyAccount ?
-          <NavLink to={`/${ authUserProfile.username }/dashboard/items`}>
+          <NavLink to={`/${ userData.username }/dashboard/items`}>
             <Category></Category>
             <p>Items</p>
           </NavLink>

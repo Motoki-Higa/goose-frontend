@@ -55,8 +55,8 @@ function ItemDetail(props: any) {
             }
             
             
-            { /* show user profile icon only on /feed */
-              currentPath === 'feed' ?
+            { /* show user profile icon only on /feed AND user exists */
+              currentPath === 'feed' && props.user ?
               <NavLink to={`/${ props.user.username }/dashboard/bikes`}>
                 {  // set image url once it's loaded from db
                   props.user.image.location !== '' ?

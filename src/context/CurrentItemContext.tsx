@@ -9,7 +9,7 @@ export const CurrentItemProvider: React.FC = (props) => {
   // function to be used for onClick
   const handleSetCurrentItem = (item: any) => {
     setCurrentItem(item);
-    console.log('current item id is: ' + item._id);
+    // console.log('current item id is: ' + item._id);
   }
 
   const handleClearCurrentItem = () => {

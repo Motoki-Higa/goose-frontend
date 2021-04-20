@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 
 // context
 import { UserContext } from '../../../context/UserContext';
@@ -14,7 +14,7 @@ import {
 
 function Account(){
   // contenxt
-  const { isAccountUpdated, authenticatedUser } = useContext<any>(UserContext);
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleModal } = useContext(ModalContext);
   const { handleSetForm } = useContext(FormContext);
 
@@ -23,13 +23,6 @@ function Account(){
     handleModal();
     handleSetForm(formName);
   }
-
-  // // state
-  // const [ userData, setUserData ] = useState<any>();
-
-  // useEffect(() => {
-  //   setUserData(authenticatedUser)
-  // },[isAccountUpdated, authenticatedUser])
 
   return(
     <>

@@ -22,11 +22,8 @@ function DeleteItem(props: any){
     const id = currentItem._id;
     const url = config.apiBaseUrl + '/items/' + id;
 
-    console.log('Delete this item? : ' + id);
-
     axios.delete(url)
       .then( (response) => {
-        console.log(response.data);
         history.goBack(); // send user back to the list page
 
         // notification

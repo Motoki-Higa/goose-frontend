@@ -8,6 +8,7 @@ export const IsMyAccountProvider: React.FC = (props) => {
 
   const handleSetIsMyAccount = (bool: boolean) => {
     setIsMyAccount(bool);
+    console.log('isMyAccount: ' + bool)
   }
 
   // value to pass to the provider

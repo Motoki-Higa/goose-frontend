@@ -10,61 +10,79 @@ import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 
+// styles
+import {
+  ScError
+} from './styles'
+
 
 function EditProfile(){
   // context
-  const { authenticatedUser, handleSetIsAccountUpdated } = useContext<any>(UserContext);
+  const { authenticatedUser, handleSetIsAccountUpdated, handleUpdateAuthUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm } = useContext(FormContext);
   const { handleSetNotification } = useContext(NotificationContext);
 
+  // state
+  const [ errors, setErrors ] = useState<string[]>([])
+
   // form
-  const { control, register, handleSubmit, formState } = useForm();
+  const { control, handleSubmit, formState } = useForm();
   const { isDirty } = formState;
 
 
   // submit
-  // const onSubmit = async (data: any) => {
-  //   try {
-  //     // endpoint
-  //     const profileId = authenticatedUser._id;
-  //     const profileUpdateApi = config.apiBaseUrl + '/profile/' + profileId + '/edit';
+  const onSubmit = async (data: any) => {
+    try {
+      // endpoint
+      const userId = authenticatedUser._id;
+      const accountUpdateApi = config.apiBaseUrl + '/users/' + userId;
 
-  //     // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
-  //     const formData: any = new FormData();
-  //     formData.append('bio', data.bio);
-  //     formData.append('website', data.website);
+      const obj = {
+        'email': data.email,
+        'name': data.name,
+        'username': data.username
+      }
 
-  //     // send request
-  //     await axios.post(profileUpdateApi, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data', // 'multipart/form-data' for text and image values together
-  //       },
-  //     })
-  //       .then( response => {
-  //         // update context to re-render associate component
-  //         handleSetIsProfileUpdated();
+      // send request
+      await axios.put(accountUpdateApi, obj)
+        .then( response => {
+          // this handles to update authuser state and cookie
+          handleUpdateAuthUser(response.data.user)
 
-  //         handleCloseModal();
-  //         handleCloseForm();
+          // update context to re-render associate component
+          handleSetIsAccountUpdated();          
 
-  //         // notification
-  //         handleSetNotification(response.data.message);
-  //       })
+          handleCloseModal();
+          handleCloseForm();
+
+          // notification
+          handleSetNotification(response.data.message);
+        })
       
-  //   } catch(err) {
-  //     console.log(err)
-  //   }
-  // };
+    } catch(err) {
+      setErrors(err.response.data.errors)
+    }
+  };
 
 
   return (
     <div className="formPanel formPanel--modal">
       <div className="formTitle">Edit account</div>
 
+      {
+        errors ?
+        errors.map( (err, index: number) => {
+          return <ScError 
+          key={index} >{ err }</ScError>
+        })
+        :
+        null
+      }
+
       <form 
         className="form" 
-        // onSubmit={ handleSubmit(onSubmit) }
+        onSubmit={ handleSubmit(onSubmit) }
         >
 
         <Controller 

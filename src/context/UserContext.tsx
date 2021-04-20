@@ -1,4 +1,5 @@
 import { useState, createContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Utils from '../Utils';
 import axios from 'axios';
@@ -14,6 +15,7 @@ interface ContextState {
   handleBookmarkUpdate: Function;
   handleSetIsProfileUpdated: any;
   handleSetIsAccountUpdated: any;
+  handleUpdateAuthUser: any;
   utils: any;
   actions: {
     signIn: Function;
@@ -25,6 +27,7 @@ export const UserContext = createContext({} as ContextState);
 
 // export Provider
 export const UserProvider: React.FC = (props) => {
+  let history = useHistory();
 
   const profileObj = {
     _id: "", 
@@ -34,7 +37,6 @@ export const UserProvider: React.FC = (props) => {
     website: "", 
     image: [{key: "", location: ""}]
   }
-
 
   // state
   const [ authenticatedUser, setAuthenticatedUser ] = useState(Cookies.getJSON('authenticatedUser') || null);
@@ -74,6 +76,7 @@ export const UserProvider: React.FC = (props) => {
     setIsProfileUpdated(false);
   }
 
+
   // this is used for re-rendering components by notifiying
   const handleSetIsAccountUpdated = () => {
     setIsAccountUpdated(true);
@@ -81,8 +84,20 @@ export const UserProvider: React.FC = (props) => {
   }
 
 
+  // handle update 'authenticatedUser'
+  const handleUpdateAuthUser = (userData: any) => {
+    // updata state
+    setAuthenticatedUser(userData);
+    // updata cookie
+    Cookies.set('authenticatedUser', JSON.stringify(userData), { expires: 1 });
+    // redirect to new username url (in case user updates username)
+    history.push(`/${ userData.username }/settings/account`);
+  } 
+
+
   // get utils with object constructor. (Utils comes with 'createUser' and 'getUser' functions)
   const utils = new Utils();
+
 
   // signin
   const signIn = async (email: string, password: string) => {
@@ -94,6 +109,7 @@ export const UserProvider: React.FC = (props) => {
     }
     return user;
   }
+
 
   // signout
   const signOut = () => {
@@ -145,6 +161,7 @@ export const UserProvider: React.FC = (props) => {
     handleBookmarkUpdate,
     handleSetIsProfileUpdated,
     handleSetIsAccountUpdated,
+    handleUpdateAuthUser,
     utils,
     actions: {
       signIn,

@@ -14,7 +14,7 @@ import {
 
 function Account(){
   // contenxt
-  const { isProfileUpdated, authenticatedUser } = useContext<any>(UserContext);
+  const { isAccountUpdated, authenticatedUser } = useContext<any>(UserContext);
   const { handleModal } = useContext(ModalContext);
   const { handleSetForm } = useContext(FormContext);
 
@@ -24,40 +24,32 @@ function Account(){
     handleSetForm(formName);
   }
 
-  // state
-  const [ userData, setUserData ] = useState<any>();
+  // // state
+  // const [ userData, setUserData ] = useState<any>();
 
-  useEffect(() => {
-    setUserData(authenticatedUser)
-  },[isProfileUpdated, authenticatedUser])
+  // useEffect(() => {
+  //   setUserData(authenticatedUser)
+  // },[isAccountUpdated, authenticatedUser])
 
   return(
     <>
-    {
-      userData ?
-      <>
-        <ScTxtArea>
-          <ScTxtRow>
-            <p>Email:<span>{ userData.email }</span></p>
-          </ScTxtRow>
+      <ScTxtArea>
+        <ScTxtRow>
+          <p>Email:<span>{ authenticatedUser.email }</span></p>
+        </ScTxtRow>
 
-          <ScTxtRow>
-            <p>Name:<span>{ userData.name }</span></p>
-          </ScTxtRow>
+        <ScTxtRow>
+          <p>Name:<span>{ authenticatedUser.name }</span></p>
+        </ScTxtRow>
 
-          <ScTxtRow>
-            <p>Username:<span>{ userData.username }</span></p>
-          </ScTxtRow>
-        </ScTxtArea>
+        <ScTxtRow>
+          <p>Username:<span>{ authenticatedUser.username }</span></p>
+        </ScTxtRow>
+      </ScTxtArea>
 
-        <ScEditBtnWrap onClick={ () => handleModalForm('EditAccount') }>
-          <span>Edit Account</span>
-        </ScEditBtnWrap>
-      </>
-      :
-      null
-    }
-    
+      <ScEditBtnWrap onClick={ () => handleModalForm('EditAccount') }>
+        <span>Edit Account</span>
+      </ScEditBtnWrap>
     </>
   )
 }

@@ -131,7 +131,6 @@ function AddBike(){
             },
           })
             .then( response => {
-              console.log(response);
               setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
               // reset after
               setDetectAnyFormSubmit();

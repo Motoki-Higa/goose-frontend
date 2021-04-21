@@ -18,13 +18,13 @@ import {
 
 function ChangePassword(){
   // context
-  const { authenticatedUser, handleSetIsAccountUpdated, handleUpdateAuthUser } = useContext<any>(UserContext);
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm } = useContext(FormContext);
   const { handleSetNotification } = useContext(NotificationContext);
 
   // state
-  const [ errors, setErrors ] = useState<string[]>([])
+  const [ error, setError ] = useState<string>()
 
   // form
   const { control, handleSubmit, formState } = useForm();
@@ -33,36 +33,39 @@ function ChangePassword(){
 
   // submit
   const onSubmit = async (data: any) => {
-    // try {
-    //   // endpoint
-    //   const userId = authenticatedUser._id;
-    //   const accountUpdateApi = config.apiBaseUrl + '/users/' + userId + '/password/change';
+    try {
+      // endpoint
+      const userId = authenticatedUser._id;
+      const pwUpdateApi = config.apiBaseUrl + '/users/' + userId + '/password/change';
 
-    //   const obj = {
-    //     'oldPassword': data.oldPassword,
-    //     'newPassword': data.newPassword,
-    //     'confirmNewPassword': data.confirmNewPassword
-    //   }
+      // creates a Base64-encoded ASCII string
+      const encodedCredentials = btoa(`${ authenticatedUser.email }:${ data.oldPassword }`);
 
-    //   // send request
-    //   await axios.put(accountUpdateApi, obj)
-    //     .then( response => {
-    //       // this handles to update authuser state and cookie
-    //       handleUpdateAuthUser(response.data.user)
+      const axiosConfig = {
+        headers: {
+          'Authorization': `Basic ${encodedCredentials}`,
+          'Content-Type': 'application/json; charset=utf-8',
+        }
+      }
 
-    //       // update context to re-render associate component
-    //       handleSetIsAccountUpdated();          
+      const obj = {
+        'newpassword': data.newPassword,
+      }
 
-    //       handleCloseModal();
-    //       handleCloseForm();
+      // send request
+      await axios.put(pwUpdateApi, JSON.stringify(obj), axiosConfig)
+        .then( response => {
+          // handle close modal and form
+          handleCloseModal();
+          handleCloseForm();
 
-    //       // notification
-    //       handleSetNotification(response.data.message);
-    //     })
+          // notification
+          handleSetNotification(response.data.message);
+        })
       
-    // } catch(err) {
-    //   setErrors(err.response.data.errors)
-    // }
+    } catch(err) {
+      setError(err.response.data.error)
+    }
   };
 
 
@@ -71,11 +74,8 @@ function ChangePassword(){
       <div className="formTitle">Change password</div>
 
       {
-        errors ?
-        errors.map( (err, index: number) => {
-          return <ScError 
-          key={index} >{ err }</ScError>
-        })
+        error ?
+        <ScError>{ error }</ScError>
         :
         null
       }
@@ -94,7 +94,7 @@ function ChangePassword(){
                 name="oldPassword"
                 label="Old password" 
                 variant="filled"
-                defaultValue=""
+                // defaultValue=""
                 />
             </div>
           }
@@ -111,7 +111,7 @@ function ChangePassword(){
                 name="newPassword"
                 label="New password" 
                 variant="filled"
-                defaultValue=""
+                // defaultValue=""
                 />
             </div>
           }
@@ -119,7 +119,7 @@ function ChangePassword(){
           defaultValue=""
         />
 
-        <Controller 
+        {/* <Controller 
           name="confirmNewPassword"
           as={
             <div className="formInputWrap">
@@ -134,7 +134,7 @@ function ChangePassword(){
           }
           control={control}
           defaultValue=""
-        />
+        /> */}
 
 
         {/* submit */}

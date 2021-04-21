@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const ScError = styled.div`
   font-size: 0.875rem;
   text-align: center;

@@ -14,33 +14,24 @@ function SignIn(props: any) {
   // initialize context for use
   const context = useContext(UserContext);
 
-  const [ apiError, setApiError ] = useState<string[]>([]); // for error handling from api
+  // state
+  const [ apiError, setApiError ] = useState<string[]>([]);
+
   // const { from } = props.location.state || { from: { pathname: '/'} };
   const { control, handleSubmit, errors } = useForm();
 
   // handle submit
   const onSubmit = (data: IFormInput) => {
-
-    // api call with the utils (custom helper function)
-    context.utils.getUser(data.email, data.password)
-      .then( (user: any) => {
-        if (user.status === 401) {
-          setApiError([user.data.message]);
-          // console.log(user.data.message)
-        }
-        else {
-          console.log(`SUCCESS! ${data.email} is now signed in!`);
-
-          // store user info in cookie and redirect to authenticated page
-          context.actions.signIn(data.email, data.password)
-            .then(() => {
-              props.history.push('/feed')
-            })
+    // store user info in cookie and redirect to authenticated page
+    context.actions.signIn(data.email, data.password)
+      .then( (response: any) => {
+        // if user exist, then redirect to /feed, otherwise set error
+        if (response === 200){
+          props.history.push('/feed')
+        } else {
+          setApiError(response)
         }
       })
-      .catch( (err: any) => { // handle rejected promises
-        console.log(err);
-      });  
   }
 
   return (

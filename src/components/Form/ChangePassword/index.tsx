@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
-import config from './../../../config';
+import config from '../../../config';
 import { TextField, Button } from '@material-ui/core';
 
 // contexts
@@ -16,7 +16,7 @@ import {
 } from '../styles'
 
 
-function EditProfile(){
+function ChangePassword(){
   // context
   const { authenticatedUser, handleSetIsAccountUpdated, handleUpdateAuthUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
@@ -33,42 +33,42 @@ function EditProfile(){
 
   // submit
   const onSubmit = async (data: any) => {
-    try {
-      // endpoint
-      const userId = authenticatedUser._id;
-      const accountUpdateApi = config.apiBaseUrl + '/users/' + userId;
+    // try {
+    //   // endpoint
+    //   const userId = authenticatedUser._id;
+    //   const accountUpdateApi = config.apiBaseUrl + '/users/' + userId + '/password/change';
 
-      const obj = {
-        'email': data.email,
-        'name': data.name,
-        'username': data.username
-      }
+    //   const obj = {
+    //     'oldPassword': data.oldPassword,
+    //     'newPassword': data.newPassword,
+    //     'confirmNewPassword': data.confirmNewPassword
+    //   }
 
-      // send request
-      await axios.put(accountUpdateApi, obj)
-        .then( response => {
-          // this handles to update authuser state and cookie
-          handleUpdateAuthUser(response.data.user)
+    //   // send request
+    //   await axios.put(accountUpdateApi, obj)
+    //     .then( response => {
+    //       // this handles to update authuser state and cookie
+    //       handleUpdateAuthUser(response.data.user)
 
-          // update context to re-render associate component
-          handleSetIsAccountUpdated();          
+    //       // update context to re-render associate component
+    //       handleSetIsAccountUpdated();          
 
-          handleCloseModal();
-          handleCloseForm();
+    //       handleCloseModal();
+    //       handleCloseForm();
 
-          // notification
-          handleSetNotification(response.data.message);
-        })
+    //       // notification
+    //       handleSetNotification(response.data.message);
+    //     })
       
-    } catch(err) {
-      setErrors(err.response.data.errors)
-    }
+    // } catch(err) {
+    //   setErrors(err.response.data.errors)
+    // }
   };
 
 
   return (
     <div className="formPanel formPanel--modal">
-      <div className="formTitle">Edit account</div>
+      <div className="formTitle">Change password</div>
 
       {
         errors ?
@@ -86,54 +86,54 @@ function EditProfile(){
         >
 
         <Controller 
-          name="email"
+          name="oldPassword"
           as={
             <div className="formInputWrap">
               <TextField 
-                id="email" 
-                name="email"
-                label="Email" 
+                id="oldPassword" 
+                name="oldPassword"
+                label="Old password" 
                 variant="filled"
-                defaultValue={ authenticatedUser.email }
+                defaultValue=""
                 />
             </div>
           }
           control={control}
-          defaultValue={ authenticatedUser.email }
+          defaultValue=""
         />
 
         <Controller 
-          name="name"
+          name="newPassword"
           as={
             <div className="formInputWrap">
               <TextField 
-                id="name" 
-                name="name"
-                label="Name" 
+                id="newPassword" 
+                name="newPassword"
+                label="New password" 
                 variant="filled"
-                defaultValue={ authenticatedUser.name }
+                defaultValue=""
                 />
             </div>
           }
           control={control}
-          defaultValue={ authenticatedUser.name }
+          defaultValue=""
         />
 
         <Controller 
-          name="username"
+          name="confirmNewPassword"
           as={
             <div className="formInputWrap">
               <TextField 
-                id="username" 
-                name="username"
-                label="Username" 
+                id="confirmNewPassword" 
+                name="confirmNewPassword"
+                label="Confirm new password" 
                 variant="filled"
-                defaultValue={ authenticatedUser.username }
+                defaultValue=""
                 />
             </div>
           }
           control={control}
-          defaultValue={ authenticatedUser.username }
+          defaultValue=""
         />
 
 
@@ -151,4 +151,4 @@ function EditProfile(){
   )
 }
 
-export default EditProfile;
+export default ChangePassword;

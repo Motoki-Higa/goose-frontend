@@ -58,7 +58,12 @@ export default class Utils {
     const response = await this.api(`/users`, 'GET', null, true, { email, password });
 
     if (response.status === 200) {
-      return response.json().then(data => data);
+      return response.json().then(data => {
+        return {
+          status: response.status,
+          data: data
+        }
+      });
     }
     else if (response.status === 401) {
       return response.json().then(data => {
@@ -67,7 +72,6 @@ export default class Utils {
           data: data
         }
       })
-      // return null;
     }
     else {
       throw new Error();

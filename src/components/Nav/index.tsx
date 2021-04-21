@@ -27,9 +27,10 @@ function Nav() {
 
   useEffect( () => {
     if (authUser){
+      const username = location.pathname.split('/')[1];
       const pathname = location.pathname.split('/')[2];
 
-      if (pathname === 'dashboard'){
+      if (pathname === 'dashboard' && username === authUser.username){
         setActiveClass('active');
       } else {
         setActiveClass('');

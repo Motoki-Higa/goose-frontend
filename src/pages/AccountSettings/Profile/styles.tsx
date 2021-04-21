@@ -58,6 +58,10 @@ const ScProfileName = styled.div`
   font-weight: 500;
   letter-spacing: 0.025rem;
   color: ${ props => props.theme.colors.black };
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const ScProfileBio = styled.div`
@@ -98,11 +102,15 @@ const ScEditBtnWrap = styled.div`
   text-align: center;
   letter-spacing: 0.025rem;
   color: ${ props => props.theme.colors.pink };
-  margin-top: 24px;
+  margin-top: 36px;
   animation: ${ keyFadeIn } 0.5s ease-in;
 
   span {
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
   }
 `
 

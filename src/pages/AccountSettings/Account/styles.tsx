@@ -53,24 +53,41 @@ const ScTxtRow = styled.div`
   }
 `;
 
-const ScEditBtnWrap = styled.div`
+const ScBtnBlock = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 36px auto 0;
+  animation: ${ keyFadeIn } 0.5s ease-in;
+
+  span {
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+const ScEditBtnWrap = styled.div`
   font-size: 1rem;
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.025rem;
   color: ${ props => props.theme.colors.pink };
-  margin-top: 24px;
-  animation: ${ keyFadeIn } 0.5s ease-in;
 
   span {
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
   }
 `
 
 export {
   ScTxtArea,
   ScTxtRow,
+  ScBtnBlock,
   ScEditBtnWrap
 }

@@ -103,11 +103,15 @@ export const UserProvider: React.FC = (props) => {
   const signIn = async (email: string, password: string) => {
     const user = await utils.getUser(email, password);
 
-    if (user !== null){
-      setAuthenticatedUser(user);
-      Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+    if (user.status === 200){
+      setAuthenticatedUser(user.data);
+      Cookies.set('authenticatedUser', JSON.stringify(user.data), { expires: 1 });
+      return user.status;
+    } 
+    else if (user.status === 401){
+      return user.data.message
     }
-    return user;
+    
   }
 
 

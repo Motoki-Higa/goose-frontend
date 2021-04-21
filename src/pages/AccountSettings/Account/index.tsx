@@ -9,6 +9,7 @@ import { FormContext } from '../../../context/FormContext';
 import {
   ScTxtArea,
   ScTxtRow,
+  ScBtnBlock,
   ScEditBtnWrap
 } from './styles';
 
@@ -40,9 +41,16 @@ function Account(){
         </ScTxtRow>
       </ScTxtArea>
 
-      <ScEditBtnWrap onClick={ () => handleModalForm('EditAccount') }>
-        <span>Edit Account</span>
-      </ScEditBtnWrap>
+      <ScBtnBlock>
+        <ScEditBtnWrap onClick={ () => handleModalForm('EditAccount') }>
+          <span>Edit Account</span>
+        </ScEditBtnWrap>
+        <ScEditBtnWrap onClick={ () => handleModalForm('ChangePassword') }>
+          <span>Change Password</span>
+        </ScEditBtnWrap>
+      </ScBtnBlock>
+
+      
     </>
   )
 }

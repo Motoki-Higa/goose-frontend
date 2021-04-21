@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
+
+// context
 import { FormContext } from '../../context/FormContext';
 
+// components
 import AddBike from './AddBike';
 import EditBike from './EditBike';
 import DeleteBike from './DeleteBike';
@@ -9,6 +12,8 @@ import EditItem from './EditItem';
 import DeleteItem from './DeleteItem';
 import EditProfile from './EditProfile';
 import EditAccount from './EditAccount';
+import ChangePassword from './ChangePassword';
+
 
 function Form() {
   // destructure context to use
@@ -24,6 +29,7 @@ function Form() {
     'DeleteItem': DeleteItem,
     'EditProfile': EditProfile,
     'EditAccount': EditAccount,
+    'ChangePassword': ChangePassword,
   };
 
   // this returns a form component

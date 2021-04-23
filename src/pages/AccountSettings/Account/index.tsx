@@ -10,7 +10,8 @@ import {
   ScTxtArea,
   ScTxtRow,
   ScBtnBlock,
-  ScEditBtnWrap
+  ScBtnWrap,
+  ScBtn
 } from './styles';
 
 function Account(){
@@ -42,12 +43,15 @@ function Account(){
       </ScTxtArea>
 
       <ScBtnBlock>
-        <ScEditBtnWrap onClick={ () => handleModalForm('EditAccount') }>
-          <span>Edit Account</span>
-        </ScEditBtnWrap>
-        <ScEditBtnWrap onClick={ () => handleModalForm('ChangePassword') }>
-          <span>Change Password</span>
-        </ScEditBtnWrap>
+        <ScBtnWrap>
+          <ScBtn onClick={ () => handleModalForm('EditAccount') } >Edit Account</ScBtn>
+        </ScBtnWrap>
+        <ScBtnWrap>
+          <ScBtn onClick={ () => handleModalForm('ChangePassword') } >Change Password</ScBtn>
+        </ScBtnWrap>
+        <ScBtnWrap>
+          <ScBtn onClick={ () => handleModalForm('DeleteAccount') } >Delete Account</ScBtn>
+        </ScBtnWrap>
       </ScBtnBlock>
 
       

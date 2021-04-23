@@ -17,6 +17,10 @@ const ScTxtArea = styled.div`
   margin: 36px auto 0;
   padding: 0 24px;
   animation: ${ keyFadeIn } 0.5s ease-in;
+
+  @media (max-width: 768px) {
+    padding: 0 6px;
+  }
 `;
 
 const ScTxtRow = styled.div`
@@ -54,34 +58,31 @@ const ScTxtRow = styled.div`
 `;
 
 const ScBtnBlock = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 50%;
-  margin: 36px auto 0;
+  margin-top: 36px;
   animation: ${ keyFadeIn } 0.5s ease-in;
+`
 
-  span {
-    cursor: pointer;
-  }
+const ScBtnWrap = styled.div`
+  text-align: center;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  &:not(:first-of-type){
+    margin-top: 12px;
   }
 `
 
-const ScEditBtnWrap = styled.div`
-  font-size: 1rem;
+const ScBtn = styled.div`
+  display: inline-block;
+  font-size: 0.875rem;
   font-weight: 500;
-  text-align: center;
   letter-spacing: 0.025rem;
-  color: ${ props => props.theme.colors.pink };
+  text-align-last: left;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  color: ${ props => props.theme.colors.black };
+  cursor: pointer;
 
-  span {
-    cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
+  &:hover {
+    color: ${ props => props.theme.colors.pink };
   }
 `
 
@@ -89,5 +90,6 @@ export {
   ScTxtArea,
   ScTxtRow,
   ScBtnBlock,
-  ScEditBtnWrap
+  ScBtnWrap,
+  ScBtn
 }

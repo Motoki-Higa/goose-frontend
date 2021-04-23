@@ -94,23 +94,32 @@ const ScProfileWebsite = styled.div`
   }
 `;
 
-const ScEditBtnWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  letter-spacing: 0.025rem;
-  color: ${ props => props.theme.colors.pink };
+const ScBtnBlock = styled.div`
   margin-top: 36px;
   animation: ${ keyFadeIn } 0.5s ease-in;
+`
 
-  span {
-    cursor: pointer;
+const ScBtnWrap = styled.div`
+  text-align: center;
+  
+  &:not(:first-of-type){
+    margin-top: 12px;
   }
+`
 
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
+const ScBtn = styled.div`
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.025rem;
+  text-align-last: left;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  color: ${ props => props.theme.colors.black };
+  cursor: pointer;
+
+  &:hover {
+    color: ${ props => props.theme.colors.pink };
   }
 `
 
@@ -121,5 +130,7 @@ export {
   ScProfileName,
   ScProfileBio,
   ScProfileWebsite,
-  ScEditBtnWrap
+  ScBtnBlock,
+  ScBtnWrap,
+  ScBtn
 }

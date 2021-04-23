@@ -13,7 +13,9 @@ import {
   ScProfileName,
   ScProfileBio,
   ScProfileWebsite,
-  ScEditBtnWrap
+  ScBtnBlock,
+  ScBtnWrap,
+  ScBtn
 } from './styles';
 
 function Profile(){
@@ -46,9 +48,11 @@ function Profile(){
         </ScProfileTxtArea>
       </ScProfile>
 
-      <ScEditBtnWrap onClick={ () => handleModalForm('EditProfile') }>
-        <span>Edit Profile</span>
-      </ScEditBtnWrap>
+      <ScBtnBlock>
+        <ScBtnWrap onClick={ () => handleModalForm('EditProfile') }>
+          <ScBtn>Edit Profile</ScBtn>
+        </ScBtnWrap>
+      </ScBtnBlock>
     </>
   )
 }

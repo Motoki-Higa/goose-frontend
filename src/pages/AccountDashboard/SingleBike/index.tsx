@@ -102,8 +102,7 @@ function SingleBike(props: any) {
 
       {/* Send data to ItemDetail component */}
       <ItemDetail 
-        item={ bike }
-        cat="item" />
+        item={ bike } />
     </>
   )
 }

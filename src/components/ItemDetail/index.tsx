@@ -48,7 +48,7 @@ function ItemDetail(props: any) {
 
             {/* bookmark */}
             {
-              props.cat ?
+              props.cat === undefined ?
               <BookmarkBtn bike={props.item} />
               :
               null

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 import config from '../../../config';
@@ -27,7 +27,9 @@ function ChangePassword(){
   const [ error, setError ] = useState<string>()
 
   // form
-  const { control, handleSubmit, formState } = useForm();
+  const { control, handleSubmit, formState, errors, watch } = useForm();
+  const newPassword = useRef({});
+  newPassword.current = watch("newPassword", "");
   const { isDirty } = formState;
 
 
@@ -64,6 +66,7 @@ function ChangePassword(){
         })
       
     } catch(err) {
+      console.log(err.response.data.error)
       setError(err.response.data.error)
     }
   };
@@ -91,15 +94,21 @@ function ChangePassword(){
             <div className="formInputWrap">
               <TextField 
                 id="oldPassword" 
+                type="password"
                 name="oldPassword"
                 label="Old password" 
                 variant="filled"
                 // defaultValue=""
+                helperText={ errors.oldPassword ? errors.oldPassword.message : null}
+                error={ !!errors.oldPassword }
                 />
             </div>
           }
           control={control}
           defaultValue=""
+          rules={{
+            required: 'Required',
+          }}
         />
 
         <Controller 
@@ -107,34 +116,47 @@ function ChangePassword(){
           as={
             <div className="formInputWrap">
               <TextField 
-                id="newPassword" 
+                id="newPassword"
+                type="password"
                 name="newPassword"
                 label="New password" 
                 variant="filled"
                 // defaultValue=""
+                helperText={ errors.newPassword ? errors.newPassword.message : null}
+                error={ !!errors.newPassword }
                 />
             </div>
           }
           control={control}
           defaultValue=""
+          rules={{
+            required: 'Required',
+          }}
         />
 
-        {/* <Controller 
+        <Controller 
           name="confirmNewPassword"
           as={
             <div className="formInputWrap">
               <TextField 
-                id="confirmNewPassword" 
+                id="confirmNewPassword"
+                type="password"
                 name="confirmNewPassword"
                 label="Confirm new password" 
                 variant="filled"
-                defaultValue=""
+                // defaultValue=""
+                helperText={ errors.confirmNewPassword ? errors.confirmNewPassword.message : null}
+                error={ !!errors.confirmNewPassword }
                 />
             </div>
           }
           control={control}
           defaultValue=""
-        /> */}
+          rules={{
+            required: 'Required',
+            validate: value => value === newPassword.current || "The passwords do not match"
+          }}
+        />
 
 
         {/* submit */}

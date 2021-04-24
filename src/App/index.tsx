@@ -10,6 +10,8 @@ import Header from '../components/Header/index';
 import Nav from '../components/Nav/index';
 import Home from '../pages/Home/index';
 import SignUp from '../pages/SignUp/index';
+import VerifyEmail from '../pages/VerifyEmail';
+import Thanks from '../pages/Thanks';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import AccountDashboard from '../pages/AccountDashboard';
@@ -69,6 +71,8 @@ function App() {
                         <Route exact path="/" component={ Home } />
                         
                         <Route path="/signup" component={ SignUp } />
+                        <Route path="/thanks" component={ Thanks } />
+                        <Route path="/verify/:accesstoken" component={ VerifyEmail } />
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
 

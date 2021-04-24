@@ -22,7 +22,10 @@ function SignUp(props: any) {
   // initialize context for use
   const context = useContext(UserContext);
 
-  const [ apiError, setApiError ] = useState([]); // for error handling from api
+  // state
+  const [ message, setMessage ] = useState([]); // for error handling from api
+
+  // form
   const { control, handleSubmit, errors } = useForm();
 
   // handle submit
@@ -32,17 +35,18 @@ function SignUp(props: any) {
     context.utils.createUser(data)
       .then( (errors: any) => {
         if (errors.length) {
-          setApiError(errors);
+          setMessage(errors);
           console.log(`Error message from api: ${errors}`);
         }
         else {
-          console.log(`${data.username} is successfully signed up and authenticated!`);
+          console.log(`${data.username} account is successfully created.`);
 
+          props.history.push('/thanks')
           // store user info in cookie and redirect to /dashboard/bikes page
-          context.actions.signIn(data.email, data.password)
-            .then(() => {
-              props.history.push('/feed')
-            })
+          // context.actions.signIn(data.email, data.password)
+          //   .then(() => {
+          //     props.history.push('/feed')
+          //   })
         }
       })
       .catch( (err: any) => { // handle rejected promises
@@ -55,8 +59,8 @@ function SignUp(props: any) {
       <h2 className="formTitle">Sign up</h2>
 
       {
-        apiError ?
-        apiError.map( (err, index: number) => {
+        message ?
+        message.map( (err, index: number) => {
           return <ScError 
           key={index} >{ err }</ScError>
         })

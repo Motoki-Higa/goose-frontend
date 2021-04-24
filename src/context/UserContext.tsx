@@ -109,7 +109,7 @@ export const UserProvider: React.FC = (props) => {
       return user.status;
     } 
     else if (user.status === 401){
-      return user.data.message
+      return user.data.error
     }
     
   }

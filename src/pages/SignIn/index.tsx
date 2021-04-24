@@ -15,7 +15,7 @@ function SignIn(props: any) {
   const context = useContext(UserContext);
 
   // state
-  const [ apiError, setApiError ] = useState<string[]>([]);
+  const [ message, setMessage ] = useState<string[]>([]);
 
   // const { from } = props.location.state || { from: { pathname: '/'} };
   const { control, handleSubmit, errors } = useForm();
@@ -29,7 +29,7 @@ function SignIn(props: any) {
         if (response === 200){
           props.history.push('/feed')
         } else {
-          setApiError(response)
+          setMessage(response)
         }
       })
   }
@@ -43,8 +43,8 @@ function SignIn(props: any) {
         onSubmit={ handleSubmit(onSubmit) } >
 
         {
-          apiError ? 
-          <div className="formErrorMsg">{ apiError }</div>
+          message ? 
+          <div className="formErrorMsg">{ message }</div>
           : 
           null
         }

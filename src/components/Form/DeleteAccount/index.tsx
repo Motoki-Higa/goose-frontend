@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import config from '../../../config';
 import { TextField, Button } from '@material-ui/core';
@@ -30,42 +31,43 @@ function DeleteAccount(){
   const { control, handleSubmit, formState, errors } = useForm();
   const { isDirty } = formState;
 
+  let history = useHistory();
+
 
   // submit
   const onSubmit = async (data: any) => {
-    // try {
-    //   // endpoint
-    //   const userId = authenticatedUser._id;
-    //   const pwUpdateApi = config.apiBaseUrl + '/users/' + userId + '/password/change';
+    try {
+      // endpoint
+      const userId = authenticatedUser._id;
+      const deleteUserApi = config.apiBaseUrl + '/users/' + userId;
 
-    //   // creates a Base64-encoded ASCII string
-    //   const encodedCredentials = btoa(`${ authenticatedUser.email }:${ data.oldPassword }`);
+      // creates a Base64-encoded ASCII string
+      const encodedCredentials = btoa(`${ authenticatedUser.email }:${ data.password }`);
 
-    //   const axiosConfig = {
-    //     headers: {
-    //       'Authorization': `Basic ${encodedCredentials}`,
-    //       'Content-Type': 'application/json; charset=utf-8',
-    //     }
-    //   }
+      // send request
+      await axios.delete(deleteUserApi, {
+        headers: {
+          'Authorization': `Basic ${encodedCredentials}`,
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        data:{
+          'password': data.password,
+        }
+      })
+        .then( response => {
+          // handle close modal and form
+          handleCloseModal();
+          handleCloseForm();
 
-    //   const obj = {
-    //     'newpassword': data.newPassword,
-    //   }
+          // notification
+          handleSetNotification(response.data.message);
 
-    //   // send request
-    //   await axios.put(pwUpdateApi, JSON.stringify(obj), axiosConfig)
-    //     .then( response => {
-    //       // handle close modal and form
-    //       handleCloseModal();
-    //       handleCloseForm();
+          history.push('/signout');
+        })
 
-    //       // notification
-    //       handleSetNotification(response.data.message);
-    //     })
-      
-    // } catch(err) {
-    //   setError(err.response.data.error)
-    // }
+    } catch(err) {
+      setError(err.response.data.error)
+    }
   };
 
 
@@ -96,8 +98,8 @@ function DeleteAccount(){
                 label="Password" 
                 variant="filled"
                 // defaultValue=""
-                helperText={ errors.oldPassword ? errors.oldPassword.message : null}
-                error={ !!errors.oldPassword }
+                helperText={ errors.password ? errors.password.message : null}
+                error={ !!errors.password }
                 />
             </div>
           }

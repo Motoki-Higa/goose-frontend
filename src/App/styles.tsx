@@ -86,7 +86,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .formTitle {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 500;
     color: #333;
     letter-spacing: 0.05rem;
@@ -94,6 +94,32 @@ const GlobalStyle = createGlobalStyle`
 
     @media (max-width: 768px) {
       font-size: 1.125rem;
+    }
+
+    &.formTitle--error {
+      color: ${ props => props.theme.colors.pink }
+    }
+  }
+
+  .formDesc {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05rem;
+    line-height: 1.5;
+    margin-top: 18px;
+  }
+
+  .formLinkTxt {
+    margin-top: 12px;
+
+    a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: ${ props => props.theme.colors.blue };
+      letter-spacing: 0.05rem;
+      line-height: 1.5;
+      text-decoration: underline;
     }
   }
 

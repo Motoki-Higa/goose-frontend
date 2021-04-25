@@ -14,6 +14,7 @@ import VerifyEmail from '../pages/VerifyEmail';
 import Thanks from '../pages/Thanks';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
+import RequestVerifyEmail from '../pages/RequestVerifyEmail/index';
 import AccountDashboard from '../pages/AccountDashboard';
 import AccountSettings from '../pages/AccountSettings';
 import Feed from '../pages/FeedAllBikes/index';
@@ -75,6 +76,7 @@ function App() {
                         <Route path="/verify/:accesstoken" component={ VerifyEmail } />
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
+                        <Route path="/request-verify-email" component={ RequestVerifyEmail } />
 
                         <PrivateRoute exact path="/feed" component={ Feed } />
                         <PrivateRoute exact path="/feed/search" component={ Feed } />

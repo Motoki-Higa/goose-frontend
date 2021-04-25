@@ -35,30 +35,41 @@ function VerifyEmail (){
   },[])
 
   return (
-    <>
+    <div className="formPanel">
       { // if signed in already, then redirect to /feed
         authenticatedUser ?
         <Redirect to="/feed"></Redirect>
         :
         <>
-          <div>Verify Email</div>
-
           { // if verified, show /signin, otherwise /token
             isVerified ? 
             <div>
-              <p>{ message }</p>
-              <NavLink to="/signin">Sign In</NavLink>
+              <h2 className="formTitle">Email confirmed</h2>
+              <p className="formDesc">
+                Thanks for signing up!<br />
+                { message }
+              </p>
+
+              <div className="formLinkTxt">
+                <NavLink to="/signin">Sign In</NavLink>
+              </div>
             </div>
             :
             <div>
-              <p>{ message }</p>
-              <p>Your verification link might be expired, please verify your email from below again.</p>
-              <NavLink to="/signin">Send verification email again</NavLink>
+              <h2 className="formTitle formTitle--error">{ message }</h2>
+              <p className="formDesc">
+                Shoot! Your verification link might be expired. <br />
+                Please verify your email from below again.
+              </p>
+
+              <div className="formLinkTxt">
+                <NavLink to="/signin">Send verification email</NavLink>
+              </div>
             </div>
           }
         </>
       }
-    </>
+    </div>
   )
 }
 

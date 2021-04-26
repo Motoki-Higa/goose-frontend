@@ -10,7 +10,7 @@ interface IFormInput {
   email: String;
 }
 
-function RequestVerifyEmail() {
+function RequestResetPw() {
   // state
   const [ message, setMessage ] = useState<string[]>([]);
 
@@ -22,11 +22,11 @@ function RequestVerifyEmail() {
   // handle submit
   const onSubmit = async (data: IFormInput) => {
     try {
-      const requestTokenApi =  config.apiBaseUrl + '/users/verificationToken';
+      const requestResetPwApi =  config.apiBaseUrl + '/users/reset-password';
       const obj = { email: data.email };
 
       // this requests to send user an email verification email again
-      await axios.post(requestTokenApi, obj)
+      await axios.put(requestResetPwApi, obj)
         .then( response => {
           setMessage(response.data.message);
           history.push('/thanks');
@@ -39,7 +39,7 @@ function RequestVerifyEmail() {
 
   return (
     <div className="formPanel">
-      <h2 className="formTitle">Request Verify Email</h2>
+      <h2 className="formTitle">Request Reset Password</h2>
 
       <form 
         className="form"
@@ -87,4 +87,4 @@ function RequestVerifyEmail() {
 
 }
 
-export default RequestVerifyEmail;
+export default RequestResetPw;

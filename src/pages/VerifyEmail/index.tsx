@@ -15,11 +15,11 @@ function VerifyEmail (){
   const { authenticatedUser } = useContext<any>(UserContext);
 
   // username params
-  const { accesstoken } = useParams<{ accesstoken: string }>();
+  const { token } = useParams<{ token: string }>();
 
   useEffect(() => {
     (async () => {
-      const verifyEmailApi =  config.apiBaseUrl + '/verify/' + accesstoken;
+      const verifyEmailApi =  config.apiBaseUrl + '/users/verify/' + token;
   
       await axios.get(verifyEmailApi)
         .then( response => {
@@ -63,7 +63,7 @@ function VerifyEmail (){
               </p>
 
               <div className="formLinkTxt">
-                <NavLink to="/signin">Send verification email</NavLink>
+                <NavLink to="/request-verify-email">Re-send verification email</NavLink>
               </div>
             </div>
           }

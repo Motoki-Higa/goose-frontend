@@ -9,12 +9,16 @@ import {
 import Header from '../components/Header/index';
 import Nav from '../components/Nav/index';
 import Home from '../pages/Home/index';
+
 import SignUp from '../pages/SignUp/index';
 import VerifyEmail from '../pages/VerifyEmail';
-import Thanks from '../pages/Thanks';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import RequestVerifyEmail from '../pages/RequestVerifyEmail/index';
+import RequestResetPw from '../pages/RequestResetPw/index';
+import ResetPw from '../pages/ResetPw/index';
+import Thanks from '../pages/Thanks';
+
 import AccountDashboard from '../pages/AccountDashboard';
 import AccountSettings from '../pages/AccountSettings';
 import Feed from '../pages/FeedAllBikes/index';
@@ -72,11 +76,13 @@ function App() {
                         <Route exact path="/" component={ Home } />
                         
                         <Route path="/signup" component={ SignUp } />
-                        <Route path="/thanks" component={ Thanks } />
-                        <Route path="/verify/:accesstoken" component={ VerifyEmail } />
+                        <Route path="/verify/:token" component={ VerifyEmail } />
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
                         <Route path="/request-verify-email" component={ RequestVerifyEmail } />
+                        <Route path="/request-reset-password" component={ RequestResetPw } />
+                        <Route path="/reset-password/:token" component={ ResetPw } />
+                        <Route path="/thanks" component={ Thanks } />
 
                         <PrivateRoute exact path="/feed" component={ Feed } />
                         <PrivateRoute exact path="/feed/search" component={ Feed } />

@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../../config';
+import config from '../../../config';
 import { TextField, Button } from '@material-ui/core';
 
 // contexts
@@ -16,9 +17,9 @@ import {
 } from '../styles'
 
 
-function EditProfile(){
+function EditEmail(){
   // context
-  const { authenticatedUser, handleSetIsAccountUpdated, handleUpdateAuthUser } = useContext<any>(UserContext);
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm } = useContext(FormContext);
   const { handleSetNotification } = useContext(NotificationContext);
@@ -30,30 +31,26 @@ function EditProfile(){
   const { control, handleSubmit, formState } = useForm();
   const { isDirty } = formState;
 
+  let history = useHistory();
 
   // submit
   const onSubmit = async (data: any) => {
     try {
-      // endpoint
       const userId = authenticatedUser._id;
-      const accountUpdateApi = config.apiBaseUrl + '/users/' + userId;
+      // endpoint
+      const emailChangeApi = config.apiBaseUrl + '/users/' + userId + '/email/change/request';
 
       const obj = {
-        'name': data.name,
-        'username': data.username
+        'newEmail': data.newEmail
       }
 
       // send request
-      await axios.put(accountUpdateApi, obj)
+      await axios.put(emailChangeApi, obj)
         .then( response => {
-          // this handles to update authuser state and cookie
-          handleUpdateAuthUser(response.data.user)
-
-          // update context to re-render associate component
-          handleSetIsAccountUpdated();          
-
           handleCloseModal();
           handleCloseForm();
+
+          history.push('/thanks');
 
           // notification
           handleSetNotification(response.data.message);
@@ -67,7 +64,7 @@ function EditProfile(){
 
   return (
     <div className="formPanel formPanel--modal">
-      <div className="formTitle">Edit account</div>
+      <div className="formTitle">Change Email</div>
 
       {
         errors ?
@@ -85,39 +82,21 @@ function EditProfile(){
         >
 
         <Controller 
-          name="name"
+          name="newEmail"
           as={
             <div className="formInputWrap">
               <TextField 
-                id="name" 
-                name="name"
-                label="Name" 
+                id="newEmail" 
+                name="newEmail"
+                label="Email" 
                 variant="filled"
-                defaultValue={ authenticatedUser.name }
+                defaultValue={ authenticatedUser.email }
                 />
             </div>
           }
           control={control}
-          defaultValue={ authenticatedUser.name }
+          defaultValue={ authenticatedUser.email }
         />
-
-        <Controller 
-          name="username"
-          as={
-            <div className="formInputWrap">
-              <TextField 
-                id="username" 
-                name="username"
-                label="Username" 
-                variant="filled"
-                defaultValue={ authenticatedUser.username }
-                />
-            </div>
-          }
-          control={control}
-          defaultValue={ authenticatedUser.username }
-        />
-
 
         {/* submit */}
         <div className="formBtnWrap">
@@ -125,7 +104,7 @@ function EditProfile(){
             variant="contained" 
             color="primary" 
             type="submit" 
-            disabled={ !isDirty }>Update</Button>
+            disabled={ !isDirty }>Change Email</Button>
         </div>
 
       </form>
@@ -133,4 +112,4 @@ function EditProfile(){
   )
 }
 
-export default EditProfile;
+export default EditEmail;

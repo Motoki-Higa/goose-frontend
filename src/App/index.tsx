@@ -15,6 +15,7 @@ import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
 import EmailVerifyRequest from '../pages/EmailVerifyRequest/index';
 import EmailVerify from '../pages/EmailVerify';
+import EmailChange from '../pages/EmailChange';
 import PasswordResetRequest from '../pages/PasswordResetRequest/index';
 import PasswordReset from '../pages/PasswordReset/index';
 import Thanks from '../pages/Thanks';
@@ -80,6 +81,7 @@ function App() {
 
                         <Route exact path="/email/verify/request" component={ EmailVerifyRequest } />
                         <Route path="/email/verify/:token" component={ EmailVerify } />
+                        <Route path="/email/change/:token" component={ EmailChange } />
 
                         <Route exact path="/password/reset/request" component={ PasswordResetRequest } />
                         <Route path="/password/reset/:token" component={ PasswordReset } />

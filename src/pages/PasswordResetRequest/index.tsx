@@ -22,7 +22,7 @@ function PasswordResetRequest() {
   // handle submit
   const onSubmit = async (data: IFormInput) => {
     try {
-      const PasswordResetRequestApi =  config.apiBaseUrl + '/users/password/reset';
+      const PasswordResetRequestApi =  config.apiBaseUrl + '/users/password/reset/request';
       const obj = { email: data.email };
 
       // this requests to send user an email verification email again

@@ -19,7 +19,7 @@ function EmailVerify(){
 
   useEffect(() => {
     (async () => {
-      const verifyEmailApi =  config.apiBaseUrl + '/email/verify/' + token;
+      const verifyEmailApi =  config.apiBaseUrl + '/users/email/verify/' + token;
   
       await axios.get(verifyEmailApi)
         .then( response => {

@@ -14,6 +14,7 @@ import EditProfile from './EditProfile';
 import EditAccount from './EditAccount';
 import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
+import ChangeEmail from './ChangeEmail';
 
 
 function Form() {
@@ -32,6 +33,7 @@ function Form() {
     'EditAccount': EditAccount,
     'ChangePassword': ChangePassword,
     'DeleteAccount': DeleteAccount,
+    'ChangeEmail': ChangeEmail,
   };
 
   // this returns a form component

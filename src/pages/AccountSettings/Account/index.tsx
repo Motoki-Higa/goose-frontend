@@ -34,7 +34,7 @@ function Account(){
             <td>Email</td>
             <td>{ authenticatedUser.email }</td>
             <td>
-              <Edit onClick={ () => handleModalForm('EditAccount') }></Edit>
+              <Edit onClick={ () => handleModalForm('ChangeEmail') }></Edit>
             </td>
           </tr>
         </tbody>

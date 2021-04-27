@@ -22,7 +22,7 @@ function EmailVerifyRequest(){
   // handle submit
   const onSubmit = async (data: IFormInput) => {
     try {
-      const requestTokenApi =  config.apiBaseUrl + '/email/verify/request';
+      const requestTokenApi =  config.apiBaseUrl + '/users/email/verify/request';
       const obj = { email: data.email };
 
       // this requests to send user an email verification email again

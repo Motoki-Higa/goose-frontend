@@ -12,47 +12,76 @@ const keyFadeIn = keyframes`
   }
 `
 
-const ScTxtArea = styled.div`
+const ScTable = styled.table`
   position: relative;
+  width: 100%;
+  max-width: 70%;
   margin: 36px auto 0;
   padding: 0 24px;
+  border-radius: 10px;
   animation: ${ keyFadeIn } 0.5s ease-in;
 
-  @media (max-width: 768px) {
-    padding: 0 6px;
+  &:not(:first-of-type){
+    margin-top: 24px;
   }
-`;
 
-const ScTxtRow = styled.div`
-  position: relative;
-  margin-bottom: 12px;
-  animation: ${ keyFadeIn } 0.5s ease-in;
+  tr {
+    border: 1px solid ${ props => props.theme.colors.midGrey };
+    background-color: ${ props => props.theme.colors.lightGrey };
+  }
 
-  p {
+  td {
+    padding: 24px;
+    vertical-align: middle;
+  }
+
+  td:first-of-type {
     font-size: 0.875rem;
     color: ${ props => props.theme.colors.darkGrey };
+    width: 25%;
   }
 
-  span {
-    display: inline-block;
+  td:nth-of-type(2) {
     font-size: 1rem;
     font-weight: 500;
-    margin-left: 12px;
+    width: 65%;
+    padding: 6px 24px;
     color: ${ props => props.theme.colors.black };
   }
 
+  .MuiSvgIcon-root {
+    font-size: 1.25rem;
+    transition: all 0.3s ease-in-out;
+    color: ${ props => props.theme.colors.black };
+    cursor: pointer;
+
+    &:hover {
+      color: ${ props => props.theme.colors.pink };
+    }
+  }
+
   @media (max-width: 768px) {
-    p {
-      font-size: 0.75rem;
-      color: ${ props => props.theme.colors.darkGrey };
+    width: 100%;
+    max-width: 95%;
+
+    &:not(:first-of-type){
+      margin-top: 12px;
     }
 
-    span {
-      display: inline-block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-left: 12px;
-      color: ${ props => props.theme.colors.black };
+    td {
+      padding: 12px;
+    }
+
+    td:first-of-type {
+      font-size: 0.75rem;
+    }
+
+    td:nth-of-type(2) {
+      font-size: 0.8125rem;
+    }
+
+    .MuiSvgIcon-root {
+      font-size: 1rem;
     }
   }
 `;
@@ -87,8 +116,7 @@ const ScBtn = styled.div`
 `
 
 export {
-  ScTxtArea,
-  ScTxtRow,
+  ScTable,
   ScBtnBlock,
   ScBtnWrap,
   ScBtn

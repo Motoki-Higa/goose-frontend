@@ -118,10 +118,14 @@ export const UserProvider: React.FC = (props) => {
   // signout
   const signOut = () => {
     // empty out user
-    setAuthenticatedUser(null);
     setAuthUserProfile(profileObj);
-    setAuthUserBookmark([])
+    setAuthUserBookmark([]);
     Cookies.remove('authenticatedUser');
+
+    // setTimeout fixes console error
+    setTimeout(() => {
+      setAuthenticatedUser(null);
+    }, 400)
   };
 
 

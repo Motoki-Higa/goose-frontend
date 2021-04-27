@@ -39,7 +39,7 @@ function EditProfile(){
       const accountUpdateApi = config.apiBaseUrl + '/users/' + userId;
 
       const obj = {
-        'email': data.email,
+        // 'email': data.email,
         'name': data.name,
         'username': data.username
       }
@@ -85,7 +85,7 @@ function EditProfile(){
         onSubmit={ handleSubmit(onSubmit) }
         >
 
-        <Controller 
+        {/* <Controller 
           name="email"
           as={
             <div className="formInputWrap">
@@ -100,7 +100,7 @@ function EditProfile(){
           }
           control={control}
           defaultValue={ authenticatedUser.email }
-        />
+        /> */}
 
         <Controller 
           name="name"

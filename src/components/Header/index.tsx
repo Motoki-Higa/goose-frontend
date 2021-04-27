@@ -15,9 +15,9 @@ import {
 } from './styles';
 
 const Header: React.FC = () => {
-  // initialize context for use
-  const context = useContext(UserContext);
-  const authUser: any = context.authenticatedUser;
+  // context
+  const { authenticatedUser } = useContext<any>(UserContext);
+
 
   return (
     <ScHeader>
@@ -26,10 +26,10 @@ const Header: React.FC = () => {
       </ScLogo>
     
       {
-        authUser ?
+        authenticatedUser ?
         <ScAccountBlock>
           <ScLink to="/signout">Sign Out</ScLink>
-          <ScUsername>{ authUser.name }</ScUsername>
+          <ScUsername>{ authenticatedUser.username }</ScUsername>
           <AccountThumb />
         </ScAccountBlock>
       :

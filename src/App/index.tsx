@@ -11,12 +11,12 @@ import Nav from '../components/Nav/index';
 import Home from '../pages/Home/index';
 
 import SignUp from '../pages/SignUp/index';
-import VerifyEmail from '../pages/VerifyEmail';
 import SignIn from '../pages/SignIn/index';
 import SignOut from '../pages/SignOut/index';
-import RequestVerifyEmail from '../pages/RequestVerifyEmail/index';
-import RequestResetPw from '../pages/RequestResetPw/index';
-import ResetPw from '../pages/ResetPw/index';
+import EmailVerifyRequest from '../pages/EmailVerifyRequest/index';
+import EmailVerify from '../pages/EmailVerify';
+import PasswordResetRequest from '../pages/PasswordResetRequest/index';
+import PasswordReset from '../pages/PasswordReset/index';
 import Thanks from '../pages/Thanks';
 
 import AccountDashboard from '../pages/AccountDashboard';
@@ -74,14 +74,16 @@ function App() {
                     <div className="AppInner">
                       <Switch>
                         <Route exact path="/" component={ Home } />
-                        
                         <Route path="/signup" component={ SignUp } />
-                        <Route path="/verify/:token" component={ VerifyEmail } />
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
-                        <Route path="/request-verify-email" component={ RequestVerifyEmail } />
-                        <Route path="/request-reset-password" component={ RequestResetPw } />
-                        <Route path="/reset-password/:token" component={ ResetPw } />
+
+                        <Route exact path="/email/verify/request" component={ EmailVerifyRequest } />
+                        <Route path="/email/verify/:token" component={ EmailVerify } />
+
+                        <Route exact path="/password/reset/request" component={ PasswordResetRequest } />
+                        <Route path="/password/reset/:token" component={ PasswordReset } />
+
                         <Route path="/thanks" component={ Thanks } />
 
                         <PrivateRoute exact path="/feed" component={ Feed } />

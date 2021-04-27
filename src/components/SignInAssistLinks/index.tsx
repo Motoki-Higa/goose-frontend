@@ -9,10 +9,10 @@ function SignInAssistLinks(){
   return (
     <ScAssistBlock>
       <div>
-        <NavLink to="/request-reset-password">Forgot password?</NavLink>
+        <NavLink to="/password/reset/request">Forgot password?</NavLink>
       </div>
       <div>
-        <NavLink to="/request-verify-email">Email not verified?</NavLink>
+        <NavLink to="/email/verify/request">Email not verified?</NavLink>
       </div>
     </ScAssistBlock>
   )

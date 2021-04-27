@@ -1,14 +1,14 @@
 import React, { useState, useRef, useContext } from 'react';
-import { Redirect, NavLink, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../config';
+import config from '../../config';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
 
 // context
 import { NotificationContext } from '../../context/NotificationContext';
 
-function ResetPw(){
+function PasswordReset(){
   // context
   const { handleSetNotification } = useContext(NotificationContext);
 
@@ -30,7 +30,7 @@ function ResetPw(){
   const onSubmit = async (data: any) => {
     try {
       // endpoint
-      const resetPwApi = config.apiBaseUrl + '/reset-password/' + token;
+      const resetPwApi = config.apiBaseUrl + '/users/password/reset/' + token;
 
       const axiosConfig = {
         headers: {
@@ -137,4 +137,4 @@ function ResetPw(){
   )
 }
 
-export default ResetPw;
+export default PasswordReset;

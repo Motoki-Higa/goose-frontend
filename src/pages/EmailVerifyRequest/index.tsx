@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../config';
+import config from '../../config';
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
 
@@ -10,7 +10,7 @@ interface IFormInput {
   email: String;
 }
 
-function RequestResetPw() {
+function EmailVerifyRequest(){
   // state
   const [ message, setMessage ] = useState<string[]>([]);
 
@@ -22,11 +22,11 @@ function RequestResetPw() {
   // handle submit
   const onSubmit = async (data: IFormInput) => {
     try {
-      const requestResetPwApi =  config.apiBaseUrl + '/users/reset-password';
+      const requestTokenApi =  config.apiBaseUrl + '/email/verify/request';
       const obj = { email: data.email };
 
       // this requests to send user an email verification email again
-      await axios.put(requestResetPwApi, obj)
+      await axios.put(requestTokenApi, obj)
         .then( response => {
           setMessage(response.data.message);
           history.push('/thanks');
@@ -39,7 +39,7 @@ function RequestResetPw() {
 
   return (
     <div className="formPanel">
-      <h2 className="formTitle">Request Reset Password</h2>
+      <h2 className="formTitle">Request Verify Email</h2>
 
       <form 
         className="form"
@@ -87,4 +87,4 @@ function RequestResetPw() {
 
 }
 
-export default RequestResetPw;
+export default EmailVerifyRequest;

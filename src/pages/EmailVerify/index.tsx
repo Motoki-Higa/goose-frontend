@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
-import config from './../../config';
+import config from '../../config';
 
 // context
 import { UserContext } from '../../context/UserContext';
 
-function VerifyEmail (){
+function EmailVerify(){
   // state
   const [ isVerified, setIsVerified ] = useState(false);
   const [ message, setMessage ] = useState();
@@ -19,7 +19,7 @@ function VerifyEmail (){
 
   useEffect(() => {
     (async () => {
-      const verifyEmailApi =  config.apiBaseUrl + '/users/verify/' + token;
+      const verifyEmailApi =  config.apiBaseUrl + '/email/verify/' + token;
   
       await axios.get(verifyEmailApi)
         .then( response => {
@@ -63,7 +63,7 @@ function VerifyEmail (){
               </p>
 
               <div className="formLinkTxt">
-                <NavLink to="/request-verify-email">Re-send verification email</NavLink>
+                <NavLink to="/email/verify/request">Re-send verification email</NavLink>
               </div>
             </div>
           }
@@ -73,4 +73,4 @@ function VerifyEmail (){
   )
 }
 
-export default VerifyEmail;
+export default EmailVerify;

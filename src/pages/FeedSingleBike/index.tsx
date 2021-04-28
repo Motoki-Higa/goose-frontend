@@ -40,7 +40,7 @@ function FeedSingleBike() {
   }  
 
   // state : bikes
-  const [ bike, setBike ] = useState<IBike | void>({
+  const [ bike, setBike ] = useState<IBike>({
     _id: "",
     user_id: "",
     username: "",
@@ -53,7 +53,7 @@ function FeedSingleBike() {
       location: "",
     }]
   });
-  const [ user, setUser ] = useState<IUser | void>({
+  const [ user, setUser ] = useState<IUser>({
     _id: "", 
     user_id: "", 
     username: "", 
@@ -92,7 +92,7 @@ function FeedSingleBike() {
           })
     
       } catch(err) {
-        console.log(err)
+        console.log(err.response.data.message)
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,10 +107,15 @@ function FeedSingleBike() {
         </ScUtilsInner>
       </ScUtils>
 
-      {/* Send data to ItemDetail component */}
-      <ItemDetail 
-        item={ bike }
-        user={ user } />
+      {
+        bike._id !== '' ?
+        /* Send data to ItemDetail component */
+        <ItemDetail 
+          item={ bike }
+          user={ user } />
+        :
+        null
+      }
     </>
   )
 }

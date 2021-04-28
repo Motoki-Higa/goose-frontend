@@ -66,6 +66,7 @@ function SingleItem(props: any) {
 
           axios.get(itemApi)
             .then( (response) => {
+              if (response.data === null) return console.log('No item')
               setItem(response.data);
               handleSetCurrentItem(response.data);
             });
@@ -77,20 +78,27 @@ function SingleItem(props: any) {
 
   return (
     <>
-      {/* utility bar: ArrowBackBtn & tools btn */}
-      <ScUtils>
-        <ScUtilsInner>
-          <ArrowBackBtn />
-          <MoreHorizBtn 
-            editForm="EditItem"
-            deleteForm="DeleteItem" />
-        </ScUtilsInner>
-      </ScUtils>
+      {
+        item._id !== '' ?
+        <>
+          {/* utility bar: ArrowBackBtn & tools btn */}
+          <ScUtils>
+            <ScUtilsInner>
+              <ArrowBackBtn />
+              <MoreHorizBtn 
+                editForm="EditItem"
+                deleteForm="DeleteItem" />
+            </ScUtilsInner>
+          </ScUtils>
 
-      {/* Send data to ItemDetail component */}
-      <ItemDetail 
-        item={ item } 
-        cat="item" />
+          {/* Send data to ItemDetail component */}
+          <ItemDetail 
+            item={ item } 
+            cat="item" />
+        </>
+        :
+        <div>This tem is deleted or not exist</div>
+      }
     </>
   )
 }

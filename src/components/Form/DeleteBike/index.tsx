@@ -24,8 +24,12 @@ function DeleteBike(props: any){
 
     axios.delete(url)
       .then( (response) => {
-        history.goBack(); // send user back to the list page
-
+        
+        // this fixes console error : Warning: Can't perform a React state update on an unmounted component.
+        setTimeout(() => {
+          history.goBack(); // send user back to the list page
+        }, 300)
+        
         // notification
         handleSetNotification(response.data.message);
       });

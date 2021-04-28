@@ -72,6 +72,7 @@ function SingleBike(props: any) {
 
           axios.get(bikeApi)
             .then( (response) => {
+              if (response.data === null) return console.log('No item')
               setBike(response.data);
               handleSetCurrentItem(response.data);
             });
@@ -83,26 +84,33 @@ function SingleBike(props: any) {
 
   return (
     <>
-      {/* utility bar: ArrowBackBtn & tools btn */}
-      <ScUtils>
-        <ScUtilsInner>
-          <ArrowBackBtn />
+      {
+        bike._id !== '' ?
+        <>
+          {/* utility bar: ArrowBackBtn & tools btn */}
+          <ScUtils>
+            <ScUtilsInner>
+              <ArrowBackBtn />
 
-          { // show more option ONLY if it's logged in users dashboard
-            isMyAccount ?
-            <MoreHorizBtn 
-              editForm="EditBike"
-              deleteForm="DeleteBike" />
-            :
-            null
-          }
-          
-        </ScUtilsInner>
-      </ScUtils>
+              { // show more option ONLY if it's logged in users dashboard
+                isMyAccount ?
+                <MoreHorizBtn 
+                  editForm="EditBike"
+                  deleteForm="DeleteBike" />
+                :
+                null
+              }
+              
+            </ScUtilsInner>
+          </ScUtils>
 
-      {/* Send data to ItemDetail component */}
-      <ItemDetail 
-        item={ bike } />
+          {/* Send data to ItemDetail component */}
+          <ItemDetail 
+            item={ bike } />
+        </>
+        :
+        <div>This tem is deleted or not exist</div>
+      }
     </>
   )
 }

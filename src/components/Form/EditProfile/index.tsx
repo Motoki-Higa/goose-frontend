@@ -26,6 +26,7 @@ function EditProfile(){
   const { isDirty } = formState;
 
   // state for preview image (display purpose)
+  const [ message, setMessage ] = useState();
   const [ preview, setPreview ] = useState<any>();
   // state for image to be used for api request call
   const [ profileImage, setProfileImage ] = useState<string>('');
@@ -98,7 +99,8 @@ function EditProfile(){
         })
       
     } catch(err) {
-      console.log(err)
+      setMessage(err.response.data.error);
+      // console.log(err.response.data.error)
     }
   };
 
@@ -113,6 +115,13 @@ function EditProfile(){
       {/* form 2: this handles new entries include images */}
       <div className="formEditArea">
         <div className="formCurrentImgArea__ttl">Edit fields / Change image</div>
+        
+        {
+          message ? 
+          <div className="formErrorMsg">{ message }</div>
+          : 
+          null
+        }
 
         <form 
           className="form" 

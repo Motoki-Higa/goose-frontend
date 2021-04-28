@@ -28,6 +28,8 @@ function EditItem(){
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
 
+  // state for error message
+  const [ message, setMessage ] = useState();
   // state for rating
   const [ value, setValue ] = React.useState<any>(parseInt(currentItem.condition));
   // state for preview image (display purpose)
@@ -119,7 +121,7 @@ function EditItem(){
         })
       
     } catch(err) {
-      console.log(err)
+      setMessage(err.response.data.error);
     }
   };
 
@@ -133,6 +135,14 @@ function EditItem(){
       {/* form 2: this handles new entries include images */}
       <div className="formEditArea">
         <div className="formCurrentImgArea__ttl">Edit fields / Add images</div>
+
+        {
+          message ? 
+          <div className="formErrorMsg">{ message }</div>
+          : 
+          null
+        }
+        
         <form 
           className="form" 
           onSubmit={ handleSubmit(onSubmit) }>

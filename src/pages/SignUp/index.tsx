@@ -8,11 +8,6 @@ import { UserContext } from '../../context/UserContext';
 // components
 import SignInAssistLinks from './../../components/SignInAssistLinks';
 
-// styles
-import {
-  ScError
-} from './styles'
-
 // TS interface for submitted data
 interface IFormInput {
   email: String;
@@ -59,8 +54,11 @@ function SignUp(props: any) {
         {
           message ?
           message.map( (err, index: number) => {
-            return <ScError 
-            key={index} >{ err }</ScError>
+            return (
+            <div 
+              className="formErrorMsg"
+              key={index} >{ err }</div>
+            )
           })
           :
           null

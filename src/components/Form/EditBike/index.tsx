@@ -48,6 +48,8 @@ function EditBike(){
   const { control, register, handleSubmit, errors, formState } = useForm();
   const { isDirty } = formState;
 
+  // state for error message
+  const [ message, setMessage ] = useState();
   // state for switch
   let isTrueSet = (currentItem.public === 'true');
   const [ isPublic, setIsPublic ] = useState(isTrueSet);
@@ -147,7 +149,7 @@ function EditBike(){
         })
       
     } catch(err) {
-      console.log(err)
+      setMessage(err.response.data.error);
     }
   };
 
@@ -161,6 +163,14 @@ function EditBike(){
       {/* form 2: this handles new entries include images */}
       <div className="formEditArea">
         <div className="formCurrentImgArea__ttl">Edit fields / Add images</div>
+
+        {
+          message ? 
+          <div className="formErrorMsg">{ message }</div>
+          : 
+          null
+        }
+        
         <form 
           className="form" 
           onSubmit={ handleSubmit(onSubmit) }>

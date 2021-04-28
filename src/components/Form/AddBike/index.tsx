@@ -42,6 +42,8 @@ function AddBike(){
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
 
+  // state for error message
+  const [ message, setMessage ] = useState();
   const [ fileError, setFileError ] = useState(false)
   // state for switch
   const [ isPublic, setIsPublic ] = useState(false);
@@ -143,7 +145,7 @@ function AddBike(){
             })
           
         } catch(err) {
-          console.log(err);
+          setMessage(err.response.data.error);
         }
       }
     } catch (err){
@@ -155,6 +157,13 @@ function AddBike(){
   return (
     <div className="formPanel formPanel--modal">
       <div className="formTitle">Add a new bike</div>
+
+      {
+        message ? 
+        <div className="formErrorMsg">{ message }</div>
+        : 
+        null
+      }
 
       <form 
         className="form" 

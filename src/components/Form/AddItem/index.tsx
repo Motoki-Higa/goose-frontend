@@ -23,6 +23,8 @@ function AddItem(){
   // form
   const { control, register, handleSubmit, errors, formState } = useForm();
 
+  // state for error message
+  const [ message, setMessage ] = useState();
   // state for rating
   const [ value, setValue ] = React.useState<number | null>(0);
   // state for preview image (display purpose)
@@ -100,8 +102,7 @@ function AddItem(){
         },
       })
         .then( response => {
-          console.log(response);
-          setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, MyBikes component can re-render on successful submission which can update the page and show the new item on the list immediately
+          setDetectAnyFormSubmit(formState.isSubmitSuccessful); // by setting this, item component can re-render on successful submission which can update the page and show the new item on the list immediately
           // reset after
           setDetectAnyFormSubmit();
 
@@ -113,13 +114,20 @@ function AddItem(){
         })
       
     } catch(err) {
-
+      setMessage(err.response.data.error);
     }
   };
 
   return (
     <div className="formPanel formPanel--modal">
       <div className="formTitle">Add an new item</div>
+
+      {
+        message ? 
+        <div className="formErrorMsg">{ message }</div>
+        : 
+        null
+      }
 
       <form 
         className="form" 

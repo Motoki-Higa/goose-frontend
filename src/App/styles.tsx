@@ -236,6 +236,7 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.025rem;
     line-height: 1.4;
     color: ${ props => props.theme.colors.pink };
+    margin-top: 24px;
   }
 
   .MuiFormControl-root {

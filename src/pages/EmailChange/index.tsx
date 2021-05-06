@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useParams, useHistory, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../config';
 
@@ -13,9 +13,14 @@ function EmailChange(){
   const { authenticatedUser, handleUpdateAuthUser } = useContext<any>(UserContext);
   const { handleSetNotification } = useContext(NotificationContext);
 
+  // state
+  const [ message, setMessage ] = useState();
 
   // username params
   const { token } = useParams<{ token: string }>();
+
+  let history = useHistory();
+  const accountSettingUrl = `/${ authenticatedUser.username }/settings/account`;
 
 
   useEffect(() => {
@@ -33,10 +38,14 @@ function EmailChange(){
 
             // notification
             handleSetNotification(response.data.message);
+
+            // redirect
+            history.push(accountSettingUrl)
           })
         
       } catch(err) {
-        console.log(err)
+        console.log(err.response.data.error);
+        setMessage(err.response.data.error);
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +53,23 @@ function EmailChange(){
 
 
   return (
-    <Redirect to={`/${authenticatedUser.username}/settings/account`} />
+    <>
+      {
+        message ?
+        <div className="formPanel">
+          <h2 className="formTitle">{ message }</h2>
+          <p className="formDesc">
+            Email verification link is valid for 10min.<br />
+            Please request it again.
+          </p>
+          <div className="formLinkTxt">
+            <NavLink to={ accountSettingUrl }>Go to settings</NavLink>
+          </div>
+        </div>
+        :
+        null
+      }
+    </>
   )
 }
 

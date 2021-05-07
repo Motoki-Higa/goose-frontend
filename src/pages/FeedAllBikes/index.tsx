@@ -46,6 +46,7 @@ function FeedAllBikes(){
     handleClearLoadedItems,
     handleClearScrollPosition } = useContext(InfiniteScrollContext);
 
+  // below are used for search function
   let history = useHistory();
   const search = window.location.search;
   const params = new URLSearchParams(search);
@@ -82,7 +83,7 @@ function FeedAllBikes(){
               handleClearLoadedItems();
               handleClearScrollPosition()
             } else {
-              // show 5 items onload
+              // show 12 items onload
               setItems(response.data.slice(0, 12));
             }
           })

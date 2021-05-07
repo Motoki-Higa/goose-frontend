@@ -126,6 +126,7 @@ export const UserProvider: React.FC = (props) => {
     setTimeout(() => {
       setAuthenticatedUser(null);
     }, 400)
+    
   };
 
 

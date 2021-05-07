@@ -16,7 +16,8 @@ import MoreHorizBtn from '../../../components/buttons/MoreHorizBtn';
 // styles
 import {
   ScUtils,
-  ScUtilsInner
+  ScUtilsInner,
+  ScNotFound
 } from './styles';
 
 function SingleBike(props: any) {
@@ -36,19 +37,7 @@ function SingleBike(props: any) {
   }
 
   // state : bikes
-  const [ bike, setBike ] = useState<IBike>({
-    _id: "",
-    user_id: "",
-    username: "",
-    name: "",
-    brand: "",
-    builtby: "",
-    desc: "",
-    images: [{
-      key: "",
-      location: "",
-    }]
-  });
+  const [ bike, setBike ] = useState<IBike | undefined | boolean>();
 
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
@@ -72,7 +61,7 @@ function SingleBike(props: any) {
 
           axios.get(bikeApi)
             .then( (response) => {
-              if (response.data === null) return console.log('No item')
+              if (response.data === null) return setBike(false);
               setBike(response.data);
               handleSetCurrentItem(response.data);
             });
@@ -84,32 +73,39 @@ function SingleBike(props: any) {
 
   return (
     <>
-      {
-        bike._id !== '' ?
-        <>
-          {/* utility bar: ArrowBackBtn & tools btn */}
-          <ScUtils>
-            <ScUtilsInner>
-              <ArrowBackBtn />
-
-              { // show more option ONLY if it's logged in users dashboard
-                isMyAccount ?
-                <MoreHorizBtn 
-                  editForm="EditBike"
-                  deleteForm="DeleteBike" />
-                :
-                null
-              }
-              
-            </ScUtilsInner>
-          </ScUtils>
-
-          {/* Send data to ItemDetail component */}
-          <ItemDetail 
-            item={ bike } />
-        </>
+      { // without this first condition, below text will briefly shows up before showing bike item
+        bike === false ?
+        <ScNotFound>This tem is deleted or not exist</ScNotFound>
         :
-        <div>This tem is deleted or not exist</div>
+        <>
+          {
+            bike ?
+            <>
+              {/* utility bar: ArrowBackBtn & tools btn */}
+              <ScUtils>
+                <ScUtilsInner>
+                  <ArrowBackBtn />
+
+                  { // show more option ONLY if it's logged in users dashboard
+                    isMyAccount ?
+                    <MoreHorizBtn 
+                      editForm="EditBike"
+                      deleteForm="DeleteBike" />
+                    :
+                    null
+                  }
+                  
+                </ScUtilsInner>
+              </ScUtils>
+
+              {/* Send data to ItemDetail component */}
+              <ItemDetail 
+                item={ bike } />
+            </>
+            :
+            null
+          }
+        </>
       }
     </>
   )

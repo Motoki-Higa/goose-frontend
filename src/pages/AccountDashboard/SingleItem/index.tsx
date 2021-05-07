@@ -15,7 +15,8 @@ import MoreHorizBtn from '../../../components/buttons/MoreHorizBtn';
 // styles
 import {
   ScUtils,
-  ScUtilsInner
+  ScUtilsInner,
+  ScNotFound
 } from './styles';
 
 function SingleItem(props: any) {
@@ -33,17 +34,7 @@ function SingleItem(props: any) {
   }
 
   // state : item
-  const [ item, setItem ] = useState<IItem>({
-    _id: "",
-    name: "",
-    brand: "",
-    builtby: "",
-    desc: "",
-    images: [{
-      key: "",
-      location: "",
-    }]
-  });
+  const [ item, setItem ] = useState<IItem | undefined | boolean>();
 
   // context
   const { handleSetCurrentItem } = useContext(CurrentItemContext);
@@ -78,26 +69,33 @@ function SingleItem(props: any) {
 
   return (
     <>
-      {
-        item._id !== '' ?
-        <>
-          {/* utility bar: ArrowBackBtn & tools btn */}
-          <ScUtils>
-            <ScUtilsInner>
-              <ArrowBackBtn />
-              <MoreHorizBtn 
-                editForm="EditItem"
-                deleteForm="DeleteItem" />
-            </ScUtilsInner>
-          </ScUtils>
-
-          {/* Send data to ItemDetail component */}
-          <ItemDetail 
-            item={ item } 
-            cat="item" />
-        </>
+      { // without this first condition, below text will briefly shows up before showing bike item
+        item === false ?
+        <ScNotFound>This tem is deleted or not exist</ScNotFound>
         :
-        <div>This tem is deleted or not exist</div>
+        <>
+          {
+            item ?
+            <>
+              {/* utility bar: ArrowBackBtn & tools btn */}
+              <ScUtils>
+                <ScUtilsInner>
+                  <ArrowBackBtn />
+                  <MoreHorizBtn 
+                    editForm="EditItem"
+                    deleteForm="DeleteItem" />
+                </ScUtilsInner>
+              </ScUtils>
+
+              {/* Send data to ItemDetail component */}
+              <ItemDetail 
+                item={ item } 
+                cat="item" />
+            </>
+            :
+            null
+          }
+        </>
       }
     </>
   )

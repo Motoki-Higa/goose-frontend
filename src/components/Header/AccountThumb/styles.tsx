@@ -64,7 +64,7 @@ const ScAccountCircle = styled(AccountCircle)`
 const ScMoreOptionTable = styled.div`
   position: absolute;
   width: auto;
-  text-align: right;
+  text-align: left;
   top: 0;
   right: 0;
   margin-top: 35px;

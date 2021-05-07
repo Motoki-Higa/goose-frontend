@@ -40,9 +40,13 @@ const GlobalStyle = createGlobalStyle`
   .AppInner {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 90%;
     margin: 0 auto;
     padding: 12px 12px 96px;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
 
   .Title {

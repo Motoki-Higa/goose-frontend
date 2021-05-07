@@ -9,7 +9,7 @@ const ScAssistBlock = styled.div`
 
   a {
     font-size: 0.875rem;
-    color: ${ props => props.theme.colors.blue }
+    color: ${ props => props.theme.colors.white }
   }
 `
 

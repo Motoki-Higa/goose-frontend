@@ -38,6 +38,7 @@ const keyFadeInProfileImg = keyframes`
 const ScItemDetail = styled.div`
   position: relative;
   width: 100%;
+  max-width: 900px;
   margin: 12px auto 0;
   padding: 20px 20px 40px;
   border-radius: 10px;

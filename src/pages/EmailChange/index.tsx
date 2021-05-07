@@ -44,7 +44,6 @@ function EmailChange(){
           })
         
       } catch(err) {
-        console.log(err.response.data.error);
         setMessage(err.response.data.error);
       }
     })()

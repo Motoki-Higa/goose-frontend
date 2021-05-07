@@ -22,8 +22,10 @@ function Nav() {
   const authUser: any = authenticatedUser;
 
   // username params (useParams() can't be used for nav component, so use below)
-  const location = useLocation()
-  
+  const location = useLocation();
+
+  // this is used NOT to show nav in home page
+  const child = location.pathname.split('/')[1];
 
   useEffect( () => {
     if (authUser){
@@ -41,41 +43,40 @@ function Nav() {
 
   return (
     <>
-    {
-      authUser ?
-      <ScNavWrap>
-        <ScNavWrapInner>
+      {
+        authUser && child !== '' ?
+        <ScNavWrap>
+          <ScNavWrapInner>
 
-          <ScLi>
-            <NavLink to="/feed">
-              <LocalFlorist />
-              <p>Feed</p>
-            </NavLink>
-          </ScLi>
+            <ScLi>
+              <NavLink to="/feed">
+                <LocalFlorist />
+                <p>Feed</p>
+              </NavLink>
+            </ScLi>
 
-          <ScLi>
-            <NavLink to="/bookmarks">
-              <Bookmark />
-              <p>Saved</p>
-            </NavLink>
-          </ScLi>
+            <ScLi>
+              <NavLink to="/bookmarks">
+                <Bookmark />
+                <p>Saved</p>
+              </NavLink>
+            </ScLi>
 
-          <ScLi>
-            <NavLink 
-              to={ `/${ authUser.username }/dashboard/bikes` }
-              className={ activeClass } >
-              <Dashboard />
-              <p>Dashboard</p>
-            </NavLink>
-          </ScLi>
-          
-        </ScNavWrapInner> 
-      </ScNavWrap>
-      :
-      null
-    }
+            <ScLi>
+              <NavLink 
+                to={ `/${ authUser.username }/dashboard/bikes` }
+                className={ activeClass } >
+                <Dashboard />
+                <p>Dashboard</p>
+              </NavLink>
+            </ScLi>
+            
+          </ScNavWrapInner> 
+        </ScNavWrap>
+        :
+        null
+      }
     </>
-    
   )
 }
 

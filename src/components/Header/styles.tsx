@@ -21,7 +21,7 @@ const ScHeader = styled.header`
   }
 `
 
-const ScLogo = styled.div`
+const ScLogo = styled(Link)`
   color: #fff;
 
   svg {
@@ -47,12 +47,9 @@ const ScAccountBlock = styled.div`
 
 const ScUsername = styled.p`
   font-size: 0.875rem;
-  color: #fff;
+  font-weight: 500;
+  color: ${ props => props.theme.colors.black };
   margin-left: 12px;
-
-  @media (max-width: 768px){
-    display: none;
-  }
 `
 
 const ScAccountCircle = styled(AccountCircle)`
@@ -65,7 +62,8 @@ const ScAccountCircle = styled(AccountCircle)`
 
 const ScLink = styled(Link)`
   font-size: 0.875rem;
-  color: #fff;
+  font-weight: 500;
+  color: ${ props => props.theme.colors.black };
 
   &:not(:first-of-type){
     margin-left: 12px;

@@ -66,11 +66,12 @@ function AccountThumb() {
         menu ?
         <ScMoreOptionTable className={ fadeClass }>
           <ul>
-            {/* <li>
-              <NavLink to={`/${ userData.username }/bikes`}>Dashboard</NavLink>
-            </li> */}
+            
             <li>
               <NavLink to={`/${ userData.username }/settings/profile`}>Settings</NavLink>
+            </li>
+            <li>
+              <NavLink to="/signout">Sign Out</NavLink>
             </li>
           </ul>
         </ScMoreOptionTable>

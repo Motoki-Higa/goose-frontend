@@ -38,7 +38,7 @@ import { InfiniteScrollProvider } from '../context/InfiniteScrollContext';
 import { NotificationProvider } from '../context/NotificationContext';
 import { IsMyAccountProvider } from '../context/IsMyAccountContext';
 
-// private route with context
+// private route (Can only be accessible if user is logged in)
 import { PrivateRoute } from '../PrivateRoute';
 
 // style
@@ -79,7 +79,7 @@ function App() {
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
 
-                        <Route exact path="/email/verify/request" component={ EmailVerifyRequest } />
+                        <PrivateRoute exact path="/email/verify/request" component={ EmailVerifyRequest } />
                         <Route path="/email/verify/:token" component={ EmailVerify } />
                         <Route path="/email/change/:token" component={ EmailChange } />
 

@@ -5,7 +5,8 @@ const ScUtils = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
+  max-width: 900px;
+  margin: 24px auto 0;
   padding: 0 10px;
   z-index: 2;
 

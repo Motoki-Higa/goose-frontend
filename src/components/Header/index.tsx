@@ -21,14 +21,13 @@ const Header: React.FC = () => {
 
   return (
     <ScHeader>
-      <ScLogo>
+      <ScLogo to="/">
         <Logo></Logo>
       </ScLogo>
     
       {
         authenticatedUser ?
         <ScAccountBlock>
-          <ScLink to="/signout">Sign Out</ScLink>
           <ScUsername>{ authenticatedUser.username }</ScUsername>
           <AccountThumb />
         </ScAccountBlock>

@@ -83,7 +83,7 @@ function FeedAllBikes(){
               handleClearScrollPosition()
             } else {
               // show 5 items onload
-              setItems(response.data.slice(0, 5));
+              setItems(response.data.slice(0, 12));
             }
           })
         

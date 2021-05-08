@@ -13,10 +13,12 @@ import Bikes from './Bikes';
 import SingleBike from './SingleBike';
 import Items from './Items';
 import SingleItem from './SingleItem';
+import FollowBtn from './../../components/buttons/Followbtn'
 
 // styles
 import {
   ScProfile,
+  ScLeftColumn,
   ScProfileImg,
   ScProfileTxtArea,
   ScProfileName,
@@ -85,8 +87,18 @@ function AccountDashboard(){
       {
         userData ? 
         <ScProfile>
-          <ScProfileImg 
-            style={{backgroundImage:`url(${ userData.image ? userData.image.location : null})`}}/>
+          <ScLeftColumn>
+            <ScProfileImg 
+              style={{backgroundImage:`url(${ userData.image ? userData.image.location : null})`}}/>
+
+            { // show follow btn if not own dashboard
+              !isMyAccount ?
+              <FollowBtn userId={ userData.user_id }></FollowBtn>
+              :
+              null
+            }
+            
+          </ScLeftColumn>
 
           <ScProfileTxtArea>
             <ScProfileName>{ userData.username }</ScProfileName>

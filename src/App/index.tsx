@@ -24,6 +24,7 @@ import AccountDashboard from '../pages/AccountDashboard';
 import AccountSettings from '../pages/AccountSettings';
 import Feed from '../pages/FeedAllBikes/index';
 import FeedSingleBike from '../pages/FeedSingleBike/index';
+import Following from '../pages/AccountDashboard/Following/index';
 import Bookmarks from '../pages/AccountDashboard/Bookmarks/index';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
@@ -79,7 +80,7 @@ function App() {
                         <Route path="/signin" component={ SignIn } />
                         <Route path="/signout" component={ SignOut } />
 
-                        <PrivateRoute exact path="/email/verify/request" component={ EmailVerifyRequest } />
+                        <Route exact path="/email/verify/request" component={ EmailVerifyRequest } />
                         <Route path="/email/verify/:token" component={ EmailVerify } />
                         <Route path="/email/change/:token" component={ EmailChange } />
 
@@ -92,6 +93,7 @@ function App() {
                         <PrivateRoute exact path="/feed/search" component={ Feed } />
                         <PrivateRoute path="/feed/:id" component={ FeedSingleBike } />
 
+                        <PrivateRoute path="/following" component={ Following } />
                         <PrivateRoute path="/bookmarks" component={ Bookmarks } />
 
                         <IsMyAccountProvider>

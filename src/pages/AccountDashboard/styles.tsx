@@ -27,6 +27,16 @@ const ScProfile = styled.div`
   }
 `;
 
+const ScLeftColumn = styled.div`
+  /* width: 125px; */
+  /* height: 125px; */
+
+  @media (max-width: 768px) {
+    /* width: 80px; */
+    /* height: 80px; */
+  }
+`;
+
 const ScProfileImg = styled.div`
   display: flex;
   width: 125px;
@@ -59,6 +69,10 @@ const ScProfileName = styled.div`
   font-weight: 500;
   letter-spacing: 0.025rem;
   color: ${ props => props.theme.colors.black };
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const ScProfileBio = styled.div`
@@ -98,7 +112,7 @@ const ScSubNav = styled.div`
   font-weight: 400;
   letter-spacing: 0.025rem;
   line-height: 1.5;
-  margin-top: 12px;
+  margin-top: 24px;
   padding: 12px 0;
   animation: ${ keyFadeIn } 0.5s ease-in;
   border-bottom: 1px solid ${ props => props.theme.colors.lightGrey };
@@ -133,6 +147,7 @@ const ScSubNav = styled.div`
 
 export {
   ScProfile,
+  ScLeftColumn,
   ScProfileImg,
   ScProfileTxtArea,
   ScProfileName,

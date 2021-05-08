@@ -10,9 +10,11 @@ interface ContextState {
   authenticatedUser: string | null;
   authUserProfile: any;
   authUserBookmark: any;
+  authUserFollowing: any;
   isProfileUpdated: boolean;
   isAccountUpdated: boolean;
   handleBookmarkUpdate: Function;
+  handleFollowingUpdate: Function;
   handleSetIsProfileUpdated: any;
   handleSetIsAccountUpdated: any;
   handleUpdateAuthUser: any;
@@ -42,6 +44,7 @@ export const UserProvider: React.FC = (props) => {
   const [ authenticatedUser, setAuthenticatedUser ] = useState(Cookies.getJSON('authenticatedUser') || null);
   const [ authUserProfile, setAuthUserProfile ] = useState(profileObj);
   const [ authUserBookmark, setAuthUserBookmark ] = useState<string[]>([])
+  const [ authUserFollowing, setAuthUserFollowing ] = useState<string[]>([])
   const [ isProfileUpdated, setIsProfileUpdated ] = useState(false);
   const [ isAccountUpdated, setIsAccountUpdated ] = useState(false);
 
@@ -56,17 +59,35 @@ export const UserProvider: React.FC = (props) => {
       url: bookmarkApi
     })
     .then(response => {
-
       if (method === 'POST'){
         // if POST, then push a new item(id) to array
         setAuthUserBookmark(prevArray => [...prevArray, response.data.id]);
       } else {
-        // if GET, then remove the item(id) from array
+        // if DELETE, then remove the item(id) from array
         setAuthUserBookmark(prevArray => prevArray.filter(item => item !== response.data.id));
       }
-      
     })
-    
+  }
+
+
+  // handle following update
+  const handleFollowingUpdate = (userId: string, following: boolean | undefined) => {
+    const followingApi = config.apiBaseUrl + '/following/' + userId;
+    const method = following ? 'DELETE' : 'POST';
+
+    axios({
+      method: method,
+      url: followingApi
+    })
+    .then(response => {
+      if (method === 'POST'){
+        // if POST, then push a new item(id) to array
+        setAuthUserFollowing(prevArray => [...prevArray, response.data.id]);
+      } else {
+        // if DELETE, then remove the item(id) from array
+        setAuthUserFollowing(prevArray => prevArray.filter(item => item !== response.data.id));
+      }
+    })
   }
   
 
@@ -111,7 +132,6 @@ export const UserProvider: React.FC = (props) => {
     else if (user.status === 401){
       return user.data.error
     }
-    
   }
 
 
@@ -126,7 +146,6 @@ export const UserProvider: React.FC = (props) => {
     setTimeout(() => {
       setAuthenticatedUser(null);
     }, 400)
-    
   };
 
 
@@ -135,6 +154,7 @@ export const UserProvider: React.FC = (props) => {
     if (authenticatedUser){
       const profileApi = config.apiBaseUrl + '/profile/' + authenticatedUser.username;
       const bookmarkApi = config.apiBaseUrl + '/' + authenticatedUser._id + '/bookmark';
+      const followingApi = config.apiBaseUrl + '/following';
 
       // get profile by username
       const profile = axios.get(profileApi)
@@ -144,15 +164,24 @@ export const UserProvider: React.FC = (props) => {
       const bookmark = axios.get(bookmarkApi)
         .then( (response) => response.data)
 
-      Promise.all([profile, bookmark])
+      // get following
+      const following = axios.get(followingApi)
+        .then( (response) => response.data)
+
+      Promise.all( [profile, bookmark, following] )
         .then( response => {
-          const [ profileObj, bookmarkObj ]: any = response
+          const [ profileObj, bookmarkObj, followingObj ]: any = response
 
           setAuthUserProfile(profileObj);
 
           // this condition makes sure that it wont run for the new user who doesn't have bookmark object created yet
           if (bookmarkObj){
             setAuthUserBookmark(bookmarkObj.bike_ids);
+          }
+
+          // this condition makes sure that it wont run for the new user who doesn't have following object created yet
+          if (followingObj){
+            setAuthUserFollowing(followingObj.following_ids);
           }
           
         })
@@ -165,9 +194,11 @@ export const UserProvider: React.FC = (props) => {
     authenticatedUser,
     authUserProfile,
     authUserBookmark,
+    authUserFollowing,
     isProfileUpdated,
     isAccountUpdated,
     handleBookmarkUpdate,
+    handleFollowingUpdate,
     handleSetIsProfileUpdated,
     handleSetIsAccountUpdated,
     handleUpdateAuthUser,

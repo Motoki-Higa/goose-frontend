@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { LocalFlorist, Bookmark, Dashboard } from '@material-ui/icons';
+import { LocalFlorist, Bookmark, Dashboard, PersonPin } from '@material-ui/icons';
 
 // contexts
 import { UserContext } from '../../context/UserContext';
@@ -59,6 +59,13 @@ function Nav() {
               <NavLink to="/bookmarks">
                 <Bookmark />
                 <p>Saved</p>
+              </NavLink>
+            </ScLi>
+
+            <ScLi>
+              <NavLink to="/following">
+                <PersonPin />
+                <p>Following</p>
               </NavLink>
             </ScLi>
 

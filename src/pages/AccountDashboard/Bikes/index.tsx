@@ -55,7 +55,7 @@ function Bikes() {
 
   // for search
   const handleSearch = async (data: any) => {
-    history.push('/' + username + '/bikes/search?q=' + data.search);
+    history.push('/' + username + '/dashboard/bikes/search?q=' + data.search);
   }
 
   // AddBtn onClick event

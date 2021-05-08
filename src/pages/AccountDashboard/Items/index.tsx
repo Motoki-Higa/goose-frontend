@@ -50,7 +50,7 @@ function Items() {
 
   // for search
   const handleSearch = async (data: any) => {
-    history.push('/' + username + '/items/search?q=' + data.search);
+    history.push('/' + username + '/dashboard/items/search?q=' + data.search);
   }
 
   // AddBtn onClick event

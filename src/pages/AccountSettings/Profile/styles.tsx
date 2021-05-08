@@ -17,6 +17,7 @@ const ScProfile = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 900px;
   margin: 24px auto 0;
   animation: ${ keyFadeIn } 0.5s ease-in;
 

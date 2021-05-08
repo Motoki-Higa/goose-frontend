@@ -68,7 +68,12 @@ function AccountThumb() {
           <ul>
             
             <li>
-              <NavLink to={`/${ userData.username }/settings/profile`}>Settings</NavLink>
+              { // in case userData is not loaded, DO NOT show Settings to avoid error
+                userData ?
+                <NavLink to={`/${ userData.username }/settings/profile`}>Settings</NavLink>
+                :
+                null
+              }
             </li>
             <li>
               <NavLink to="/signout">Sign Out</NavLink>

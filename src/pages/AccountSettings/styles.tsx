@@ -19,7 +19,8 @@ const ScSubNav = styled.div`
   font-weight: 400;
   letter-spacing: 0.025rem;
   line-height: 1.5;
-  margin-top: 12px;
+  max-width: 900px;
+  margin: 12px auto 0;
   padding: 12px 0;
   animation: ${ keyFadeIn } 0.5s ease-in;
   border-bottom: 1px solid ${ props => props.theme.colors.lightGrey };

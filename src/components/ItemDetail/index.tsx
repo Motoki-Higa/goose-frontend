@@ -7,9 +7,14 @@ import Box from '@material-ui/core/Box';
 
 // context
 import { IsMyAccount } from '../../context/IsMyAccountContext';
+import { ModalContext } from '../../context/ModalContext';
+import { FormContext } from '../../context/FormContext';
 
 // components
 import BookmarkBtn from '../../components/buttons/BookmarkBtn/index';
+import AddBtn from '../../components/buttons/AddBtn';
+import EditBtn from '../../components/buttons/EditBtn';
+import DeleteBtn from '../../components/buttons/DeleteBtn';
 
 // styles
 import {
@@ -24,14 +29,28 @@ import {
   ScItemDetailDataKey,
   ScItemDetailDataVal,
   ScAccountCircleImg,
-  ScAccountCircle
+  ScAccountCircle,
+  ScFlexTable,
+  ScFlexRow,
+  ScFlexCell,
+  ScBtnBlock,
+  ScBtnWrap
 } from './styles';
 
 function ItemDetail(props: any) {
   const currentPath = window.location.pathname.split('/')[1];
+  const dashboardCat = window.location.pathname.split('/')[3];
 
   // contexts
   const { isMyAccount } = useContext(IsMyAccount);
+  const { handleModal } = useContext(ModalContext);
+  const { handleSetForm } = useContext(FormContext);
+
+  // AddBtn onClick event
+  const handleModalForm = (formName: string) => {
+    handleModal();
+    handleSetForm(formName);
+  }
 
   return (
       <ScItemDetail>
@@ -46,16 +65,14 @@ function ItemDetail(props: any) {
               props.item.public === 'true' && currentPath !== 'feed' && isMyAccount ? <Public></Public> : null
             }
 
-            {/* bookmark */}
-            {
+            { // bookmark
               props.cat === undefined ?
-              <BookmarkBtn bike={props.item} />
+              <BookmarkBtn bike={ props.item } />
               :
               null
             }
             
-            
-            { /* show user profile icon only on /feed AND user exists */
+            { // show user profile icon only on /feed AND user exists
               currentPath === 'feed' && props.user ?
               <NavLink to={`/${ props.user.username }/dashboard/bikes`}>
                 {  // set image url once it's loaded from db
@@ -109,11 +126,51 @@ function ItemDetail(props: any) {
           }
 
           {
-            props.item.components ?
-            <ScItemDetailRow>
+            props.item.parts ?
+            <ScItemDetailCol>
               <ScItemDetailDataKey>Components</ScItemDetailDataKey>
-              <ScItemDetailDataVal></ScItemDetailDataVal>
-            </ScItemDetailRow>
+              <ScFlexTable>
+                {
+                  props.item.parts.map( (item: any, index: number) => {
+                    return (
+                      <ScFlexRow key={ index }>
+                        <ScFlexCell>{ item.cat }</ScFlexCell>
+                        <ScFlexCell>{ item.name }</ScFlexCell>
+                      </ScFlexRow>
+                    )
+                  })
+                }
+              </ScFlexTable>
+            </ScItemDetailCol>
+            :
+            null
+          }
+
+
+          { // Show this section if on /dashboard/bikes page
+            dashboardCat === 'bikes' ?
+            <>
+              { // Show Add components button if it's bike detail AND no components yet
+                !props.item.parts ?
+                <ScBtnBlock>
+                  <ScBtnWrap onClick={ () => handleModalForm('AddParts') }>
+                    <AddBtn />
+                    <p>Add components</p>
+                  </ScBtnWrap>
+                </ScBtnBlock>
+                :
+                <ScBtnBlock>
+                  <ScBtnWrap onClick={ () => handleModalForm('EditParts') }>
+                    <EditBtn />
+                    <p>Edit components</p>
+                  </ScBtnWrap>
+                  <ScBtnWrap onClick={ () => handleModalForm('DeleteParts') }>
+                    <DeleteBtn />
+                    <p>Delete components</p>
+                  </ScBtnWrap>
+                </ScBtnBlock>
+              }
+            </>
             :
             null
           }

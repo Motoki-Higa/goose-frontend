@@ -131,6 +131,37 @@ const GlobalStyle = createGlobalStyle`
     margin-top: 24px;
   }
 
+  .formPairField {
+    display: flex;
+    justify-content: space-between;
+    align-items: unset;
+
+    &:not(:first-of-type){
+      margin-top: 12px;
+    }
+
+    .formInputWrap {
+      margin-top: 0;
+      width: auto;
+
+      &:nth-of-type(2) {
+        flex-grow: 2;
+        margin-left: 6px;
+      }
+    }
+
+    .MuiSvgIcon-root {
+      color: ${ props => props.theme.colors.pink };
+      margin-top: 15px;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .formAddPairFieldBtn {
+    margin-top: 24px;
+  }
+
   .formInputWrap {
     width: 100%;
     margin-top: 12px;

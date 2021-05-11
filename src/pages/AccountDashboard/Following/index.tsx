@@ -20,9 +20,6 @@ function Following(){
   // context
   const { authUserFollowing } = useContext(UserContext);
 
-  const BaseUrl = config.apiBaseUrl;
-
-
   useEffect(() => {
     if (authUserFollowing.length > 0){
       const BaseUrl = config.apiBaseUrl;

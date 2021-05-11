@@ -134,7 +134,7 @@ function AddItem(){
         onSubmit={ handleSubmit(onSubmit) }>
 
         {/* add image button */}
-        <div className="formImageAddBtnWrap">
+        <div>
           <label htmlFor="image" >
             <Button 
               variant="contained" 

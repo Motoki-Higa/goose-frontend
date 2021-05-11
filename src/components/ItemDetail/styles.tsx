@@ -130,7 +130,7 @@ const ScItemDetailCol = styled.div`
     border-bottom: 1px solid ${ props => props.theme.colors.lightGrey };
   }
 
-  div:not(:first-of-type){
+  & > div:not(:first-of-type){
     margin-top: 12px;
     line-height: 1.5;
   }
@@ -199,6 +199,77 @@ const ScAccountCircle = styled(AccountCircle)`
   }
 `
 
+const ScFlexTable = styled.div`
+  margin-top: 12px;
+
+  td {
+    padding: 8px 12px;
+  }
+
+  td:nth-of-type(3) {
+    text-align: right;
+  }
+`
+
+const ScFlexRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  &:nth-of-type(odd){
+    background-color: ${ props => props.theme.colors.lightGrey }
+  }
+`
+
+const ScFlexCell = styled.div`
+  position: relative;
+  font-size: 0.875rem;
+  letter-spacing: 0.05rem;
+  color: ${ props => props.theme.colors.black };
+  margin-top: 0;
+  padding: 8px 12px;
+
+  &:nth-of-type(1) {
+    font-weight: 500;
+    width: 25%;
+  }
+
+  &:nth-of-type(2) {
+    position: relative;
+    width: 75%;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
+`
+
+const ScBtnBlock = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 12px;
+`
+
+const ScBtnWrap = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  &:not(:first-of-type){
+    margin-left: 12px;
+  }
+
+  p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: ${ props => props.theme.colors.blue };
+
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
+    }
+  }
+`
+
 
 export {
   ScItemDetail,
@@ -212,5 +283,10 @@ export {
   ScItemDetailDataKey,
   ScItemDetailDataVal,
   ScAccountCircleImg,
-  ScAccountCircle
+  ScAccountCircle,
+  ScFlexTable,
+  ScFlexRow,
+  ScFlexCell,
+  ScBtnBlock,
+  ScBtnWrap
 }

@@ -7,6 +7,7 @@ const ScAddBtnWrap = styled.button`
   width: 24px;
   height: 24px;
   margin-right: 10px;
+  padding: 0;
   border-radius: 50%;
   border: 2px solid ${ props => props.theme.colors.black};
   background-color: transparent;

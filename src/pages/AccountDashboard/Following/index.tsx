@@ -49,7 +49,10 @@ function Following(){
             return (
               <ScLi key={ index }>
                 <NavLink to={`/${ following.username }/dashboard/bikes`} >
-                  <div style={{backgroundImage: `url( ${ following.image.location } )`}} ></div>
+                  <div style={{
+                    backgroundImage: `url( ${ following.image.location } )`,
+                    backgroundColor: `#ECEDEF`,
+                    }} ></div>
                   <p>{ following.username }</p>
                 </NavLink>
               </ScLi>

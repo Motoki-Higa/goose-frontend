@@ -148,7 +148,7 @@ function ItemDetail(props: any) {
 
 
           { // Show this section if on /dashboard/bikes page
-            dashboardCat === 'bikes' ?
+            dashboardCat === 'bikes' && isMyAccount ?
             <>
               { // Show Add components button if it's bike detail AND no components yet
                 !props.item.parts ?

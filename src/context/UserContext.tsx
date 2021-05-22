@@ -1,9 +1,9 @@
 import { useState, createContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Utils from '../Utils';
+import Utils from './../Utils';
 import axios from 'axios';
-import config from '../config';
+import config from './../config'
 
 // set the type of state you want to handle with context e.g.
 interface ContextState {

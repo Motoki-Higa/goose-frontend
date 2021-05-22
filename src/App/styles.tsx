@@ -46,6 +46,7 @@ const GlobalStyle = createGlobalStyle`
 
     @media (max-width: 768px) {
       max-width: 100%;
+      padding: 12px 12px 0;
     }
   }
 
@@ -291,7 +292,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .MuiInputLabel-filled {
-    font-size: 14px!important;
+    font-size: 0.875rem!important;
   }
 
   .MuiFormLabel-root.Mui-focused {

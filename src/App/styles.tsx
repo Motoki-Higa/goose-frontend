@@ -33,6 +33,8 @@ const GlobalStyle = createGlobalStyle`
     padding-top: 80px;
 
     @media (max-width: 768px) {
+      height: auto;
+      min-height: auto;
       padding-top: 50px;
     }
   }

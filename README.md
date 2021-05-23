@@ -3,6 +3,16 @@
 An SNS like app for bike lovers.
 *This repo is only for the frontend
 
+## Live on Netlify
+
+Hey there! Thanks for visiting my app "Goose".
+This app is open to public, so you can signup and look around the app.
+
+__NOTE:__
+As this app is still in the development process, the front-end (react) and the back-end (express) are hosted on the free services such as Netlify and Heroku, so you might get slower server response for loading pages and posting stuff.
+Also, __you might get the signup confirmation email in your trash box__, as it will be sent by gmail (motonx.dev), so please look around if you can't find it in your inbox.
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -31,4 +41,10 @@ To install dependencies, run this in the application folder from the command-lin
 
 ```
 npm install
+```
+
+### Start a project
+
+```
+npm start
 ```

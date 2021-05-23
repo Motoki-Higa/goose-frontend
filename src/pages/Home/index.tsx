@@ -20,7 +20,7 @@ function Home() {
           }}></ScHero>
 
       <ScTaglineArea>
-        <h2>Keep track of your beloved bikes built</h2>
+        <h2>Keep track of your beloved bike builds</h2>
       </ScTaglineArea>
     </>
   )

@@ -137,7 +137,7 @@ function Bookmarks(){
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
+            <p style={{ textAlign: 'center', marginTop: '12px' }}>
               <b>You have seen it all!</b>
             </p>
           } >

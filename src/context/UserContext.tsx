@@ -122,7 +122,7 @@ export const UserProvider: React.FC = (props) => {
 
   // signin
   const signIn = async (email: string, password: string) => {
-    const user = await utils.getUser(email, password);
+    const user = await utils.getUser(email.toLowerCase(), password);
 
     if (user.status === 200){
       setAuthenticatedUser(user.data);

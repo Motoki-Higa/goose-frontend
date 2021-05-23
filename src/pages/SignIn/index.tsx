@@ -108,7 +108,8 @@ function SignIn(props: any) {
                   <TextField 
                     id="password" 
                     name="password"
-                    label="password" 
+                    label="password"
+                    type="password"
                     variant="filled"
                     helperText={ errors.password ? errors.password.message : null}
                     error={ !!errors.password }

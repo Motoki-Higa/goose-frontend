@@ -91,9 +91,11 @@ function Bookmarks(){
                 handleClearLoadedItems();
                 handleClearScrollPosition()
               } else {
-                // show 4 items onload
-                setItems(response.data.slice(0, 4));
+                // show 8 items onload
+                setItems(response.data.slice(0, 8));
               }
+
+              response.data.length > 8 ? setHasMore(true) : setHasMore(false);
             })
         }
       } catch(err) {

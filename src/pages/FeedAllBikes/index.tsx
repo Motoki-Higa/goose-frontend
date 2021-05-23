@@ -86,6 +86,8 @@ function FeedAllBikes(){
               // show 12 items onload
               setItems(response.data.slice(0, 12));
             }
+
+            response.data.length > 12 ? setHasMore(true) : setHasMore(false);
           })
         
       } catch(err) {

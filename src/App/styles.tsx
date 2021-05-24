@@ -90,6 +90,10 @@ const GlobalStyle = createGlobalStyle`
     margin: auto;
     overflow-y: scroll;
     z-index: 100;
+
+    @media (max-width: 768px){
+      max-height: 80%
+    }
   }
 
   .formTitle {

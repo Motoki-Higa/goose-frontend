@@ -9,13 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 // contexts
+import { UserContext } from '../../../context/UserContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 
 
 function AddItem(){
-  // init context to use
+  // context
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
   const { handleSetNotification } = useContext(NotificationContext);
@@ -81,7 +83,8 @@ function AddItem(){
   const onSubmit = async (data: any) => {
     try {
       // endpoint
-      const url = config.apiBaseUrl + '/items';
+      const userId = authenticatedUser._id;
+      const url = config.apiBaseUrl + '/' + userId + '/items';
 
       // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
       const formData: any = new FormData();

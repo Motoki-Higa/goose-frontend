@@ -36,9 +36,11 @@ function EditProfile(){
     try {
       // endpoint
       const userId = authenticatedUser._id;
-      const accountUpdateApi = config.apiBaseUrl + '/users/' + userId;
+      const username = authenticatedUser.username;
+      const accountUpdateApi = config.apiBaseUrl + '/users/' + username;
 
       const obj = {
+        '_id': userId,
         'name': data.name,
         'username': data.username
       }

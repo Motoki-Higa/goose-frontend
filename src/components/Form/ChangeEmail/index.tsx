@@ -41,6 +41,7 @@ function EditEmail(){
       const emailChangeApi = config.apiBaseUrl + '/users/' + userId + '/email/change/request';
 
       const obj = {
+        'oldEmail': authenticatedUser.email,
         'newEmail': data.newEmail
       }
 

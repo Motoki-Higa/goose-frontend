@@ -51,7 +51,8 @@ export const UserProvider: React.FC = (props) => {
 
   // handle bookmark update
   const handleBookmarkUpdate = (itemId: string, bookmarked: boolean | undefined) => {
-    const bookmarkApi = config.apiBaseUrl + '/bookmark/bikes/' + itemId;
+    const userId = authenticatedUser._id;
+    const bookmarkApi = config.apiBaseUrl + '/' + userId + '/bookmark/bikes/' + itemId;
     const method = bookmarked ? 'DELETE' : 'POST';
 
     axios({
@@ -71,8 +72,9 @@ export const UserProvider: React.FC = (props) => {
 
 
   // handle following update
-  const handleFollowingUpdate = (userId: string, following: boolean | undefined) => {
-    const followingApi = config.apiBaseUrl + '/following/' + userId;
+  const handleFollowingUpdate = (followingId: string, following: boolean | undefined) => {
+    const userId = authenticatedUser._id;
+    const followingApi = config.apiBaseUrl + '/' + userId + '/following/' + followingId;
     const method = following ? 'DELETE' : 'POST';
 
     axios({
@@ -154,7 +156,7 @@ export const UserProvider: React.FC = (props) => {
     if (authenticatedUser){
       const profileApi = config.apiBaseUrl + '/profile/' + authenticatedUser.username;
       const bookmarkApi = config.apiBaseUrl + '/' + authenticatedUser._id + '/bookmark';
-      const followingApi = config.apiBaseUrl + '/following';
+      const followingApi = config.apiBaseUrl + '/' + authenticatedUser._id + '/following';
 
       // get profile by username
       const profile = axios.get(profileApi)

@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 
 // contexts
+import { UserContext } from '../../../context/UserContext';
 import { ModalContext } from '../../../context/ModalContext';
 import { FormContext } from '../../../context/FormContext';
 import { NotificationContext } from '../../../context/NotificationContext';
@@ -35,6 +36,7 @@ const BlueSwitch = withStyles({
 
 function AddBike(){
   // init context to use
+  const { authenticatedUser } = useContext<any>(UserContext);
   const { handleCloseModal } = useContext(ModalContext);
   const { handleCloseForm, setDetectAnyFormSubmit } = useContext(FormContext);
   const { handleSetNotification } = useContext(NotificationContext);
@@ -111,7 +113,8 @@ function AddBike(){
       } else {
         try {
           // endpoint
-          const url = config.apiBaseUrl + '/bikes';
+          const userId = authenticatedUser._id;
+          const url = config.apiBaseUrl + '/' + userId + '/bikes';
     
           // construct a set of key/value pairs by js FormData() *FormDate() is important and useful
           const formData: any = new FormData();

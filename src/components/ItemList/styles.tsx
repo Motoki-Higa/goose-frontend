@@ -82,40 +82,6 @@ const ScItemCard = styled.div<IScItemCard>`
   }
 `
 
-// const ScItemCard = styled.div<IScItemCard>`
-//   position: relative;
-//   flex: 1;
-//   align-self: flex-end;
-//   min-width: 30%;
-//   max-width: 50%;
-//   margin: 1%;
-//   border-radius: 10px;
-//   overflow: hidden;
-//   animation: ${ keyFadeIn } 0.5s ease-in;
-//   background-color: ${ props => props.theme.colors.white};
-
-//   &:nth-of-type(-n + 1){
-//     min-width: 40%;
-//     max-width: 50%;
-//   }
-
-//   @media (max-width: 768px) {
-//     min-width: 48%;
-//     max-width: 100%;
-//     /* padding: 10px 10px 0; */
-//   }
-
-//   a {
-//     display: block;
-//     text-decoration: none;
-//     padding: 16px 16px 0;
-
-//     @media (max-width: 768px) {
-//       padding: 12px 12px 0;
-//     }
-//   }
-// `
-
 const ScItemCardImg = styled.div`
   position: relative;
   width: calc(100% + 32px);

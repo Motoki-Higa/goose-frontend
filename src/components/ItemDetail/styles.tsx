@@ -248,6 +248,7 @@ const ScBtnBlock = styled.div`
   justify-content: left;
   align-items: center;
   margin-top: 12px;
+  padding: 0;
 `
 
 const ScBtnWrap = styled.div`

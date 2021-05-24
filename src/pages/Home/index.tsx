@@ -21,6 +21,15 @@ function Home() {
 
       <ScTaglineArea>
         <h2>Keep track of your beloved bike builds</h2>
+        <p
+          style={{
+            fontSize: '0.875em',
+            width: '90%',
+            textAlign: 'center',
+            margin: '24px auto 0',
+            lineHeight: '1.5',
+            color: '#fff'
+          }}>As this app is still in development, <br />it might be deleted, or go under maintenance without notice. <br />Thanks!</p>
       </ScTaglineArea>
     </>
   )

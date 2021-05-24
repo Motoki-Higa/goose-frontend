@@ -31,7 +31,7 @@ const ScHero = styled.div`
 `
 
 const ScTaglineArea = styled.div`
-  margin-top: 33vh;
+  margin-top: 30vh;
   padding: 0 12px;
 
   h2 {

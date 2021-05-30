@@ -163,6 +163,7 @@ function SignUp(props: any) {
                     id="password" 
                     name="password"
                     label="password" 
+                    type="password"
                     variant="filled"
                     helperText={ errors.password ? errors.password.message : null}
                     error={ !!errors.password }
